@@ -26,7 +26,12 @@ public class Pawn extends ChessPiece {
     public ArrayList<Position> possibleMoves(Game game) {
         ArrayList<Position> moves = new ArrayList<Position>();
         if (!move) {
-            moves.addAll(pawnPositionTest(game,posX,posY + (2 * direction)));
+            Board bd = game.getBoard();
+            Position skip = new Position(posX,posY + direction);
+            int skipIndex = skip.toSingleValue() - 1;
+            if (Objects.isNull(bd.getOnBoard().get(skipIndex))) {
+                moves.addAll(pawnPositionTest(game, posX, posY + (2 * direction)));
+            }
         }
         moves.addAll(pawnPositionTest(game,posX, posY + direction));
         moves.addAll(attackTest(game,posX - 1, posY + direction));
@@ -41,12 +46,16 @@ public class Pawn extends ChessPiece {
         if (x >= 1 && x <= 8 && y >= 1 && y <= 8) {
             Board bd = game.getBoard();
             int posnIndex = testPosition.toSingleValue() - 1;
-            Game testGame = new Game(game);
+            int initialX = this.posX;
+            int initialY = this.posY;
+            boolean initialMove = move;
             if (Objects.isNull(bd.getOnBoard().get(posnIndex))) {
-                testGame.move(this,x,y);
-                if (!testGame.check(colour)) {
+                game.move(this,x,y);
+                if (!game.check(colour)) {
                     moves.add(testPosition);
                 }
+                game.move(this,initialX,initialY);
+                move = initialMove;
             }
         }
         return moves;
@@ -59,18 +68,37 @@ public class Pawn extends ChessPiece {
         if (x >= 1 && x <= 8 && y >= 1 && y <= 8) {
             Board bd = game.getBoard();
             int posnIndex = testPosition.toSingleValue() - 1;
-            Game testGame = new Game(game);
+            int initialX = this.posX;
+            int initialY = this.posY;
+            boolean initialMove = move;
             if (!Objects.isNull(bd.getOnBoard().get(posnIndex))) {
                 if (!bd.getOnBoard().get(posnIndex).getColour().equals(colour)) {
                     ChessPiece enemyAttacked = bd.getOnBoard().get(posnIndex);
-                    testGame.remove(enemyAttacked);
-                    testGame.move(this,x,y);
-                    if (!testGame.check(colour)) {
+                    int enemyX = enemyAttacked.getPosX();
+                    int enemyY = enemyAttacked.getPosY();
+                    game.remove(enemyAttacked);
+                    game.move(this,x,y);
+                    if (!game.check(colour)) {
                         moves.add(testPosition);
                     }
+                    game.move(this,initialX,initialY);
+                    game.place(enemyAttacked,enemyX,enemyY);
+                    move = initialMove;
                 }
             }
         }
         return moves;
+    }
+
+    // REQUIRES: posn must not be the same as the current position
+    // EFFECTS: returns a boolean that tells whether this pawn can move to given position(enemy king's position)
+    // in one step, ignoring whether the king on the same team will be checked
+    @Override
+    public boolean checkEnemy(Game game, Position posn) {
+        int x = posn.getPosX();
+        int y = posn.getPosY();
+        int diffX = x - posX;
+        int diffY = y = posY;
+        return diffY == direction && Math.abs(diffX) == 1;
     }
 }

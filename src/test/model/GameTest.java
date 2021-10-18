@@ -11,6 +11,8 @@ public class GameTest {
     Board bd;
     ArrayList<ChessPiece> white;
     ArrayList<ChessPiece> black;
+    ArrayList<ChessPiece> whiteOff;
+    ArrayList<ChessPiece> blackOff;
 
     @BeforeEach
     private void setup() {
@@ -21,6 +23,8 @@ public class GameTest {
         bd = new Board();
         white = new ArrayList<ChessPiece>();
         black = new ArrayList<ChessPiece>();
+        whiteOff = new ArrayList<ChessPiece>();
+        blackOff = new ArrayList<ChessPiece>();
     }
 
     private void placeOnBoard(ChessPiece cp, int x, int y) {
@@ -33,61 +37,57 @@ public class GameTest {
         game.setGameBoard(bd);
         game.setWhiteChessPiecesOnBoard(white);
         game.setBlackChessPiecesOnBoard(black);
+        game.setWhiteChessPiecesOffBoard(whiteOff);
+        game.setBlackChessPiecesOffBoard(blackOff);
     }
 
     @Test
     public void testStalemateMethodAndHasEnded() {
-        setup();
         setupRest();
         King whiteKing = new King("white");
         King blackKing = new King("black");
         Bishop blackBishop = new Bishop("black");
+        Pawn whitePawn = new Pawn("white");
         placeOnBoard(whiteKing,1,1);
         placeOnBoard(blackKing, 2,3);
         placeOnBoard(blackBishop,4,3);
         white.add(whiteKing);
         black.add(blackKing);
         black.add(blackBishop);
+        whiteOff.add(whitePawn);
         setGame();
         assertTrue(game.stalemate("white"));
         assertFalse(game.stalemate("black"));
         assertTrue(game.hasEnded());
-        Pawn whitePawn = new Pawn("white");
-        bd.place(whitePawn,8,6);
-        game.setGameBoard(bd);
+        game.place(whitePawn,8,6);
         assertFalse(game.stalemate("white"));
-        assertFalse(game.hasEnded());
     }
 
     @Test
     public void testCheckAndCheckmateAndHasEnded() {
-        setup();
         setupRest();
         King whiteKing = new King("white");
         King blackKing = new King("black");
         Bishop blackBishop = new Bishop("black");
+        Queen blackQueen = new Queen("black");
         placeOnBoard(whiteKing,1,1);
         placeOnBoard(blackBishop,6,6);
         placeOnBoard(blackKing, 8,8);
         white.add(whiteKing);
         black.add(blackBishop);
         black.add(blackKing);
+        blackOff.add(blackQueen);
         setGame();
         assertTrue(game.check("white"));
         assertFalse(game.checkmate("white"));
         assertFalse(game.hasEnded());
-        Queen blackQueen = new Queen("black");
-        placeOnBoard(blackQueen, 3,2);
-        black.add(blackQueen);
-        setGame();
-        assertTrue(game.check("white"));
+        game.place(blackQueen,3,2);
         assertTrue(game.checkmate("white"));
         assertTrue(game.hasEnded());
     }
 
     @Test
     public void testMovesMethodsInGame() {
-        setup();
         Bishop bishop = new Bishop("white");
         Rook rook = new Rook("black");
         Pawn pawn = new Pawn("black");

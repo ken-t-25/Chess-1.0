@@ -5,25 +5,17 @@ import java.util.List;
 
 public class Board {
 
-    private ArrayList<Position> board;
     private ArrayList<ChessPiece> onBoard;
 
     // EFFECTS: constructs a chess board (8 times 8) with no chess pieces on it
     public Board() {
-        board = new ArrayList<Position>();
         onBoard = new ArrayList<ChessPiece>();
         for (int i = 1; i <= 8; i++) {
             for (int j = 1; j <= 8; j++) {
                 Position p = new Position(j,i);
-                board.add(p);
                 onBoard.add(null);
             }
         }
-    }
-
-    // EFFECTS: return board
-    public ArrayList<Position> getBoard() {
-        return board;
     }
 
     // EFFECTS: return onBoard

@@ -12,6 +12,8 @@ public class KingTest {
     Board bd;
     ArrayList<ChessPiece> white;
     ArrayList<ChessPiece> black;
+    ArrayList<ChessPiece> whiteOff;
+    ArrayList<ChessPiece> blackOff;
 
     @BeforeEach
     private void setup() {
@@ -20,6 +22,8 @@ public class KingTest {
         bd = new Board();
         white = new ArrayList<ChessPiece>();
         black = new ArrayList<ChessPiece>();
+        whiteOff = new ArrayList<ChessPiece>();
+        blackOff = new ArrayList<ChessPiece>();
     }
 
     private void arrayListEquals(ArrayList<Position> list1, ArrayList<Position> list2) {
@@ -35,6 +39,8 @@ public class KingTest {
         game.setGameBoard(bd);
         game.setWhiteChessPiecesOnBoard(white);
         game.setBlackChessPiecesOnBoard(black);
+        game.setWhiteChessPiecesOffBoard(whiteOff);
+        game.setBlackChessPiecesOffBoard(blackOff);
     }
 
     private void placeOnBoard(ChessPiece cp, int x, int y) {
@@ -45,7 +51,6 @@ public class KingTest {
 
     @Test
     public void testPossibleMovesMiddle() {
-        setup();
         placeOnBoard(king, 5,4);
         white.add(king);
         setGame();
@@ -65,7 +70,6 @@ public class KingTest {
 
     @Test
     public void testPossibleMovesSide() {
-        setup();
         placeOnBoard(king, 8,3);
         white.add(king);
         setGame();
@@ -82,7 +86,6 @@ public class KingTest {
 
     @Test
     public void testPossibleMovesCorner() {
-        setup();
         placeOnBoard(king, 1,8);
         white.add(king);
         setGame();
@@ -97,7 +100,6 @@ public class KingTest {
 
     @Test
     public void testPossibleMovesBlockedByTeamMate() {
-        setup();
         placeOnBoard(king, 5, 4);
         Bishop bishop = new Bishop("white");
         placeOnBoard(bishop, 5, 5);
@@ -119,7 +121,6 @@ public class KingTest {
 
     @Test
     public void testPossibleMovesBlockedByOpponentCanAttack() {
-        setup();
         placeOnBoard(king, 5, 4);
         Rook rook = new Rook("black");
         placeOnBoard(rook, 5, 5);
@@ -130,19 +131,15 @@ public class KingTest {
         ArrayList<Position> expected = new ArrayList<Position>();
         expected.add(new Position(4, 3));
         expected.add(new Position(4, 4));
-        expected.add(new Position(4, 5));
-        expected.add(new Position(5, 3));
         expected.add(new Position(5, 5));
         expected.add(new Position(6, 3));
         expected.add(new Position(6, 4));
-        expected.add(new Position(6, 5));
         assertEquals(expected.size(), pm.size());
         arrayListEquals(pm, expected);
     }
 
     @Test
     public void testPossibleMovesBlockedByOpponentCannotAttack() {
-        setup();
         placeOnBoard(king, 5, 4);
         Rook rook1 = new Rook("black");
         Rook rook2 = new Rook("black");
@@ -156,17 +153,14 @@ public class KingTest {
         ArrayList<Position> expected = new ArrayList<Position>();
         expected.add(new Position(4, 3));
         expected.add(new Position(4, 4));
-        expected.add(new Position(4, 5));
         expected.add(new Position(6, 3));
         expected.add(new Position(6, 4));
-        expected.add(new Position(6, 5));
         assertEquals(expected.size(), pm.size());
         arrayListEquals(pm, expected);
     }
 
     @Test
     public void testPossibleMovesCastlingNoEnemiesRookKingHasNotMoved(){
-        setup();
         placeOnBoard(king, 4,1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
@@ -191,7 +185,6 @@ public class KingTest {
 
     @Test
     public void testPossibleMovesCastlingNoEnemiesRookMoved(){
-        setup();
         placeOnBoard(king, 4,1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
@@ -217,7 +210,6 @@ public class KingTest {
 
     @Test
     public void testPossibleMovesCastlingNoEnemiesKingMoved(){
-        setup();
         placeOnBoard(king, 4,1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
@@ -242,7 +234,6 @@ public class KingTest {
 
     @Test
     public void testPossibleMovesCastlingNoEnemiesPathBlocked(){
-        setup();
         placeOnBoard(king, 4,1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
@@ -268,7 +259,6 @@ public class KingTest {
 
     @Test
     public void testPossibleMovesCastlingEnemiesAttackingKing(){
-        setup();
         placeOnBoard(king, 4,1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
@@ -293,7 +283,6 @@ public class KingTest {
 
     @Test
     public void testPossibleMovesCastlingEnemiesAttackingPath(){
-        setup();
         placeOnBoard(king, 4,1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
@@ -318,7 +307,6 @@ public class KingTest {
 
     @Test
     public void testPossibleMovesCastlingEnemiesWillAttackEndKing(){
-        setup();
         placeOnBoard(king, 4,1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");

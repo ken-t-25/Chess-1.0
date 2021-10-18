@@ -10,18 +10,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class KnightTest {
 
     Knight knight;
+    King king;
     Game game;
     Board bd;
     ArrayList<ChessPiece> white;
     ArrayList<ChessPiece> black;
+    ArrayList<ChessPiece> whiteOff;
+    ArrayList<ChessPiece> blackOff;
 
     @BeforeEach
     private void setup() {
         knight = new Knight("white");
+        king = new King("white");
         game = new Game();
         bd = new Board();
         white = new ArrayList<ChessPiece>();
         black = new ArrayList<ChessPiece>();
+        whiteOff = new ArrayList<ChessPiece>();
+        blackOff = new ArrayList<ChessPiece>();
     }
 
 
@@ -38,6 +44,8 @@ public class KnightTest {
         game.setGameBoard(bd);
         game.setWhiteChessPiecesOnBoard(white);
         game.setBlackChessPiecesOnBoard(black);
+        game.setWhiteChessPiecesOffBoard(whiteOff);
+        game.setBlackChessPiecesOffBoard(blackOff);
     }
 
     private void placeOnBoard(ChessPiece cp, int x, int y) {
@@ -48,9 +56,10 @@ public class KnightTest {
 
     @Test
     public void testPossibleMovesMiddle() {
-        setup();
         placeOnBoard(knight, 4, 6);
+        placeOnBoard(king,4,5);
         white.add(knight);
+        white.add(king);
         setGame();
         ArrayList<Position> pm = knight.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<Position>();
@@ -68,9 +77,10 @@ public class KnightTest {
 
     @Test
     public void testPossibleMovesSide() {
-        setup();
         placeOnBoard(knight, 5, 8);
+        placeOnBoard(king,5,7);
         white.add(knight);
+        white.add(king);
         setGame();
         ArrayList<Position> pm = knight.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<Position>();
@@ -84,9 +94,10 @@ public class KnightTest {
 
     @Test
     public void testPossibleMovesCorner() {
-        setup();
         placeOnBoard(knight, 8, 8);
+        placeOnBoard(king,8,7);
         white.add(knight);
+        white.add(king);
         setGame();
         ArrayList<Position> pm = knight.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<Position>();
@@ -98,12 +109,13 @@ public class KnightTest {
 
     @Test
     public void testPossibleBlockByTeammate() {
-        setup();
         placeOnBoard(knight, 4, 6);
+        placeOnBoard(king,4,5);
         Bishop bishop = new Bishop("white");
         placeOnBoard(bishop,2,5);
         white.add(knight);
         white.add(bishop);
+        white.add(king);
         setGame();
         ArrayList<Position> pm = knight.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<Position>();
@@ -120,11 +132,12 @@ public class KnightTest {
 
     @Test
     public void testPossibleMovesBlockByEnemy() {
-        setup();
         placeOnBoard(knight, 4, 6);
+        placeOnBoard(king,4,5);
         Bishop bishop = new Bishop("black");
         placeOnBoard(bishop,6,5);
         white.add(knight);
+        white.add(king);
         black.add(bishop);
         setGame();
         ArrayList<Position> pm = knight.possibleMoves(game);
@@ -143,8 +156,6 @@ public class KnightTest {
 
     @Test
     public void testPossibleMovesKingUnderAttack() {
-        setup();
-        King king = new King("white");
         Rook rook = new Rook("black");
         placeOnBoard(knight, 4, 6);
         placeOnBoard(king,6,3);
@@ -163,8 +174,6 @@ public class KnightTest {
 
     @Test
     public void testPossibleMovesKingWillBeUnderAttack() {
-        setup();
-        King king = new King("white");
         Rook rook = new Rook("black");
         placeOnBoard(knight, 4, 6);
         placeOnBoard(king, 4,3);

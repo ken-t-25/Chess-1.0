@@ -28,10 +28,8 @@ public class Position {
     public Boolean attacked(ArrayList<ChessPiece> chessPieces, Game game) {
         boolean attacked = false;
         for (ChessPiece cp: chessPieces) {
-            for (Position posn: cp.possibleMoves(game)) {
-                if (posn.getPosX() == posX && posn.getPosY() == posY) {
-                    attacked = true;
-                }
+            if (cp.checkEnemy(game,this)) {
+                attacked = true;
             }
         }
         return attacked;

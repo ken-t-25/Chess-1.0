@@ -37,4 +37,16 @@ public class Knight extends ChessPiece {
         }
         return moves;
     }
+
+    // REQUIRES: posn must not be the same as the current position of this king
+    // EFFECTS: returns a boolean that tells whether this knight can move to given position(enemy king's position)
+    // in one step, ignoring whether the king on the same team will be checked
+    @Override
+    public boolean checkEnemy(Game game, Position posn) {
+        int x = posn.getPosX();
+        int y = posn.getPosY();
+        int diffX = x - posX;
+        int diffY = y - posY;
+        return Math.abs(diffX) + Math.abs(diffY) == 3 && diffX != 0 && diffY != 0;
+    }
 }

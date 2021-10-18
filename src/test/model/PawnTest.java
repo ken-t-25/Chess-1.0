@@ -8,18 +8,24 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PawnTest {
 
     Pawn pawn;
+    King king;
     Game game;
     Board bd;
     ArrayList<ChessPiece> white;
     ArrayList<ChessPiece> black;
+    ArrayList<ChessPiece> whiteOff;
+    ArrayList<ChessPiece> blackOff;
 
     @BeforeEach
     private void setup() {
         pawn = new Pawn("white");
+        king = new King("white");
         game = new Game();
         bd = new Board();
         white = new ArrayList<ChessPiece>();
         black = new ArrayList<ChessPiece>();
+        whiteOff = new ArrayList<ChessPiece>();
+        blackOff = new ArrayList<ChessPiece>();
     }
 
     private void arrayListEquals(ArrayList<Position> list1, ArrayList<Position> list2) {
@@ -35,6 +41,8 @@ public class PawnTest {
         game.setGameBoard(bd);
         game.setWhiteChessPiecesOnBoard(white);
         game.setBlackChessPiecesOnBoard(black);
+        game.setWhiteChessPiecesOffBoard(whiteOff);
+        game.setBlackChessPiecesOffBoard(blackOff);
     }
 
     private void placeOnBoard(ChessPiece cp, int x, int y) {
@@ -45,25 +53,27 @@ public class PawnTest {
 
     @Test
     public void testPossibleMovesNoBlockHasNotMoved() {
-        setup();
-        placeOnBoard(pawn, 6, 7);
+        placeOnBoard(pawn, 6,7);
+        placeOnBoard(king,6,8);
         white.add(pawn);
+        white.add(king);
         setGame();
         ArrayList<Position> pm = pawn.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<Position>();
-        expected.add(new Position(6, 6));
         expected.add(new Position(6, 5));
+        expected.add(new Position(6, 6));
         assertEquals(expected.size(), pm.size());
         arrayListEquals(pm, expected);
     }
 
     @Test
     public void testPossibleMovesNoBlockHasMoved() {
-        setup();
-        placeOnBoard(pawn, 6, 7);
+        placeOnBoard(pawn, 6,7);
+        placeOnBoard(king,6,8);
         white.add(pawn);
+        white.add(king);
         setGame();
-        bd.move(pawn, 6, 5);
+        game.move(pawn, 6, 5);
         ArrayList<Position> pm = pawn.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<Position>();
         expected.add(new Position(6, 4));
@@ -73,11 +83,12 @@ public class PawnTest {
 
     @Test
     public void testPossibleMovesBlockByTeammate() {
-        setup();
         placeOnBoard(pawn, 6, 7);
+        placeOnBoard(king,6,8);
         Bishop bishop = new Bishop("white");
         placeOnBoard(bishop, 6,6);
         white.add(pawn);
+        white.add(king);
         white.add(bishop);
         setGame();
         ArrayList<Position> pm = pawn.possibleMoves(game);
@@ -86,11 +97,12 @@ public class PawnTest {
 
     @Test
     public void testPossibleMovesBlockByEnemy() {
-        setup();
         placeOnBoard(pawn, 6, 7);
+        placeOnBoard(king,6,8);
         Bishop bishop = new Bishop("black");
         placeOnBoard(bishop, 6,6);
         white.add(pawn);
+        white.add(king);
         black.add(bishop);
         setGame();
         ArrayList<Position> pm = pawn.possibleMoves(game);
@@ -99,18 +111,20 @@ public class PawnTest {
 
     @Test
     public void testPossibleMovesCanAttack() {
-        setup();
         placeOnBoard(pawn, 4, 5);
+        placeOnBoard(king,4,6);
         Bishop bishop = new Bishop("black");
         placeOnBoard(bishop, 3,4);
         Rook rook = new Rook("black");
         placeOnBoard(rook,5,4);
         white.add(pawn);
+        white.add(king);
         black.add(bishop);
         black.add(rook);
         setGame();
         ArrayList<Position> pm = pawn.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<Position>();
+        expected.add(new Position(4, 3));
         expected.add(new Position(4, 4));
         expected.add(new Position(3, 4));
         expected.add(new Position(5, 4));
@@ -120,9 +134,7 @@ public class PawnTest {
 
     @Test
     public void testPossibleMovesKingUnderAttack() {
-        setup();
         placeOnBoard(pawn, 4, 5);
-        King king = new King("white");
         placeOnBoard(king, 5, 5);
         Bishop bishop = new Bishop("black");
         placeOnBoard(bishop, 7,3);
@@ -136,9 +148,7 @@ public class PawnTest {
 
     @Test
     public void testPossibleMovesKingWillBeUnderAttack() {
-        setup();
         placeOnBoard(pawn, 5, 4);
-        King king = new King("white");
         placeOnBoard(king, 5, 5);
         Bishop bishop = new Bishop("black");
         placeOnBoard(bishop, 6,3);

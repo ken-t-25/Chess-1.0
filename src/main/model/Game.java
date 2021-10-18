@@ -14,16 +14,6 @@ public class Game {
     // EFFECTS: constructs and sets up a chess game
     public Game() {}
 
-    // EFFECTS: creates a copy of another game
-    public Game(Game another) {
-        this.whiteChessPiecesOnBoard = another.whiteChessPiecesOnBoard;
-        this.blackChessPiecesOnBoard = another.blackChessPiecesOnBoard;
-        this.whiteChessPiecesOffBoard = another.whiteChessPiecesOffBoard;
-        this.blackChessPiecesOffBoard = another.blackChessPiecesOffBoard;
-        this.gameBoard = another.gameBoard;
-        this.history = another.history;
-    }
-
     // MODIFIES: this
     // EFFECTS: replaces current gameBoard with given board
     public void setGameBoard(Board bd) {
@@ -105,13 +95,13 @@ public class Game {
 
     // EFFECTS: tells whether given team has legal move
     private boolean haveLegalMove(ArrayList<ChessPiece> chessList) {
-        boolean haveLegalMove = false;
-        for (ChessPiece cp: chessList) {
+        ArrayList<ChessPiece> copyList = new ArrayList<ChessPiece>(chessList);
+        for (ChessPiece cp: copyList) {
             if (!cp.possibleMoves(this).isEmpty()) {
-                haveLegalMove = true;
+                return true;
             }
         }
-        return haveLegalMove;
+        return false;
     }
 
     // REQUIRES: side must be one of "black" and "white"

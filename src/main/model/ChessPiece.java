@@ -25,6 +25,11 @@ public abstract class ChessPiece {
     // EFFECTS: return the possible next moves that this chess piece can take on given board
     protected abstract ArrayList<Position> possibleMoves(Game game);
 
+    // REQUIRES: posn must not be the same as the current position of this chess piece
+    // EFFECTS: returns a boolean that tells whether this chess piece can move to this position(enemy king's position)
+    // in one step, ignoring whether the king on the same team will be checked
+    protected abstract boolean checkEnemy(Game game, Position posn);
+
 
     // EFFECTS: return move, which tells whether this chess piece has been moved during the game
     protected boolean hasMoved() {
@@ -132,6 +137,42 @@ public abstract class ChessPiece {
             y = y + deltaY;
         }
         return moves;
+    }
+
+    // EFFECTS: returns true if there are no blocks on the given diagonal path
+    protected boolean checkEnemyDiagonalPath(int deltaX, int deltaY, int x, int y, int diff, Board board) {
+        boolean notBlock = true;
+        for (int i = 1; i < diff; i++) {
+            int testX = x + (deltaX * i);
+            int testY = y + (deltaY * i);
+            Position testPosn = new Position(testX, testY);
+            int testIndex = testPosn.toSingleValue() - 1;
+            if (!Objects.isNull(board.getOnBoard().get(testIndex))) {
+                notBlock = false;
+            }
+        }
+        return notBlock;
+    }
+
+    // EFFECTS: returns true if there are no blocks on the given horizontal or vertical path
+    protected boolean checkEnemyStraightPath(int constance, int change, int changeTo, String direction, Board board) {
+        boolean notBlock = true;
+        int diff = changeTo - change;
+        int absDiff = Math.abs(diff);
+        int delta = diff / absDiff;
+        for (int i = 1; i < absDiff; i++) {
+            Position testPosn;
+            if (direction.equals("x")) {
+                testPosn = new Position(change + (delta * i), constance);
+            } else {
+                testPosn = new Position(constance, change + (delta * i));
+            }
+            int testIndex = testPosn.toSingleValue() - 1;
+            if (!Objects.isNull(board.getOnBoard().get(testIndex))) {
+                notBlock = false;
+            }
+        }
+        return notBlock;
     }
 
 }

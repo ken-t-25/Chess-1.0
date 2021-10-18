@@ -18,20 +18,32 @@ public class Bishop extends ChessPiece {
     @Override
     public ArrayList<Position> possibleMoves(Game game) {
         ArrayList<Position> moves = new ArrayList<Position>();
-        ArrayList<Position> topLeftDiagonal = lineTest(game,-1,-1);
-        ArrayList<Position> bottomLeftDiagonal = lineTest(game,-1,1);
-        ArrayList<Position> topRightDiagonal = lineTest(game,1,-1);
-        ArrayList<Position> bottomRightDiagonal = lineTest(game,1,1);
-        append(moves, topLeftDiagonal);
-        append(moves, bottomLeftDiagonal);
-        append(moves, topRightDiagonal);
-        append(moves, bottomRightDiagonal);
+        moves.addAll(lineTest(game,-1,-1));
+        moves.addAll(lineTest(game,-1,1));
+        moves.addAll(lineTest(game,1,-1));
+        moves.addAll(lineTest(game,1,1));
         return moves;
     }
 
-    protected void append(ArrayList<Position> allMoves, ArrayList<Position> moves) {
-        for (Position posn: moves) {
-            allMoves.add(posn);
+    // REQUIRES: posn must not be the same as the current position of this bishop
+    // EFFECTS: returns a boolean that tells whether this bishop can move to given position(enemy king's position)
+    // in one step, ignoring whether the king on the same team will be checked
+    @Override
+    public boolean checkEnemy(Game game, Position posn) {
+        Board bd = game.getBoard();
+        int x = posn.getPosX();
+        int y = posn.getPosY();
+        int diffX = x - posX;
+        int diffY = y - posY;
+        if (Math.abs(diffX) == Math.abs(diffY) && diffX != 0) {
+            int deltaX = Math.abs(diffX) / diffX;
+            int deltaY = Math.abs(diffY) / diffY;
+            int diff = Math.abs(diffX);
+            return checkEnemyDiagonalPath(deltaX,deltaY,posX,posY,diff,bd);
+        } else {
+            return false;
         }
     }
+
+
 }

@@ -18,7 +18,9 @@ public class King extends ChessPiece {
     @Override
     public ArrayList<Position> possibleMoves(Game game) {
         ArrayList<Position> moves = new ArrayList<Position>();
-        moves.addAll(kingPositionTest(game, posX - 1, posY - 1));
+        int x = posX;
+        int y = posY;
+        moves.addAll(kingPositionTest(game, x - 1, y - 1));
         moves.addAll(kingPositionTest(game, posX - 1, posY));
         moves.addAll(kingPositionTest(game, posX - 1, posY + 1));
         moves.addAll(kingPositionTest(game, posX, posY - 1));
@@ -106,6 +108,19 @@ public class King extends ChessPiece {
             move = initialMove;
         }
         return moves;
+    }
+
+    // REQUIRES: posn must not be the same as the current position of this king
+    // EFFECTS: returns a boolean that tells whether this king can move to given position(enemy king's position)
+    // in one step, ignoring whether this king will be checked
+    @Override
+    public boolean checkEnemy(Game game, Position posn) {
+        int x = posn.getPosX();
+        int y = posn.getPosY();
+        int diffX = x - posX;
+        int diffY = y - posY;
+        return (Math.abs(diffX) + Math.abs(diffY) <= 2) && (Math.abs(diffX) == 1 || Math.abs(diffY) == 1);
+
     }
 
 }

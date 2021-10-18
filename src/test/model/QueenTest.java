@@ -8,18 +8,24 @@ import static org.junit.jupiter.api.Assertions.*;
 public class QueenTest {
 
     Queen queen;
+    King king;
     Game game;
     Board bd;
     ArrayList<ChessPiece> white;
     ArrayList<ChessPiece> black;
+    ArrayList<ChessPiece> whiteOff;
+    ArrayList<ChessPiece> blackOff;
 
     @BeforeEach
     private void setup() {
         queen = new Queen("white");
+        king = new King("white");
         game = new Game();
         bd = new Board();
         white = new ArrayList<ChessPiece>();
         black = new ArrayList<ChessPiece>();
+        whiteOff = new ArrayList<ChessPiece>();
+        blackOff = new ArrayList<ChessPiece>();
     }
 
     private void arrayListEquals(ArrayList<Position> list1, ArrayList<Position> list2) {
@@ -35,6 +41,8 @@ public class QueenTest {
         game.setGameBoard(bd);
         game.setWhiteChessPiecesOnBoard(white);
         game.setBlackChessPiecesOnBoard(black);
+        game.setWhiteChessPiecesOffBoard(whiteOff);
+        game.setBlackChessPiecesOffBoard(blackOff);
     }
 
     private void placeOnBoard(ChessPiece cp, int x, int y) {
@@ -46,9 +54,10 @@ public class QueenTest {
 
     @Test
     public void testPossibleMovesNoBlockMiddle() {
-        setup();
         placeOnBoard(queen, 5, 4);
+        placeOnBoard(king,3,3);
         white.add(queen);
+        white.add(king);
         setGame();
         ArrayList<Position> pm = queen.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<Position>();
@@ -85,9 +94,10 @@ public class QueenTest {
 
     @Test
     public void testPossibleMovesNoBlockSide() {
-        setup();
         placeOnBoard(queen, 1, 6);
+        placeOnBoard(king,2,4);
         white.add(queen);
+        white.add(king);
         setGame();
         ArrayList<Position> pm = queen.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<Position>();
@@ -118,9 +128,10 @@ public class QueenTest {
 
     @Test
     public void testPossibleMovesNoBlockCorner() {
-        setup();
         placeOnBoard(queen, 1, 1);
+        placeOnBoard(king,2,3);
         white.add(queen);
+        white.add(king);
         setGame();
         ArrayList<Position> pm = queen.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<Position>();
@@ -151,8 +162,8 @@ public class QueenTest {
 
     @Test
     public void testPossibleMovesBlockByTeammate() {
-        setup();
         placeOnBoard(queen, 5, 4);
+        placeOnBoard(king,4,2);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
         Bishop bishop = new Bishop("white");
@@ -160,6 +171,7 @@ public class QueenTest {
         placeOnBoard(rook2,8,4);
         placeOnBoard(bishop,3,6);
         white.add(queen);
+        white.add(king);
         white.add(rook1);
         white.add(rook2);
         white.add(bishop);
@@ -193,8 +205,8 @@ public class QueenTest {
 
     @Test
     public void testPossibleMovesBlockByEnemy() {
-        setup();
         placeOnBoard(queen, 5, 4);
+        placeOnBoard(king,1,1);
         Rook rook1 = new Rook("black");
         Rook rook2 = new Rook("black");
         Bishop bishop = new Bishop("black");
@@ -202,6 +214,7 @@ public class QueenTest {
         placeOnBoard(rook2,8,4);
         placeOnBoard(bishop,3,6);
         white.add(queen);
+        white.add(king);
         black.add(rook1);
         black.add(rook2);
         black.add(bishop);
@@ -238,9 +251,7 @@ public class QueenTest {
 
     @Test
     public void testPossibleMovesKingUnderAttack() {
-        setup();
         placeOnBoard(queen, 5, 4);
-        King king = new King("white");
         Rook rook = new Rook("black");
         placeOnBoard(king,3,6);
         placeOnBoard(rook,3,2);
@@ -258,9 +269,7 @@ public class QueenTest {
 
     @Test
     public void testPossibleMovesKingWillBeUnderAttack() {
-        setup();
         placeOnBoard(queen, 3, 5);
-        King king = new King("white");
         Rook rook = new Rook("black");
         placeOnBoard(king,3,6);
         placeOnBoard(rook,3,2);

@@ -25,6 +25,20 @@ public class Rook extends ChessPiece {
         return moves;
     }
 
-
-
+    // REQUIRES: posn must not be the same as the current position of this rook
+    // EFFECTS: returns a boolean that tells whether this rook can move to given position(enemy king's position)
+    // in one step, ignoring whether the king on the same team will be checked
+    @Override
+    public boolean checkEnemy(Game game, Position posn) {
+        Board bd = game.getBoard();
+        int x = posn.getPosX();
+        int y = posn.getPosY();
+        if (x == posX) {
+            return checkEnemyStraightPath(posX,posY,y,"y",bd);
+        } else if (y == posY) {
+            return checkEnemyStraightPath(posY,posX,x,"x",bd);
+        } else {
+            return false;
+        }
+    }
 }
