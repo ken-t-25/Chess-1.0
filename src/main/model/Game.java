@@ -12,7 +12,65 @@ public class Game {
     private ArrayList<Moves> history;
 
     // EFFECTS: constructs and sets up a chess game
-    public Game() {}
+    public Game() {
+        whiteChessPiecesOnBoard = buildDefaultChessOnBoard("white");
+        blackChessPiecesOnBoard = buildDefaultChessOnBoard("black");
+        whiteChessPiecesOffBoard = buildDefaultChessOffBoard("white");
+        blackChessPiecesOffBoard = buildDefaultChessOffBoard("black");
+        gameBoard = new Board();
+        updateBoard(whiteChessPiecesOnBoard);
+        updateBoard(blackChessPiecesOnBoard);
+        history = new ArrayList<Moves>();
+    }
+
+    // REQUIRES: colour must be "black" or "white"
+    // EFFECTS: constructs the default chess pieces on board
+    private ArrayList<ChessPiece> buildDefaultChessOnBoard(String colour) {
+        ArrayList<ChessPiece> cp = new ArrayList<ChessPiece>();
+        int firstRow;
+        int secondRow;
+        if (colour.equals("white")) {
+            firstRow = 8;
+            secondRow = 7;
+        } else {
+            firstRow = 1;
+            secondRow = 2;
+        }
+        cp.add(new Rook(colour,1,firstRow));
+        cp.add(new Knight(colour,2,firstRow));
+        cp.add(new Bishop(colour,3,firstRow));
+        cp.add(new Queen(colour,4,firstRow));
+        cp.add(new King(colour,5,firstRow));
+        cp.add(new Bishop(colour,6,firstRow));
+        cp.add(new Knight(colour,7,firstRow));
+        cp.add(new Rook(colour,8,firstRow));
+        for (int i = 1; i <= 8; i++) {
+            cp.add(new Pawn(colour,i,secondRow));
+        }
+        return cp;
+    }
+
+    // REQUIRES: colour must be "black" or "white"
+    // EFFECTS: constructs the default chess pieces off board
+    private ArrayList<ChessPiece> buildDefaultChessOffBoard(String colour) {
+        ArrayList<ChessPiece> cp = new ArrayList<ChessPiece>();
+        for (int i = 0; i < 8; i++) {
+            cp.add(new Queen(colour));
+            cp.add(new Bishop(colour));
+            cp.add(new Knight(colour));
+            cp.add(new Rook(colour));
+        }
+        return cp;
+    }
+
+    // EFFECTS: update the chess info in given chess list to the board in this game
+    private void updateBoard(ArrayList<ChessPiece> cpl) {
+        for (ChessPiece cp: cpl) {
+            gameBoard.place(cp,cp.getPosX(),cp.getPosY());
+        }
+    }
+
+
 
     // MODIFIES: this
     // EFFECTS: replaces current gameBoard with given board

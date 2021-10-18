@@ -42,6 +42,15 @@ public class GameTest {
     }
 
     @Test
+    public void testConstructor() {
+        assertEquals(16,game.getWhiteChessPiecesOnBoard().size());
+        assertEquals(16,game.getBlackChessPiecesOnBoard().size());
+        assertEquals(32,game.getWhiteChessPiecesOffBoard().size());
+        assertEquals(32,game.getBlackChessPiecesOffBoard().size());
+        assertEquals(0,game.getHistory().size());
+    }
+
+    @Test
     public void testStalemateMethodAndHasEnded() {
         setupRest();
         King whiteKing = new King("white");

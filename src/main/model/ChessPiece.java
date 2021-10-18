@@ -22,6 +22,16 @@ public abstract class ChessPiece {
         move = false;
     }
 
+    // REQUIRES: colour must be one of "black" and "white", x and y must be in the range [1.8]
+    // EFFECTS: an abstract constructor for chess piece that is on the game board
+    protected ChessPiece(String colour, int x, int y) {
+        posX = x;
+        posY = y;
+        this.colour = colour;
+        onBoard = true;
+        move = false;
+    }
+
     // EFFECTS: return the possible next moves that this chess piece can take on given board
     protected abstract ArrayList<Position> possibleMoves(Game game);
 

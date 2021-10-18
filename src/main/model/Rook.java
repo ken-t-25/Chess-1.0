@@ -11,6 +11,11 @@ public class Rook extends ChessPiece {
         super(colour);
     }
 
+    // REQUIRES: colour must be one of "black" and "white", x and y must be in the range [1.8]
+    // EFFECTS: constructs a rook that is on the game board
+    public Rook(String colour, int x, int y) {
+        super(colour, x, y);
+    }
 
 
     // EFFECTS: consumes a game board and returns a list of positions that represents
