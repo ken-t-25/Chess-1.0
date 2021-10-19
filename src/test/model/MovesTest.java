@@ -22,8 +22,8 @@ public class MovesTest {
         assertEquals(0,initial.size());
         Bishop bishop = new Bishop("white");
         King king = new King("black");
-        Move m1 = new Move(1,1,5,5,bishop);
-        Move m2 = new Move(4,1,4,2,king);
+        Move m1 = new Move(1,1,5,5,bishop,true);
+        Move m2 = new Move(4,1,4,2,king,false);
         moves.addMove(m1);
         moves.addMove(m2);
         ArrayList<Move> after = moves.getMoves();

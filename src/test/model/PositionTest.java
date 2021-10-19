@@ -50,4 +50,19 @@ public class PositionTest {
         int single2 = posn.toSingleValue();
         assertEquals(7,single2);
     }
+
+    @Test
+    public void testPositionEqualsMethod() {
+        posn = new Position(4,1);
+        Position posn1 = new Position(4,1);
+        Position posn2 = new Position(1,4);
+        Position posn3 = new Position(4,2);
+        Position posn4 = new Position(6,1);
+        Position posn5 = new Position(5,6);
+        assertTrue(posn.positionEquals(posn1));
+        assertFalse(posn.positionEquals(posn2));
+        assertFalse(posn.positionEquals(posn3));
+        assertFalse(posn.positionEquals(posn4));
+        assertFalse(posn.positionEquals(posn5));
+    }
 }

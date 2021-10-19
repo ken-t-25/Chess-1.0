@@ -93,7 +93,7 @@ public class Pawn extends ChessPiece {
                         moves.add(testPosition);
                     }
                     game.move(this,initialX,initialY);
-                    game.place(enemyAttacked,enemyX,enemyY);
+                    game.placeFromOffBoard(enemyAttacked,enemyX,enemyY);
                     move = initialMove;
                 }
             }

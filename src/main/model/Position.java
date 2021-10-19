@@ -40,4 +40,9 @@ public class Position {
         return 8 * (posY - 1) + posX;
     }
 
+    // EFFECTS: returns a true if this position has the same x,y coordinates as the given position
+    public boolean positionEquals(Position posn) {
+        return posn.getPosX() == posX && posn.getPosY() == posY;
+    }
+
 }

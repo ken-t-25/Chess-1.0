@@ -33,63 +33,63 @@ public abstract class ChessPiece {
     }
 
     // EFFECTS: return the possible next moves that this chess piece can take on given board
-    protected abstract ArrayList<Position> possibleMoves(Game game);
+    public abstract ArrayList<Position> possibleMoves(Game game);
 
     // REQUIRES: posn must not be the same as the current position of this chess piece
     // EFFECTS: returns a boolean that tells whether this chess piece can move to this position(enemy king's position)
     // in one step, ignoring whether the king on the same team will be checked
-    protected abstract boolean checkEnemy(Game game, Position posn);
+    public abstract boolean checkEnemy(Game game, Position posn);
 
 
     // EFFECTS: return move, which tells whether this chess piece has been moved during the game
-    protected boolean hasMoved() {
+    public boolean hasMoved() {
         return move;
     }
 
 
     // EFFECTS: return the colour of this chess piece
-    protected String getColour() {
+    public String getColour() {
         return colour;
     }
 
     // EFFECTS: return a boolean telling whether this chess piece is on board
-    protected Boolean onBoard() {
+    public Boolean onBoard() {
         return onBoard;
     }
 
     // EFFECTS: return the chess piece's x position (horizontal) on the chess board
-    protected int getPosX() {
+    public int getPosX() {
         return posX;
     }
 
     // EFFECTS: return the chess piece's y position (vertical) on the chess board
-    protected int getPosY() {
+    public int getPosY() {
         return posY;
     }
 
     // REQUIRES: x must in the interval [1,8]
     // MODIFIES: this
     // EFFECTS: change the x position of this chess piece to the given value
-    protected void setPosX(int x) {
+    public void setPosX(int x) {
         posX = x;
     }
 
     // REQUIRES: y must in the interval [1,8]
     // MODIFIES: this
     // EFFECTS: change the y position of this chess piece to the given value
-    protected void setPosY(int y) {
+    public void setPosY(int y) {
         posY = y;
     }
 
     // MODIFIES: this
     // EFFECTS: set assign onBoard with the given boolean value
-    protected void setOnBoard(Boolean b) {
+    public void setOnBoard(Boolean b) {
         onBoard = b;
     }
 
     // MODIFIES: this
     // EFFECTS: set assign move with the given boolean value
-    protected void setMove(Boolean m) {
+    public void setMove(Boolean m) {
         move = m;
     }
 
@@ -121,7 +121,7 @@ public abstract class ChessPiece {
                     moves.add(posn);
                 }
                 game.move(this,initialX,initialY);
-                game.place(enemyAttacked,enemyInitialX,enemyInitialY);
+                game.placeFromOffBoard(enemyAttacked,enemyInitialX,enemyInitialY);
                 move = initialMove;
             }
         }

@@ -68,7 +68,7 @@ public class GameTest {
         assertTrue(game.stalemate("white"));
         assertFalse(game.stalemate("black"));
         assertTrue(game.hasEnded());
-        game.place(whitePawn,8,6);
+        game.placeFromOffBoard(whitePawn,8,6);
         assertFalse(game.stalemate("white"));
     }
 
@@ -90,7 +90,7 @@ public class GameTest {
         assertTrue(game.check("white"));
         assertFalse(game.checkmate("white"));
         assertFalse(game.hasEnded());
-        game.place(blackQueen,3,2);
+        game.placeFromOffBoard(blackQueen,3,2);
         assertTrue(game.checkmate("white"));
         assertTrue(game.hasEnded());
     }
@@ -100,9 +100,9 @@ public class GameTest {
         Bishop bishop = new Bishop("white");
         Rook rook = new Rook("black");
         Pawn pawn = new Pawn("black");
-        Move m1 = new Move(5,5,1,1, bishop);
-        Move m2 = new Move(1,1,0,0, rook);
-        Move m3 = new Move(1,5,1,6, pawn);
+        Move m1 = new Move(5,5,1,1, bishop,true);
+        Move m2 = new Move(1,1,0,0, rook,false);
+        Move m3 = new Move(1,5,1,6, pawn,true);
         Moves ms1 = new Moves();
         Moves ms2 = new Moves();
         ms1.addMove(m1);
@@ -119,6 +119,36 @@ public class GameTest {
         game.removeMostRecentMoves();
         assertEquals(1, game.getHistory().size());
         assertEquals(ms1,game.getMostRecentMoves());
+    }
+
+    @Test
+    public void testMoveRemovePlaceMethods() {
+        setupRest();
+        King whiteKing = new King("white");
+        King blackKing = new King("black");
+        Bishop blackBishop = new Bishop("black",4,3);
+        Pawn whitePawn = new Pawn("white",8,6);
+        whiteOff.add(whiteKing);
+        blackOff.add(blackKing);
+        setGame();
+        game.placeFromOffBoard(whiteKing,1,1);
+        game.placeFromOffBoard(blackKing,2,3);
+        game.placeNew(blackBishop);
+        game.placeNew(whitePawn);
+        assertEquals(2,game.getWhiteChessPiecesOnBoard().size());
+        assertEquals(2,game.getBlackChessPiecesOnBoard().size());
+        Position whiteKingPosn = new Position(1,1);
+        assertEquals(whiteKing, game.getBoard().getOnBoard().get(whiteKingPosn.toSingleValue() - 1));
+        Position blackBishopPosn = new Position(4,3);
+        assertEquals(blackBishop, game.getBoard().getOnBoard().get(blackBishopPosn.toSingleValue() - 1));
+        game.remove(whiteKing);
+        game.remove(blackBishop);
+        assertEquals(1,game.getWhiteChessPiecesOnBoard().size());
+        assertEquals(1,game.getBlackChessPiecesOnBoard().size());
+        assertEquals(1,game.getWhiteChessPiecesOffBoard().size());
+        assertEquals(1,game.getBlackChessPiecesOffBoard().size());
+        assertNull(game.getBoard().getOnBoard().get(whiteKingPosn.toSingleValue() - 1));
+        assertNull(game.getBoard().getOnBoard().get(blackBishopPosn.toSingleValue() - 1));
     }
 
 }

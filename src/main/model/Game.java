@@ -70,8 +70,6 @@ public class Game {
         }
     }
 
-
-
     // MODIFIES: this
     // EFFECTS: replaces current gameBoard with given board
     public void setGameBoard(Board bd) {
@@ -137,7 +135,6 @@ public class Game {
     public ArrayList<ChessPiece> getBlackChessPiecesOffBoard() {
         return whiteChessPiecesOffBoard;
     }
-
 
     // REQUIRES: side must be one of "black" and "white"
     // EFFECTS: tells whether a stalemate has occurred on the given side (i.e. no more legal moves)
@@ -237,11 +234,11 @@ public class Game {
         listAddTo.add(cp);
     }
 
-    // REQUIRES: cp must not be on the board, x and y must be within the range [1, 8]
+    // REQUIRES: cp must be in off board list, x and y must be within the range [1, 8]
     //           x and y must not be occupied
     // MODIFIES: this
-    // EFFECTS: place cp on this board at given x, y position
-    public void place(ChessPiece cp, int x, int y) {
+    // EFFECTS: take cp from off board list and place cp on this board at given x, y position
+    public void placeFromOffBoard(ChessPiece cp, int x, int y) {
         gameBoard.place(cp,x,y);
         String colour = cp.getColour();
         ArrayList<ChessPiece> listTakeFrom;
@@ -257,6 +254,24 @@ public class Game {
         cp.setPosX(x);
         cp.setPosY(y);
         cp.setOnBoard(true);
+        listAddTo.add(cp);
+    }
+
+    // REQUIRES: cp must not be on the board nor in off board list, cp must have valid x, y position (within the range
+    //           [1.8], x and y must not be occupied
+    // MODIFIES: this
+    // EFFECTS: place newly created cp on this board at given x, y position
+    public void placeNew(ChessPiece cp) {
+        int x = cp.getPosX();
+        int y = cp.getPosY();;
+        gameBoard.place(cp,x,y);
+        String colour = cp.getColour();
+        ArrayList<ChessPiece> listAddTo;
+        if (colour.equals("white")) {
+            listAddTo = whiteChessPiecesOnBoard;
+        } else {
+            listAddTo = blackChessPiecesOnBoard;
+        }
         listAddTo.add(cp);
     }
 

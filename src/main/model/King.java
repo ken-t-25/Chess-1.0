@@ -69,15 +69,15 @@ public class King extends ChessPiece {
         return moves;
     }
 
-    // EFFECTS: test whether given bishop can perform castling move with this king,
+    // EFFECTS: test whether given rook can perform castling move with this king,
     //          if can, return a list that contains the corresponding move of this king
     //          otherwise, return an empty list
     private ArrayList<Position> testRook(ChessPiece rook, Game game) {
         ArrayList<Position> moves = new ArrayList<Position>();
-        if (!rook.hasMoved()) {
-            int rookX = rook.getPosX();
-            int difference = rookX - posX;
-            int absDiff = Math.abs(difference);
+        int rookX = rook.getPosX();
+        int difference = rookX - posX;
+        int absDiff = Math.abs(difference);
+        if (!rook.hasMoved() && rook.getPosY() == posY && (absDiff == 3 || absDiff == 4)) {
             int direction = difference / absDiff;
             Position testPosn1 = new Position(posX + direction, posY);
             Position testPosn2 = new Position(posX + (2 * direction), posY);
@@ -96,6 +96,9 @@ public class King extends ChessPiece {
         return moves;
     }
 
+    // EFFECTS: test whether given posn that is in the path of castling meets the castling criteria
+    //          (i.e. posn must be empty and king must not be attacked if move to posn),
+    //          if test passed, return a list that contains the passed position, otherwise return an empty list
     private ArrayList<Position> castlingPositionTest(Game game, Position posn) {
         ArrayList<Position> moves = new ArrayList<Position>();
         Board bd = game.getBoard();

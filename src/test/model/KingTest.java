@@ -240,7 +240,7 @@ public class KingTest {
         Bishop bishop = new Bishop("white");
         placeOnBoard(rook1,1,1);
         placeOnBoard(rook2,8,1);
-        placeOnBoard(bishop, 5,1);
+        placeOnBoard(bishop, 7,1);
         white.add(king);
         white.add(rook1);
         white.add(rook2);
@@ -251,6 +251,7 @@ public class KingTest {
         expected.add(new Position(3, 1));
         expected.add(new Position(3, 2));
         expected.add(new Position(4, 2));
+        expected.add(new Position(5, 1));
         expected.add(new Position(5, 2));
         expected.add(new Position(2, 1));
         assertEquals(expected.size(), pm.size());

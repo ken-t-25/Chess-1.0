@@ -7,14 +7,16 @@ public class Move {
     private int endX;
     private int endY;
     private ChessPiece chess;
+    private boolean moveStatus;
 
     // EFFECTS: constructs a move
-    public Move(int beginX, int beginY, int endX, int endY, ChessPiece chess) {
+    public Move(int beginX, int beginY, int endX, int endY, ChessPiece chess, boolean moveStatus) {
         this.beginX = beginX;
         this.beginY = beginY;
         this.endX = endX;
         this.endY = endY;
         this.chess = chess;
+        this.moveStatus = moveStatus;
     }
 
     // EFFECTS: returns the beginning x position of the move
@@ -40,5 +42,10 @@ public class Move {
     // EFFECTS: returns the chess that is being moved
     public ChessPiece getChessPiece() {
         return chess;
+    }
+
+    // EFFECTS: returns the move status of the moved chess before this move
+    public boolean getMoveStatus() {
+        return moveStatus;
     }
 }
