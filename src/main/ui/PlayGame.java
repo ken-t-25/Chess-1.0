@@ -86,6 +86,9 @@ public class PlayGame {
         }
         reverseTurn();
         System.out.println("Move success");
+        if (game.check(turn)) {
+            System.out.println(turn + " is checked!");
+        }
     }
 
     // MODIFIES: this
@@ -194,22 +197,24 @@ public class PlayGame {
     // MODIFIES: this
     // EFFECTS: undo the most recent move
     public void undoAction() {
-        int numMoves = game.getHistory().size();
-        Moves recentMoves = game.getHistory().get(numMoves - 1);
-        ArrayList<Move> moveList = recentMoves.getMoves();
-        for (int i = moveList.size() - 1; i >= 0; i--) {
-            Move move = moveList.get(i);
-            ChessPiece movedChess = move.getChessPiece();
-            if (move.getBeginX() == 0 && move.getBeginY() == 0) {
-                game.remove(movedChess);
-            } else if (move.getEndX() == 0 && move.getEndY() == 0) {
-                game.placeFromOffBoard(movedChess, move.getBeginX(), move.getBeginY());
-            } else {
-                game.move(movedChess,move.getBeginX(),move.getBeginY());
+        if (game.getHistory().size() > 0) {
+            int numMoves = game.getHistory().size();
+            Moves recentMoves = game.getHistory().get(numMoves - 1);
+            ArrayList<Move> moveList = recentMoves.getMoves();
+            for (int i = moveList.size() - 1; i >= 0; i--) {
+                Move move = moveList.get(i);
+                ChessPiece movedChess = move.getChessPiece();
+                if (move.getBeginX() == 0 && move.getBeginY() == 0) {
+                    game.remove(movedChess);
+                } else if (move.getEndX() == 0 && move.getEndY() == 0) {
+                    game.placeFromOffBoard(movedChess, move.getBeginX(), move.getBeginY());
+                } else {
+                    game.move(movedChess, move.getBeginX(), move.getBeginY());
+                }
+                movedChess.setMove(move.getMoveStatus());
             }
-            movedChess.setMove(move.getMoveStatus());
+            reverseTurn();
         }
-        reverseTurn();
     }
 
     // MODIFIES: this
