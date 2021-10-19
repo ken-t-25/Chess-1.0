@@ -22,10 +22,10 @@ public class PawnTest {
         king = new King("white");
         game = new Game();
         bd = new Board();
-        white = new ArrayList<ChessPiece>();
-        black = new ArrayList<ChessPiece>();
-        whiteOff = new ArrayList<ChessPiece>();
-        blackOff = new ArrayList<ChessPiece>();
+        white = new ArrayList<>();
+        black = new ArrayList<>();
+        whiteOff = new ArrayList<>();
+        blackOff = new ArrayList<>();
     }
 
     private void arrayListEquals(ArrayList<Position> list1, ArrayList<Position> list2) {
@@ -59,7 +59,7 @@ public class PawnTest {
         white.add(king);
         setGame();
         ArrayList<Position> pm = pawn.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(6, 5));
         expected.add(new Position(6, 6));
         assertEquals(expected.size(), pm.size());
@@ -75,7 +75,7 @@ public class PawnTest {
         setGame();
         game.move(pawn, 6, 5);
         ArrayList<Position> pm = pawn.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(6, 4));
         assertEquals(expected.size(), pm.size());
         arrayListEquals(pm, expected);
@@ -123,7 +123,7 @@ public class PawnTest {
         black.add(rook);
         setGame();
         ArrayList<Position> pm = pawn.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(4, 3));
         expected.add(new Position(4, 4));
         expected.add(new Position(3, 4));
@@ -162,5 +162,4 @@ public class PawnTest {
         ArrayList<Position> pm = pawn.possibleMoves(game);
         assertEquals(0, pm.size());
     }
-
 }

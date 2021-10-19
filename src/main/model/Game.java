@@ -20,13 +20,13 @@ public class Game {
         gameBoard = new Board();
         updateBoard(whiteChessPiecesOnBoard);
         updateBoard(blackChessPiecesOnBoard);
-        history = new ArrayList<Moves>();
+        history = new ArrayList<>();
     }
 
     // REQUIRES: colour must be "black" or "white"
     // EFFECTS: constructs the default chess pieces on board
     private ArrayList<ChessPiece> buildDefaultChessOnBoard(String colour) {
-        ArrayList<ChessPiece> cp = new ArrayList<ChessPiece>();
+        ArrayList<ChessPiece> cp = new ArrayList<>();
         int firstRow;
         int secondRow;
         if (colour.equals("white")) {
@@ -53,7 +53,7 @@ public class Game {
     // REQUIRES: colour must be "black" or "white"
     // EFFECTS: constructs the default chess pieces off board
     private ArrayList<ChessPiece> buildDefaultChessOffBoard(String colour) {
-        ArrayList<ChessPiece> cp = new ArrayList<ChessPiece>();
+        ArrayList<ChessPiece> cp = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             cp.add(new Queen(colour));
             cp.add(new Bishop(colour));
@@ -150,7 +150,7 @@ public class Game {
 
     // EFFECTS: tells whether given team has legal move
     private boolean haveLegalMove(ArrayList<ChessPiece> chessList) {
-        ArrayList<ChessPiece> copyList = new ArrayList<ChessPiece>(chessList);
+        ArrayList<ChessPiece> copyList = new ArrayList<>(chessList);
         for (ChessPiece cp: copyList) {
             if (!cp.possibleMoves(this).isEmpty()) {
                 return true;
@@ -164,7 +164,7 @@ public class Game {
     public boolean check(String side) {
         ArrayList<ChessPiece> examinedList;
         ArrayList<ChessPiece> enemySide;
-        boolean check = false;
+        boolean check;
         if (side.equals("white")) {
             examinedList = whiteChessPiecesOnBoard;
             enemySide = blackChessPiecesOnBoard;
@@ -263,7 +263,7 @@ public class Game {
     // EFFECTS: place newly created cp on this board at given x, y position
     public void placeNew(ChessPiece cp) {
         int x = cp.getPosX();
-        int y = cp.getPosY();;
+        int y = cp.getPosY();
         gameBoard.place(cp,x,y);
         String colour = cp.getColour();
         ArrayList<ChessPiece> listAddTo;
@@ -296,8 +296,7 @@ public class Game {
     // EFFECTS: returns the most recent moves in history
     public Moves getMostRecentMoves() {
         int totalMoves = history.size();
-        Moves recentMoves = history.get(totalMoves - 1);
-        return recentMoves;
+        return history.get(totalMoves - 1);
     }
 
     // MODIFIES: this

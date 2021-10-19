@@ -21,7 +21,7 @@ public class King extends ChessPiece {
     //          the possible moves of this bishop
     @Override
     public ArrayList<Position> possibleMoves(Game game) {
-        ArrayList<Position> moves = new ArrayList<Position>();
+        ArrayList<Position> moves = new ArrayList<>();
         int x = posX;
         int y = posY;
         moves.addAll(kingPositionTest(game, x - 1, y - 1));
@@ -38,7 +38,7 @@ public class King extends ChessPiece {
 
     // EFFECTS: find possible moves of a king by positions (excluding castling)
     private ArrayList<Position> kingPositionTest(Game game, int x, int y) {
-        ArrayList<Position> moves = new ArrayList<Position>();
+        ArrayList<Position> moves = new ArrayList<>();
         Position testPosition = new Position(x,y);
         if (x >= 1 && x <= 8 && y >= 1 && y <= 8) {
             moves = positionTest(game,testPosition);
@@ -48,10 +48,10 @@ public class King extends ChessPiece {
 
     // EFFECTS: find possible castling moves
     private ArrayList<Position> castling(Game game) {
-        ArrayList<Position> moves = new ArrayList<Position>();
+        ArrayList<Position> moves = new ArrayList<>();
         if (!move && !game.check(colour)) {
-            ArrayList<ChessPiece> rooks = new ArrayList<ChessPiece>();
-            ArrayList<ChessPiece> examinedList = new ArrayList<ChessPiece>();
+            ArrayList<ChessPiece> rooks = new ArrayList<>();
+            ArrayList<ChessPiece> examinedList;
             if (colour.equals("white")) {
                 examinedList = game.getWhiteChessPiecesOnBoard();
             } else {
@@ -73,7 +73,7 @@ public class King extends ChessPiece {
     //          if can, return a list that contains the corresponding move of this king
     //          otherwise, return an empty list
     private ArrayList<Position> testRook(ChessPiece rook, Game game) {
-        ArrayList<Position> moves = new ArrayList<Position>();
+        ArrayList<Position> moves = new ArrayList<>();
         int rookX = rook.getPosX();
         int difference = rookX - posX;
         int absDiff = Math.abs(difference);
@@ -100,7 +100,7 @@ public class King extends ChessPiece {
     //          (i.e. posn must be empty and king must not be attacked if move to posn),
     //          if test passed, return a list that contains the passed position, otherwise return an empty list
     private ArrayList<Position> castlingPositionTest(Game game, Position posn) {
-        ArrayList<Position> moves = new ArrayList<Position>();
+        ArrayList<Position> moves = new ArrayList<>();
         Board bd = game.getBoard();
         int posnIndex = posn.toSingleValue() - 1;
         int initialX = this.posX;
@@ -127,7 +127,5 @@ public class King extends ChessPiece {
         int diffX = x - posX;
         int diffY = y - posY;
         return (Math.abs(diffX) + Math.abs(diffY) <= 2) && (Math.abs(diffX) == 1 || Math.abs(diffY) == 1);
-
     }
-
 }

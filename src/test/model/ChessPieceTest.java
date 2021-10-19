@@ -22,10 +22,10 @@ public class ChessPieceTest {
         rook = new Rook("white");
         game = new Game();
         bd = new Board();
-        white = new ArrayList<ChessPiece>();
-        black = new ArrayList<ChessPiece>();
-        whiteOff = new ArrayList<ChessPiece>();
-        blackOff = new ArrayList<ChessPiece>();
+        white = new ArrayList<>();
+        black = new ArrayList<>();
+        whiteOff = new ArrayList<>();
+        blackOff = new ArrayList<>();
     }
 
     private void placeOnBoard(ChessPiece cp, int x, int y) {

@@ -21,10 +21,10 @@ public class GameTest {
 
     private void setupRest() {
         bd = new Board();
-        white = new ArrayList<ChessPiece>();
-        black = new ArrayList<ChessPiece>();
-        whiteOff = new ArrayList<ChessPiece>();
-        blackOff = new ArrayList<ChessPiece>();
+        white = new ArrayList<>();
+        black = new ArrayList<>();
+        whiteOff = new ArrayList<>();
+        blackOff = new ArrayList<>();
     }
 
     private void placeOnBoard(ChessPiece cp, int x, int y) {
@@ -108,7 +108,7 @@ public class GameTest {
         ms1.addMove(m1);
         ms1.addMove(m2);
         ms2.addMove(m3);
-        ArrayList<Moves> history = new ArrayList<Moves>();
+        ArrayList<Moves> history = new ArrayList<>();
         game.setHistory(history);
         game.updateHistory(ms1);
         game.updateHistory(ms2);

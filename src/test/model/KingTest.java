@@ -20,10 +20,10 @@ public class KingTest {
         king = new King("white");
         game = new Game();
         bd = new Board();
-        white = new ArrayList<ChessPiece>();
-        black = new ArrayList<ChessPiece>();
-        whiteOff = new ArrayList<ChessPiece>();
-        blackOff = new ArrayList<ChessPiece>();
+        white = new ArrayList<>();
+        black = new ArrayList<>();
+        whiteOff = new ArrayList<>();
+        blackOff = new ArrayList<>();
     }
 
     private void arrayListEquals(ArrayList<Position> list1, ArrayList<Position> list2) {
@@ -55,7 +55,7 @@ public class KingTest {
         white.add(king);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(4, 3));
         expected.add(new Position(4, 4));
         expected.add(new Position(4, 5));
@@ -74,7 +74,7 @@ public class KingTest {
         white.add(king);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(7, 2));
         expected.add(new Position(7, 3));
         expected.add(new Position(7, 4));
@@ -90,7 +90,7 @@ public class KingTest {
         white.add(king);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(1, 7));
         expected.add(new Position(2, 7));
         expected.add(new Position(2, 8));
@@ -107,7 +107,7 @@ public class KingTest {
         white.add(bishop);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(4, 3));
         expected.add(new Position(4, 4));
         expected.add(new Position(4, 5));
@@ -128,7 +128,7 @@ public class KingTest {
         black.add(rook);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(4, 3));
         expected.add(new Position(4, 4));
         expected.add(new Position(5, 5));
@@ -150,7 +150,7 @@ public class KingTest {
         black.add(rook2);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(4, 3));
         expected.add(new Position(4, 4));
         expected.add(new Position(6, 3));
@@ -171,7 +171,7 @@ public class KingTest {
         white.add(rook2);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(3, 1));
         expected.add(new Position(3, 2));
         expected.add(new Position(4, 2));
@@ -197,7 +197,7 @@ public class KingTest {
         game.move(rook1,1,2);
         game.move(rook1,1,1);
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(3, 1));
         expected.add(new Position(3, 2));
         expected.add(new Position(4, 2));
@@ -222,7 +222,7 @@ public class KingTest {
         game.move(king,3,1);
         game.move(king,4,1);
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(3, 1));
         expected.add(new Position(3, 2));
         expected.add(new Position(4, 2));
@@ -247,7 +247,7 @@ public class KingTest {
         white.add(bishop);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(3, 1));
         expected.add(new Position(3, 2));
         expected.add(new Position(4, 2));
@@ -273,7 +273,7 @@ public class KingTest {
         black.add(rook3);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(3, 1));
         expected.add(new Position(3, 2));
         expected.add(new Position(5, 1));
@@ -297,7 +297,7 @@ public class KingTest {
         black.add(rook3);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(3, 1));
         expected.add(new Position(3, 2));
         expected.add(new Position(4, 2));
@@ -321,7 +321,7 @@ public class KingTest {
         black.add(rook3);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(3, 1));
         expected.add(new Position(3, 2));
         expected.add(new Position(4, 2));

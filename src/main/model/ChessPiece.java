@@ -40,12 +40,10 @@ public abstract class ChessPiece {
     // in one step, ignoring whether the king on the same team will be checked
     public abstract boolean checkEnemy(Game game, Position posn);
 
-
     // EFFECTS: return move, which tells whether this chess piece has been moved during the game
     public boolean hasMoved() {
         return move;
     }
-
 
     // EFFECTS: return the colour of this chess piece
     public String getColour() {
@@ -97,41 +95,56 @@ public abstract class ChessPiece {
     // EFFECTS: if given position can be a next move of this chess, return a list containing only this position
     //          otherwise, return an empty list
     protected ArrayList<Position> positionTest(Game game, Position posn) {
-        ArrayList<Position> moves = new ArrayList<Position>();
+        ArrayList<Position> moves = new ArrayList<>();
         Board bd = game.getBoard();
         int posnIndex = posn.toSingleValue() - 1;
         int initialX = this.posX;
         int initialY = this.posY;
         boolean initialMove = move;
         if (Objects.isNull(bd.getOnBoard().get(posnIndex))) {
-            game.move(this,posn.getPosX(),posn.getPosY());
-            if (!game.check(colour)) {
-                moves.add(posn);
-            }
-            game.move(this,initialX,initialY);
-            move = initialMove;
+            positionEmpty(game,posn,moves,initialX,initialY,initialMove);
         } else {
             if (!bd.getOnBoard().get(posnIndex).getColour().equals(colour)) {
-                ChessPiece enemyAttacked = bd.getOnBoard().get(posnIndex);
-                int enemyInitialX = enemyAttacked.getPosX();
-                int enemyInitialY = enemyAttacked.getPosY();
-                game.remove(enemyAttacked);
-                game.move(this,posn.getPosX(),posn.getPosY());
-                if (!game.check(colour)) {
-                    moves.add(posn);
-                }
-                game.move(this,initialX,initialY);
-                game.placeFromOffBoard(enemyAttacked,enemyInitialX,enemyInitialY);
-                move = initialMove;
+                hasEnemy(game,posn,moves,initialX,initialY,initialMove,bd,posnIndex);
             }
         }
         return moves;
     }
 
+    // MODIFIES: moves
+    // EFFECTS: do position test on a position that is empty
+    //          ix = initialX, iy = initialY, im = initialMove
+    protected void positionEmpty(Game game, Position posn, ArrayList<Position> moves, int ix, int iy, boolean im) {
+        game.move(this,posn.getPosX(),posn.getPosY());
+        if (!game.check(colour)) {
+            moves.add(posn);
+        }
+        game.move(this,ix,iy);
+        this.move = im;
+    }
+
+    // MODIFIES: ms (moves)
+    // EFFECTS: do position test on a position that is occupied by an enemy
+    //          g = game, p = position, ms = moves, tp = testPosition, ix = initialX, iy = initialY,
+    //          im = initialMove, b = board, pi = positionIndex
+    protected void hasEnemy(Game g, Position p, ArrayList<Position> ms, int ix, int iy, boolean im, Board b, int pi) {
+        ChessPiece enemyAttacked = b.getOnBoard().get(pi);
+        int enemyInitialX = enemyAttacked.getPosX();
+        int enemyInitialY = enemyAttacked.getPosY();
+        g.remove(enemyAttacked);
+        g.move(this,p.getPosX(),p.getPosY());
+        if (!g.check(colour)) {
+            ms.add(p);
+        }
+        g.move(this,ix,iy);
+        g.placeFromOffBoard(enemyAttacked,enemyInitialX,enemyInitialY);
+        move = im;
+    }
+
     // REQUIRES: this chess must be one of queen, rook, and bishop
     // EFFECTS: find possible moves of this chess by lines
     protected ArrayList<Position> lineTest(Game game, int deltaX, int deltaY) {
-        ArrayList<Position> moves = new ArrayList<Position>();
+        ArrayList<Position> moves = new ArrayList<>();
         int x = posX + deltaX;
         int y = posY + deltaY;
         boolean blocked = false;
@@ -184,5 +197,4 @@ public abstract class ChessPiece {
         }
         return notBlock;
     }
-
 }

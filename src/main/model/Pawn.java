@@ -29,13 +29,11 @@ public class Pawn extends ChessPiece {
         }
     }
 
-
-
     // EFFECTS: consumes a game board and returns a list of positions that represents
     //          the possible moves of this bishop
     @Override
     public ArrayList<Position> possibleMoves(Game game) {
-        ArrayList<Position> moves = new ArrayList<Position>();
+        ArrayList<Position> moves = new ArrayList<>();
         if (!move) {
             Board bd = game.getBoard();
             Position skip = new Position(posX,posY + direction);
@@ -52,7 +50,7 @@ public class Pawn extends ChessPiece {
 
     // EFFECTS: find possible moves of a pawn by positions (excluding attack moves)
     private ArrayList<Position> pawnPositionTest(Game game, int x, int y) {
-        ArrayList<Position> moves = new ArrayList<Position>();
+        ArrayList<Position> moves = new ArrayList<>();
         Position testPosition = new Position(x,y);
         if (x >= 1 && x <= 8 && y >= 1 && y <= 8) {
             Board bd = game.getBoard();
@@ -74,7 +72,7 @@ public class Pawn extends ChessPiece {
 
     // EFFECTS: find possible attack moves of a pawn by positions
     private ArrayList<Position> attackTest(Game game, int x, int y) {
-        ArrayList<Position> moves = new ArrayList<Position>();
+        ArrayList<Position> moves = new ArrayList<>();
         Position testPosition = new Position(x,y);
         if (x >= 1 && x <= 8 && y >= 1 && y <= 8) {
             Board bd = game.getBoard();
@@ -84,21 +82,29 @@ public class Pawn extends ChessPiece {
             boolean initialMove = move;
             if (!Objects.isNull(bd.getOnBoard().get(posnIndex))) {
                 if (!bd.getOnBoard().get(posnIndex).getColour().equals(colour)) {
-                    ChessPiece enemyAttacked = bd.getOnBoard().get(posnIndex);
-                    int enemyX = enemyAttacked.getPosX();
-                    int enemyY = enemyAttacked.getPosY();
-                    game.remove(enemyAttacked);
-                    game.move(this,x,y);
-                    if (!game.check(colour)) {
-                        moves.add(testPosition);
-                    }
-                    game.move(this,initialX,initialY);
-                    game.placeFromOffBoard(enemyAttacked,enemyX,enemyY);
-                    move = initialMove;
+                    hasEnemy(game,bd,posnIndex,moves,testPosition,initialX,initialY,initialMove);
                 }
             }
         }
         return moves;
+    }
+
+    // MODIFIES: ms
+    // EFFECTS: do a pawn attack test on a position that is occupied by an enemy
+    //          g = game, bd = board, pi = positionIndex, ms = moves, tp = testPosition, ix = initialX
+    //          iy = initialY, im = initialMove
+    private void hasEnemy(Game g, Board bd, int pi, ArrayList<Position> ms, Position tp, int ix, int iy, boolean im) {
+        ChessPiece enemyAttacked = bd.getOnBoard().get(pi);
+        int enemyX = enemyAttacked.getPosX();
+        int enemyY = enemyAttacked.getPosY();
+        g.remove(enemyAttacked);
+        g.move(this, tp.getPosX(), tp.getPosY());
+        if (!g.check(colour)) {
+            ms.add(tp);
+        }
+        g.move(this,ix,iy);
+        g.placeFromOffBoard(enemyAttacked,enemyX,enemyY);
+        move = im;
     }
 
     // REQUIRES: posn must not be the same as the current position
@@ -109,7 +115,7 @@ public class Pawn extends ChessPiece {
         int x = posn.getPosX();
         int y = posn.getPosY();
         int diffX = x - posX;
-        int diffY = y = posY;
+        int diffY = y - posY;
         return diffY == direction && Math.abs(diffX) == 1;
     }
 }

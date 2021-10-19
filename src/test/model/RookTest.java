@@ -1,6 +1,5 @@
 package model;
 
-import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -23,10 +22,10 @@ public class RookTest {
         king = new King("white");
         game = new Game();
         bd = new Board();
-        white = new ArrayList<ChessPiece>();
-        black = new ArrayList<ChessPiece>();
-        whiteOff = new ArrayList<ChessPiece>();
-        blackOff = new ArrayList<ChessPiece>();
+        white = new ArrayList<>();
+        black = new ArrayList<>();
+        whiteOff = new ArrayList<>();
+        blackOff = new ArrayList<>();
     }
 
     private void arrayListEquals(ArrayList<Position> list1, ArrayList<Position> list2) {
@@ -61,7 +60,7 @@ public class RookTest {
         white.add(king);
         setGame();
         ArrayList<Position> pm = rook.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(5, 3));
         expected.add(new Position(5, 2));
         expected.add(new Position(5, 1));
@@ -88,7 +87,7 @@ public class RookTest {
         white.add(king);
         setGame();
         ArrayList<Position> pm = rook.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(1, 5));
         expected.add(new Position(1, 4));
         expected.add(new Position(1, 3));
@@ -115,7 +114,7 @@ public class RookTest {
         white.add(king);
         setGame();
         ArrayList<Position> pm = rook.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(1, 2));
         expected.add(new Position(1, 3));
         expected.add(new Position(1, 4));
@@ -148,7 +147,7 @@ public class RookTest {
         white.add(bishop2);
         setGame();
         ArrayList<Position> pm = rook.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(5, 3));
         expected.add(new Position(5, 5));
         expected.add(new Position(5, 6));
@@ -178,7 +177,7 @@ public class RookTest {
         black.add(bishop2);
         setGame();
         ArrayList<Position> pm = rook.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(5, 3));
         expected.add(new Position(5, 2));
         expected.add(new Position(5, 5));
@@ -207,7 +206,7 @@ public class RookTest {
         black.add(queen);
         setGame();
         ArrayList<Position> pm = rook.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(3, 4));
         assertEquals(expected.size(), pm.size());
         arrayListEquals(pm, expected);
@@ -225,7 +224,7 @@ public class RookTest {
         black.add(queen);
         setGame();
         ArrayList<Position> pm = rook.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(3, 4));
         expected.add(new Position(3, 3));
         expected.add(new Position(3, 2));

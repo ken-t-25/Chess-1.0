@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Rook extends ChessPiece {
 
@@ -22,7 +21,7 @@ public class Rook extends ChessPiece {
     //          the possible moves of this bishop
     @Override
     public ArrayList<Position> possibleMoves(Game game) {
-        ArrayList<Position> moves = new ArrayList<Position>();
+        ArrayList<Position> moves = new ArrayList<>();
         moves.addAll(lineTest(game,0,-1));
         moves.addAll(lineTest(game,0,1));
         moves.addAll(lineTest(game,-1,0));

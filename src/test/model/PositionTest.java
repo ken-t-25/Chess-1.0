@@ -1,6 +1,5 @@
 package model;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -26,8 +25,8 @@ public class PositionTest {
         ChessPiece bishop = new Bishop("white");
         placeOnBoard(rook,4,5,bd);
         placeOnBoard(bishop,5,5,bd);
-        ArrayList<ChessPiece> white = new ArrayList<ChessPiece>();
-        ArrayList<ChessPiece> black = new ArrayList<ChessPiece>();
+        ArrayList<ChessPiece> white = new ArrayList<>();
+        ArrayList<ChessPiece> black = new ArrayList<>();
         white.add(rook);
         white.add(bishop);
         game.setBlackChessPiecesOnBoard(black);

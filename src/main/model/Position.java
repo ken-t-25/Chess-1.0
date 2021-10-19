@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Position {
 
-    private int posX;
-    private int posY;
+    private final int posX;
+    private final int posY;
 
     // REQUIRES: x and y must be in the range [1, 8]
     // EFFECTS: constructs a position on a chess board
@@ -44,5 +44,4 @@ public class Position {
     public boolean positionEquals(Position posn) {
         return posn.getPosX() == posX && posn.getPosY() == posY;
     }
-
 }

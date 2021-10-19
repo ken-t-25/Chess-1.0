@@ -9,7 +9,7 @@ public class Moves {
 
     // EFFECTS: constructs a moves object that represents the moves that took place in a hand
     public Moves() {
-        moves = new ArrayList<Move>();
+        moves = new ArrayList<>();
     }
 
     // MODIFIES: this

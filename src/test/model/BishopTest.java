@@ -22,10 +22,10 @@ public class BishopTest {
         king = new King("white");
         game = new Game();
         bd = new Board();
-        white = new ArrayList<ChessPiece>();
-        black = new ArrayList<ChessPiece>();
-        whiteOff = new ArrayList<ChessPiece>();
-        blackOff = new ArrayList<ChessPiece>();
+        white = new ArrayList<>();
+        black = new ArrayList<>();
+        whiteOff = new ArrayList<>();
+        blackOff = new ArrayList<>();
     }
 
     private void arrayListEquals(ArrayList<Position> list1, ArrayList<Position> list2) {
@@ -51,9 +51,6 @@ public class BishopTest {
         cp.setPosY(y);
     }
 
-
-
-
     @Test
     public void testBishopPossibleMovesNoBlockingMiddle() {
         placeOnBoard(bishop, 5, 4);
@@ -62,7 +59,7 @@ public class BishopTest {
         white.add(king);
         setGame();
         ArrayList<Position> pm = bishop.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(4, 3));
         expected.add(new Position(3, 2));
         expected.add(new Position(2, 1));
@@ -88,7 +85,7 @@ public class BishopTest {
         white.add(king);
         setGame();
         ArrayList<Position> pm = bishop.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(2, 3));
         expected.add(new Position(3, 2));
         expected.add(new Position(4, 1));
@@ -108,7 +105,7 @@ public class BishopTest {
         white.add(king);
         setGame();
         ArrayList<Position> pm = bishop.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(2, 2));
         expected.add(new Position(3, 3));
         expected.add(new Position(4, 4));
@@ -131,7 +128,7 @@ public class BishopTest {
         white.add(rook);
         setGame();
         ArrayList<Position> pm = bishop.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(4, 3));
         expected.add(new Position(3, 2));
         expected.add(new Position(2, 1));
@@ -157,7 +154,7 @@ public class BishopTest {
         black.add(rook);
         setGame();
         ArrayList<Position> pm = bishop.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(4, 3));
         expected.add(new Position(4, 5));
         expected.add(new Position(3, 6));
@@ -187,7 +184,6 @@ public class BishopTest {
         assertEquals(0,pm.size());
     }
 
-
     @Test
     public void testBishopPossibleMovesKingIsChecked() {
         Knight knight = new Knight("black");
@@ -199,12 +195,9 @@ public class BishopTest {
         black.add(knight);
         setGame();
         ArrayList<Position> pm = bishop.possibleMoves(game);
-        ArrayList<Position> expected = new ArrayList<Position>();
+        ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(6, 5));
         assertEquals(expected.size(), pm.size());
         arrayListEquals(pm, expected);
-
     }
-
-
 }

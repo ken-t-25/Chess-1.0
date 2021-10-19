@@ -2,12 +2,12 @@ package model;
 
 public class Move {
 
-    private int beginX;
-    private int beginY;
-    private int endX;
-    private int endY;
-    private ChessPiece chess;
-    private boolean moveStatus;
+    private final int beginX;
+    private final int beginY;
+    private final int endX;
+    private final int endY;
+    private final ChessPiece chess;
+    private final boolean moveStatus;
 
     // EFFECTS: constructs a move
     public Move(int beginX, int beginY, int endX, int endY, ChessPiece chess, boolean moveStatus) {

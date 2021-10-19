@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Board {
 
@@ -9,10 +8,9 @@ public class Board {
 
     // EFFECTS: constructs a chess board (8 times 8) with no chess pieces on it
     public Board() {
-        onBoard = new ArrayList<ChessPiece>();
+        onBoard = new ArrayList<>();
         for (int i = 1; i <= 8; i++) {
             for (int j = 1; j <= 8; j++) {
-                Position p = new Position(j,i);
                 onBoard.add(null);
             }
         }
@@ -52,6 +50,5 @@ public class Board {
         Position posn = new Position(x, y);
         int index = posn.toSingleValue() - 1;
         onBoard.set(index, cp);
-
     }
 }

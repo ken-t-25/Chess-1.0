@@ -31,5 +31,4 @@ public class MovesTest {
         assertEquals(m1,after.get(0));
         assertEquals(m2,after.get(1));
     }
-
 }
