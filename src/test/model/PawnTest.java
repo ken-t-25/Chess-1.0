@@ -96,6 +96,35 @@ public class PawnTest {
     }
 
     @Test
+    public void testPossibleMovesDiagonalToTeammateCannotAttack() {
+        placeOnBoard(pawn, 6, 7);
+        placeOnBoard(king,6,8);
+        Bishop bishop = new Bishop("white");
+        placeOnBoard(bishop, 5,6);
+        white.add(pawn);
+        white.add(king);
+        white.add(bishop);
+        setGame();
+        ArrayList<Position> pm = pawn.possibleMoves(game);
+        ArrayList<Position> expected = new ArrayList<>();
+        expected.add(new Position(6, 5));
+        expected.add(new Position(6, 6));
+        assertEquals(expected.size(), pm.size());
+        arrayListEquals(pm, expected);
+    }
+
+    @Test
+    public void testPossibleMovesNoSpaceInFront() {
+        placeOnBoard(pawn, 6, 1);
+        placeOnBoard(king,6,8);
+        white.add(pawn);
+        white.add(king);
+        setGame();
+        ArrayList<Position> pm = pawn.possibleMoves(game);
+        assertEquals(0, pm.size());
+    }
+
+    @Test
     public void testPossibleMovesBlockByEnemy() {
         placeOnBoard(pawn, 6, 7);
         placeOnBoard(king,6,8);

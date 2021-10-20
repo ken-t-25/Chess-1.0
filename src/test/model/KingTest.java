@@ -141,20 +141,18 @@ public class KingTest {
     @Test
     public void testPossibleMovesBlockedByOpponentCannotAttack() {
         placeOnBoard(king, 5, 4);
-        Rook rook1 = new Rook("black");
-        Rook rook2 = new Rook("black");
-        placeOnBoard(rook1, 5, 5);
-        placeOnBoard(rook2, 5, 6);
+        Rook rook = new Rook("black");
+        Queen queen = new Queen("black");
+        placeOnBoard(rook, 5, 5);
+        placeOnBoard(queen, 6, 6);
         white.add(king);
-        black.add(rook1);
-        black.add(rook2);
+        black.add(rook);
+        black.add(queen);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(4, 3));
         expected.add(new Position(4, 4));
-        expected.add(new Position(6, 3));
-        expected.add(new Position(6, 4));
         assertEquals(expected.size(), pm.size());
         arrayListEquals(pm, expected);
     }

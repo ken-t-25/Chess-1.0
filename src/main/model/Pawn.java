@@ -38,7 +38,7 @@ public class Pawn extends ChessPiece {
             Board bd = game.getBoard();
             Position skip = new Position(posX,posY + direction);
             int skipIndex = skip.toSingleValue() - 1;
-            if (Objects.isNull(bd.getOnBoard().get(skipIndex))) {
+            if (posY + direction >= 1 && posY + direction <= 8 && Objects.isNull(bd.getOnBoard().get(skipIndex))) {
                 moves.addAll(pawnPositionTest(game, posX, posY + (2 * direction)));
             }
         }

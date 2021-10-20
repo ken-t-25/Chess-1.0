@@ -145,13 +145,13 @@ public class BishopTest {
 
     @Test
     public void testBishopPossibleMovesBlockByOpponents() {
-        Rook rook = new Rook("black");
+        Pawn pawn = new Pawn("black");
         placeOnBoard(bishop, 5, 4);
         placeOnBoard(king,5,5);
-        placeOnBoard(rook, 4,3);
+        placeOnBoard(pawn, 4,3);
         white.add(bishop);
         white.add(king);
-        black.add(rook);
+        black.add(pawn);
         setGame();
         ArrayList<Position> pm = bishop.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<>();
