@@ -35,3 +35,5 @@ do) and the game is over
 - As a user, I want to be able to know when a stalemate occurs (my King is not checked but there are no legal moves that
 I can make) and the game is over
 - As a user, I want to be able to see the results when game is over (i.e., who wins?)
+- As a user, I want to be able to save my unfinished game and play it later
+- As a user, I want to be able to review my recent scores
