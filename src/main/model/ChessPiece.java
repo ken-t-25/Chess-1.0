@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 // An abstract class for the chess pieces
-public abstract class ChessPiece {
+public abstract class ChessPiece implements Writable {
 
     protected int posX;
     protected int posY;
@@ -12,7 +15,7 @@ public abstract class ChessPiece {
     protected String colour;
     protected boolean move;
 
-    // REQUIRES: colour must be one of "black" and "white"
+    // REQUIRES: colour must be one of "black", "white", or an empty string (stands for a null chess);
     // EFFECTS: an abstract constructor for chess piece
     protected ChessPiece(String colour) {
         posX = 0;
@@ -31,6 +34,30 @@ public abstract class ChessPiece {
         onBoard = true;
         move = false;
     }
+
+    // REQUIRES: colour must be one of "black" and "white", x and y must be in the range [1.8]
+    // EFFECTS: an abstract constructor for chess piece with given information
+    protected ChessPiece(String colour, int x, int y, boolean onBoard, boolean move) {
+        posX = x;
+        posY = y;
+        this.colour = colour;
+        this.onBoard = onBoard;
+        this.move = move;
+    }
+
+    // EFFECTS: returns this chess piece as an array
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("posX", posX);
+        json.put("posY", posY);
+        json.put("onBoard", onBoard);
+        json.put("colour", colour);
+        json.put("move", move);
+        return json;
+    }
+
+
 
     // EFFECTS: return the possible next moves that this chess piece can take on given board
     public abstract ArrayList<Position> possibleMoves(Game game);
@@ -51,7 +78,7 @@ public abstract class ChessPiece {
     }
 
     // EFFECTS: return a boolean telling whether this chess piece is on board
-    public Boolean onBoard() {
+    public Boolean getOnBoard() {
         return onBoard;
     }
 

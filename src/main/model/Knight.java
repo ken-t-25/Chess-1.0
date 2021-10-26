@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Knight extends ChessPiece {
@@ -14,6 +16,20 @@ public class Knight extends ChessPiece {
     // EFFECTS: constructs a knight that is on the game board
     public Knight(String colour, int x, int y) {
         super(colour, x, y);
+    }
+
+    // REQUIRES: colour must be one of "black" and "white", x and y must be in the range [1.8]
+    // EFFECTS: constructs a knight with given information
+    public Knight(String colour, int x, int y, boolean onBoard, boolean move) {
+        super(colour, x, y, onBoard, move);
+    }
+
+    // EFFECTS: returns this knight as a json object
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = super.toJson();
+        jsonObject.put("type", "knight");
+        return jsonObject;
     }
 
     // EFFECTS: consumes a game board and returns a list of positions that represents

@@ -1,29 +1,78 @@
 package ui;
 
 import model.*;
+import persistence.JsonWriter;
+import persistence.JsonReader;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class PlayGame {
 
-    Game game;
-    String turn;
-    Boolean drawn;
+    private static final String JSON_STORE = "./data/chessgame.json";
+    private Game game;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private boolean exit;
 
     // EFFECTS: constructs a chess game
     public PlayGame() {
         game = new Game();
-        turn = "white";
-        drawn = false;
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        exit = false;
+    }
+
+    // EFFECTS: starts the application
+    public void start() {
+        while (!exit) {
+            Scanner scan = new Scanner(System.in);
+            printStart();
+            String response = scan.nextLine();
+            if (response.equals("load")) {
+                try {
+                    game = jsonReader.readGame();
+                    System.out.println("You have load your most recently saved game from file.");
+                    play();
+                } catch (IOException e) {
+                    System.out.println("Unable to read from file: " + JSON_STORE);
+                }
+            } else if (response.equals("start")) {
+                System.out.println("You have started a new game.");
+                play();
+            } else if (response.equals("exit")) {
+                String confirmation = exitConfirmation();
+                if (confirmation.equals("yes")) {
+                    System.out.println("Good bye:)");
+                    exit = true;
+                }
+            }
+        }
+    }
+
+    // EFFECTS: prints statements when application is started
+    public void printStart() {
+        System.out.println("Enter:");
+        System.out.println("\"load\" to load game from file");
+        System.out.println("\"start\" to start a new game");
+        System.out.println("\"exit\" to exit game");
+    }
+
+    // EFFECTS: confirms whether user wants to exit the game
+    public String exitConfirmation() {
+        Scanner confirm = new Scanner(System.in);
+        System.out.println("Are you sure to exit? Type \"yes\" to exit or anything else to keep playing.");
+        return confirm.nextLine();
     }
 
     // EFFECTS: starts and proceeds a new chess game
     public void play() {
-        while (!game.hasEnded() && !drawn) {
+        while (!game.hasEnded()) {
             Scanner act = new Scanner(System.in);
-            System.out.println("Pick your action (move, undo, draw): " + turn + "'s turn");
+            System.out.println("Pick your action (move, undo, draw, save, leave): " + game.getTurn() + "'s turn");
             String action = act.nextLine();
             if (action.equals("move")) {
                 moveAction();
@@ -31,6 +80,16 @@ public class PlayGame {
                 undoAction();
             } else if (action.equals("draw")) {
                 drawAction();
+            } else if (action.equals("save")) {
+                saveGame();
+            } else if (action.equals("leave")) {
+                Scanner leaveConfirm = new Scanner(System.in);
+                System.out.println("Are you sure to leave this game? Type \"yes\" to leave or anything else to keep"
+                        + "playing (Note: remember to save your game for later).");
+                String confirm = leaveConfirm.nextLine();
+                if (confirm.equals("yes")) {
+                    break;
+                }
             }
         }
         printResult();
@@ -63,7 +122,7 @@ public class PlayGame {
             Position initialPosn = new Position(bx, by);
             int initialIndex = initialPosn.toSingleValue() - 1;
             ChessPiece cp = game.getBoard().getOnBoard().get(initialIndex);
-            if (!Objects.isNull(cp) && cp.getColour().equals(turn)) {
+            if (!Objects.isNull(cp) && cp.getColour().equals(game.getTurn())) {
                 for (Position posn : cp.possibleMoves(game)) {
                     if (posn.getPosX() == ex && posn.getPosY() == ey) {
                         applyMove(cp, bx, by, ex, ey);
@@ -84,10 +143,10 @@ public class PlayGame {
         } else {
             simpleMove(cp, bx, by, ex, ey);
         }
-        reverseTurn();
+        game.reverseTurn();
         System.out.println("Move success");
-        if (game.check(turn)) {
-            System.out.println(turn + " is checked!");
+        if (game.check(game.getTurn())) {
+            System.out.println(game.getTurn() + " is checked!");
         }
     }
 
@@ -185,21 +244,10 @@ public class PlayGame {
     }
 
     // MODIFIES: this
-    // EFFECTS: reverse the field "turn" and make it the opposite team's turn
-    public void reverseTurn() {
-        if (turn.equals("white")) {
-            turn = "black";
-        } else {
-            turn = "white";
-        }
-    }
-
-    // MODIFIES: this
     // EFFECTS: undo the most recent move
     public void undoAction() {
         if (game.getHistory().size() > 0) {
-            int numMoves = game.getHistory().size();
-            Moves recentMoves = game.getHistory().get(numMoves - 1);
+            Moves recentMoves = game.getMostRecentMoves();
             ArrayList<Move> moveList = recentMoves.getMoves();
             for (int i = moveList.size() - 1; i >= 0; i--) {
                 Move move = moveList.get(i);
@@ -213,7 +261,8 @@ public class PlayGame {
                 }
                 movedChess.setMove(move.getMoveStatus());
             }
-            reverseTurn();
+            game.removeMostRecentMoves();
+            game.reverseTurn();
         }
     }
 
@@ -226,22 +275,33 @@ public class PlayGame {
                         + "type anything else");
         String response = makeSureToDraw.nextLine();
         if (response.equals("yes")) {
-            drawn = true;
+            game.setDrawn(true);
         }
     }
 
     // EFFECTS: print the result of this game
     public void printResult() {
-        if (drawn || game.stalemate("white") || game.stalemate("black")) {
+        if (game.getDrawn() || game.stalemate("white") || game.stalemate("black")) {
             System.out.println("There is a tie!!!");
         } else if (game.checkmate("white")) {
             System.out.println("BLACK WINS!!!");
-        } else {
+        } else if (game.checkmate("black")) {
             System.out.println("WHITE WINS!!!");
+        } else {
+            System.out.println("Players have left the game.");
         }
     }
 
-
-
+    // EFFECTS: saves game to file
+    private void saveGame() {
+        try {
+            jsonWriter.open();
+            jsonWriter.writeGame(game);
+            jsonWriter.close();
+            System.out.println("Game has been saved " + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
 }
 

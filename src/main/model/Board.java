@@ -1,8 +1,13 @@
 package model;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
-public class Board {
+import java.util.ArrayList;
+import java.util.Objects;
+
+public class Board implements Writable {
 
     private ArrayList<ChessPiece> onBoard;
 
@@ -14,6 +19,33 @@ public class Board {
                 onBoard.add(null);
             }
         }
+    }
+
+    // EFFECTS: returns this board as a json object
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("onBoard", chessListToJson(onBoard));
+        return jsonObject;
+    }
+
+    // EFFECTS: returns given chess array as a json array
+    public JSONArray chessListToJson(ArrayList<ChessPiece> chessArray) {
+        JSONArray jsonArray = new JSONArray();
+        for (ChessPiece cp: chessArray) {
+            if (Objects.isNull(cp)) {
+                ChessPiece nullChess = new King("");
+                jsonArray.put(nullChess.toJson());
+            } else {
+                jsonArray.put(cp.toJson());
+            }
+        }
+        return jsonArray;
+    }
+
+    // EFFECTS: constructs a chess board (8 times 8) with given onBoard list
+    public Board(ArrayList<ChessPiece> onBoard) {
+        this.onBoard = onBoard;
     }
 
     // EFFECTS: return onBoard

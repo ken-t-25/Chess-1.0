@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -27,6 +29,25 @@ public class Pawn extends ChessPiece {
         } else {
             direction = 1;
         }
+    }
+
+    // REQUIRES: colour must be one of "black" and "white", x and y must be in the range [1.8]
+    // EFFECTS: constructs a pawn with given information
+    public Pawn(String colour, int x, int y, boolean onBoard, boolean move) {
+        super(colour, x, y, onBoard, move);
+        if (colour.equals("white")) {
+            direction = -1;
+        } else {
+            direction = 1;
+        }
+    }
+
+    // EFFECTS: returns this pawn as a json object
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = super.toJson();
+        jsonObject.put("type", "pawn");
+        return jsonObject;
     }
 
     // EFFECTS: consumes a game board and returns a list of positions that represents

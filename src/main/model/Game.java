@@ -1,8 +1,12 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements Writable {
 
     private ArrayList<ChessPiece> whiteChessPiecesOnBoard;
     private ArrayList<ChessPiece> blackChessPiecesOnBoard;
@@ -10,6 +14,8 @@ public class Game {
     private ArrayList<ChessPiece> blackChessPiecesOffBoard;
     private Board gameBoard;
     private ArrayList<Moves> history;
+    private String turn;
+    private boolean drawn;
 
     // EFFECTS: constructs and sets up a chess game
     public Game() {
@@ -21,6 +27,47 @@ public class Game {
         updateBoard(whiteChessPiecesOnBoard);
         updateBoard(blackChessPiecesOnBoard);
         history = new ArrayList<>();
+        turn = "white";
+        drawn = false;
+    }
+
+    // REQUIRES: t must be "black" or "white"
+    // EFFECTS: constructs and sets up a chess game using given chess lists, game board, and history
+    public Game(ArrayList<ChessPiece> onW, ArrayList<ChessPiece> offW, ArrayList<ChessPiece> onB,
+                ArrayList<ChessPiece> offB, Board gb, ArrayList<Moves> his, String t, boolean d) {
+        whiteChessPiecesOnBoard = onW;
+        blackChessPiecesOnBoard = onB;
+        whiteChessPiecesOffBoard = offW;
+        blackChessPiecesOffBoard = offB;
+        gameBoard = gb;
+        history = his;
+        turn = t;
+        drawn = d;
+    }
+
+
+    // EFFECTS: returns this PlayGame as a json object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("wcOnBoard", gameBoard.chessListToJson(whiteChessPiecesOnBoard));
+        json.put("bcOnBoard", gameBoard.chessListToJson(blackChessPiecesOnBoard));
+        json.put("wcOffBoard", gameBoard.chessListToJson(whiteChessPiecesOffBoard));
+        json.put("bcOffBoard", gameBoard.chessListToJson(blackChessPiecesOffBoard));
+        json.put("gameBoard", gameBoard.toJson());
+        json.put("history", movesListToJson(history));
+        json.put("turn", turn);
+        json.put("drawn", drawn);
+        return json;
+    }
+
+    // EFFECTS: returns given chess array as a json array
+    public JSONArray movesListToJson(ArrayList<Moves> movesArray) {
+        JSONArray jsonArray = new JSONArray();
+        for (Moves ms: movesArray) {
+            jsonArray.put(ms.toJson());
+        }
+        return jsonArray;
     }
 
     // REQUIRES: colour must be "black" or "white"
@@ -289,7 +336,8 @@ public class Game {
 
     // EFFECTS: tells whether the game has ended by checkmate or stalemate
     public boolean hasEnded() {
-        return checkmate("white") || checkmate("black") || stalemate("white") || stalemate("black");
+        return checkmate("white") || checkmate("black") || stalemate("white") || stalemate("black")
+                || drawn;
     }
 
     // REQUIRES: history must not be empty
@@ -310,5 +358,31 @@ public class Game {
     public void removeMostRecentMoves() {
         int totalMoves = history.size();
         history.remove(totalMoves - 1);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set draw to given boolean value
+    public void setDrawn(boolean d) {
+        drawn = d;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: reverse the field "turn" and make it the opposite team's turn
+    public void reverseTurn() {
+        if (turn.equals("white")) {
+            turn = "black";
+        } else {
+            turn = "white";
+        }
+    }
+
+    // EFFECTS: return turn
+    public String getTurn() {
+        return turn;
+    }
+
+    // EFFECTS: return drawn
+    public boolean getDrawn() {
+        return drawn;
     }
 }

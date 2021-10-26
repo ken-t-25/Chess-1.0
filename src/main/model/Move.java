@@ -1,6 +1,9 @@
 package model;
 
-public class Move {
+import org.json.JSONObject;
+import persistence.Writable;
+
+public class Move implements Writable {
 
     private final int beginX;
     private final int beginY;
@@ -17,6 +20,19 @@ public class Move {
         this.endY = endY;
         this.chess = chess;
         this.moveStatus = moveStatus;
+    }
+
+    // EFFECTS: returns this move to a json object
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("beginX", beginX);
+        jsonObject.put("beginY", beginY);
+        jsonObject.put("endX", endX);
+        jsonObject.put("endY", endY);
+        jsonObject.put("chess", chess.toJson());
+        jsonObject.put("moveStatus", moveStatus);
+        return jsonObject;
     }
 
     // EFFECTS: returns the beginning x position of the move

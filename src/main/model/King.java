@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -11,10 +14,24 @@ public class King extends ChessPiece {
         super(colour);
     }
 
+    // EFFECTS: returns this king as a json object
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = super.toJson();
+        jsonObject.put("type", "king");
+        return jsonObject;
+    }
+
     // REQUIRES: colour must be one of "black" and "white", x and y must be in the range [1.8]
     // EFFECTS: constructs a ing that is on the game board
     public King(String colour, int x, int y) {
         super(colour, x, y);
+    }
+
+    // REQUIRES: colour must be one of "black" and "white", x and y must be in the range [1.8]
+    // EFFECTS: constructs a king with given information
+    public King(String colour, int x, int y, boolean onBoard, boolean move) {
+        super(colour, x, y, onBoard, move);
     }
 
     // EFFECTS: consumes a game board and returns a list of positions that represents

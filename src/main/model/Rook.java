@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Rook extends ChessPiece {
@@ -16,6 +18,19 @@ public class Rook extends ChessPiece {
         super(colour, x, y);
     }
 
+    // REQUIRES: colour must be one of "black" and "white", x and y must be in the range [1.8]
+    // EFFECTS: constructs a rook with given information
+    public Rook(String colour, int x, int y, boolean onBoard, boolean move) {
+        super(colour, x, y, onBoard, move);
+    }
+
+    // EFFECTS: returns this rook as a json object
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = super.toJson();
+        jsonObject.put("type", "rook");
+        return jsonObject;
+    }
 
     // EFFECTS: consumes a game board and returns a list of positions that represents
     //          the possible moves of this bishop

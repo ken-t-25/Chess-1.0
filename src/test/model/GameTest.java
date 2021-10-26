@@ -151,4 +151,22 @@ public class GameTest {
         assertNull(game.getBoard().getOnBoard().get(blackBishopPosn.toSingleValue() - 1));
     }
 
+    @Test
+    public void testSetDrawn() {
+        assertFalse(game.getDrawn());
+        game.setDrawn(true);
+        assertTrue(game.getDrawn());
+        game.setDrawn(false);
+        assertFalse(game.getDrawn());
+    }
+
+    @Test
+    public void testReverseTurn() {
+        assertEquals("white", game.getTurn());
+        game.reverseTurn();
+        assertEquals("black", game.getTurn());
+        game.reverseTurn();
+        assertEquals("white", game.getTurn());
+    }
+
 }
