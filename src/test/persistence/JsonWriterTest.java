@@ -1,11 +1,9 @@
 package persistence;
 
 import model.*;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.fail;

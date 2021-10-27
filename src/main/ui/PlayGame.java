@@ -12,17 +12,18 @@ import java.util.Scanner;
 
 public class PlayGame {
 
-    private static final String JSON_STORE = "./data/chessgame.json";
+    private static final String JSON_STORE = "./data/chessGame.json";
     private Game game;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private JsonWriter jsonWriterGame;
+    private JsonReader jsonReaderGame;
     private boolean exit;
+    private ArrayList<String> results;
 
     // EFFECTS: constructs a chess game
     public PlayGame() {
         game = new Game();
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriterGame = new JsonWriter(JSON_STORE);
+        jsonReaderGame = new JsonReader(JSON_STORE);
         exit = false;
     }
 
@@ -34,7 +35,7 @@ public class PlayGame {
             String response = scan.nextLine();
             if (response.equals("load")) {
                 try {
-                    game = jsonReader.readGame();
+                    game = jsonReaderGame.readGame();
                     System.out.println("You have load your most recently saved game from file.");
                     play();
                 } catch (IOException e) {
@@ -295,9 +296,9 @@ public class PlayGame {
     // EFFECTS: saves game to file
     private void saveGame() {
         try {
-            jsonWriter.open();
-            jsonWriter.writeGame(game);
-            jsonWriter.close();
+            jsonWriterGame.open();
+            jsonWriterGame.writeGame(game);
+            jsonWriterGame.close();
             System.out.println("Game has been saved " + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);

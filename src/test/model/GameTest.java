@@ -168,5 +168,4 @@ public class GameTest {
         game.reverseTurn();
         assertEquals("white", game.getTurn());
     }
-
 }
