@@ -17,22 +17,6 @@
             "type": "bishop"
         },
         {
-            "posX": 8,
-            "posY": 8,
-            "colour": "white",
-            "move": false,
-            "onBoard": true,
-            "type": "rook"
-        },
-        {
-            "posX": 6,
-            "posY": 8,
-            "colour": "white",
-            "move": false,
-            "onBoard": true,
-            "type": "bishop"
-        },
-        {
             "posX": 4,
             "posY": 8,
             "colour": "white",
@@ -49,36 +33,20 @@
             "type": "king"
         },
         {
-            "posX": 7,
-            "posY": 7,
+            "posX": 6,
+            "posY": 8,
             "colour": "white",
             "move": false,
             "onBoard": true,
-            "type": "pawn"
+            "type": "bishop"
         },
         {
             "posX": 8,
-            "posY": 7,
-            "colour": "white",
-            "move": false,
-            "onBoard": true,
-            "type": "pawn"
-        },
-        {
-            "posX": 2,
             "posY": 8,
             "colour": "white",
             "move": false,
             "onBoard": true,
-            "type": "knight"
-        },
-        {
-            "posX": 7,
-            "posY": 8,
-            "colour": "white",
-            "move": false,
-            "onBoard": true,
-            "type": "knight"
+            "type": "rook"
         },
         {
             "posX": 1,
@@ -93,22 +61,6 @@
             "posY": 7,
             "colour": "white",
             "move": false,
-            "onBoard": true,
-            "type": "pawn"
-        },
-        {
-            "posX": 5,
-            "posY": 5,
-            "colour": "white",
-            "move": true,
-            "onBoard": true,
-            "type": "pawn"
-        },
-        {
-            "posX": 5,
-            "posY": 4,
-            "colour": "white",
-            "move": true,
             "onBoard": true,
             "type": "pawn"
         },
@@ -129,6 +81,14 @@
             "type": "pawn"
         },
         {
+            "posX": 5,
+            "posY": 7,
+            "colour": "white",
+            "move": false,
+            "onBoard": true,
+            "type": "pawn"
+        },
+        {
             "posX": 6,
             "posY": 7,
             "colour": "white",
@@ -137,12 +97,36 @@
             "type": "pawn"
         },
         {
-            "posX": 5,
+            "posX": 7,
             "posY": 7,
             "colour": "white",
             "move": false,
             "onBoard": true,
             "type": "pawn"
+        },
+        {
+            "posX": 8,
+            "posY": 7,
+            "colour": "white",
+            "move": false,
+            "onBoard": true,
+            "type": "pawn"
+        },
+        {
+            "posX": 2,
+            "posY": 8,
+            "colour": "white",
+            "move": false,
+            "onBoard": true,
+            "type": "knight"
+        },
+        {
+            "posX": 7,
+            "posY": 8,
+            "colour": "white",
+            "move": false,
+            "onBoard": true,
+            "type": "knight"
         }
     ],
     "wcOffBoard": [
@@ -597,44 +581,12 @@
             "type": "king"
         },
         {
-            "posX": 1,
-            "posY": 4,
-            "colour": "black",
-            "move": true,
-            "onBoard": true,
-            "type": "pawn"
-        },
-        {
             "posX": 0,
             "posY": 0,
             "colour": "",
             "move": false,
             "onBoard": false,
             "type": "king"
-        },
-        {
-            "posX": 0,
-            "posY": 0,
-            "colour": "",
-            "move": false,
-            "onBoard": false,
-            "type": "king"
-        },
-        {
-            "posX": 0,
-            "posY": 0,
-            "colour": "",
-            "move": false,
-            "onBoard": false,
-            "type": "king"
-        },
-        {
-            "posX": 5,
-            "posY": 4,
-            "colour": "white",
-            "move": true,
-            "onBoard": true,
-            "type": "pawn"
         },
         {
             "posX": 0,
@@ -693,12 +645,44 @@
             "type": "king"
         },
         {
-            "posX": 5,
-            "posY": 5,
-            "colour": "white",
-            "move": true,
-            "onBoard": true,
-            "type": "pawn"
+            "posX": 0,
+            "posY": 0,
+            "colour": "",
+            "move": false,
+            "onBoard": false,
+            "type": "king"
+        },
+        {
+            "posX": 0,
+            "posY": 0,
+            "colour": "",
+            "move": false,
+            "onBoard": false,
+            "type": "king"
+        },
+        {
+            "posX": 0,
+            "posY": 0,
+            "colour": "",
+            "move": false,
+            "onBoard": false,
+            "type": "king"
+        },
+        {
+            "posX": 0,
+            "posY": 0,
+            "colour": "",
+            "move": false,
+            "onBoard": false,
+            "type": "king"
+        },
+        {
+            "posX": 0,
+            "posY": 0,
+            "colour": "",
+            "move": false,
+            "onBoard": false,
+            "type": "king"
         },
         {
             "posX": 0,
@@ -919,6 +903,14 @@
     ]},
     "bcOnBoard": [
         {
+            "posX": 1,
+            "posY": 1,
+            "colour": "black",
+            "move": false,
+            "onBoard": true,
+            "type": "rook"
+        },
+        {
             "posX": 3,
             "posY": 1,
             "colour": "black",
@@ -960,11 +952,19 @@
         },
         {
             "posX": 1,
-            "posY": 1,
+            "posY": 2,
             "colour": "black",
             "move": false,
             "onBoard": true,
-            "type": "rook"
+            "type": "pawn"
+        },
+        {
+            "posX": 2,
+            "posY": 2,
+            "colour": "black",
+            "move": false,
+            "onBoard": true,
+            "type": "pawn"
         },
         {
             "posX": 3,
@@ -979,14 +979,6 @@
             "posY": 2,
             "colour": "black",
             "move": false,
-            "onBoard": true,
-            "type": "pawn"
-        },
-        {
-            "posX": 1,
-            "posY": 4,
-            "colour": "black",
-            "move": true,
             "onBoard": true,
             "type": "pawn"
         },
@@ -1023,14 +1015,6 @@
             "type": "pawn"
         },
         {
-            "posX": 1,
-            "posY": 2,
-            "colour": "black",
-            "move": false,
-            "onBoard": true,
-            "type": "pawn"
-        },
-        {
             "posX": 2,
             "posY": 1,
             "colour": "black",
@@ -1045,14 +1029,6 @@
             "move": false,
             "onBoard": true,
             "type": "knight"
-        },
-        {
-            "posX": 2,
-            "posY": 2,
-            "colour": "black",
-            "move": false,
-            "onBoard": true,
-            "type": "pawn"
         }
     ],
     "bcOffBoard": [

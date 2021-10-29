@@ -21,8 +21,8 @@ public class Game implements Writable {
     public Game() {
         whiteChessPiecesOnBoard = buildDefaultChessOnBoard("white");
         blackChessPiecesOnBoard = buildDefaultChessOnBoard("black");
-        whiteChessPiecesOffBoard = buildDefaultChessOffBoard("white");
-        blackChessPiecesOffBoard = buildDefaultChessOffBoard("black");
+        whiteChessPiecesOffBoard = buildDefaultChessOffBoard("white", 8);
+        blackChessPiecesOffBoard = buildDefaultChessOffBoard("black", 8);
         gameBoard = new Board();
         updateBoard(whiteChessPiecesOnBoard);
         updateBoard(blackChessPiecesOnBoard);
@@ -99,9 +99,9 @@ public class Game implements Writable {
 
     // REQUIRES: colour must be "black" or "white"
     // EFFECTS: constructs the default chess pieces off board
-    private ArrayList<ChessPiece> buildDefaultChessOffBoard(String colour) {
+    public ArrayList<ChessPiece> buildDefaultChessOffBoard(String colour, int pawnNum) {
         ArrayList<ChessPiece> cp = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < pawnNum; i++) {
             cp.add(new Queen(colour));
             cp.add(new Bishop(colour));
             cp.add(new Knight(colour));

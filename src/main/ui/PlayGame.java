@@ -1,11 +1,13 @@
 package ui;
 
+import com.sun.corba.se.impl.ior.JIDLObjectKeyTemplate;
 import model.*;
 import persistence.JsonWriter;
 import persistence.JsonReader;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -42,7 +44,7 @@ public class PlayGame {
                     System.out.println("Unable to read from file: " + JSON_STORE);
                 }
             } else if (response.equals("start")) {
-                System.out.println("You have started a new game.");
+                startOptions();
                 play();
             } else if (response.equals("exit")) {
                 String confirmation = exitConfirmation();
@@ -67,6 +69,245 @@ public class PlayGame {
         Scanner confirm = new Scanner(System.in);
         System.out.println("Are you sure to exit? Type \"yes\" to exit or anything else to keep playing.");
         return confirm.nextLine();
+    }
+
+    // EFFECTS: let user choose whether they wish to play a regular game or build their own game
+    public void startOptions() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Would you like to build your own game? Type \"yes\" to build your own game or anything else"
+                + " to play a regular game");
+        String decision = scan.nextLine();
+        if (decision.equals("yes")) {
+            game = new Game(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new Board(),
+                    new ArrayList<>(), "white", false);
+            boolean modifyChess = true;
+            while (modifyChess) {
+                modifyChess = modifyChessAction();
+            }
+            String firstTeam = "";
+            while (!firstTeam.equals("white") && !firstTeam.equals("black")) {
+                firstTeam = setFirstTeam();
+            }
+            game.setWhiteChessPiecesOffBoard(setOffBoard("white"));
+            game.setBlackChessPiecesOffBoard(setOffBoard("black"));
+        } else {
+            game = new Game();
+        }
+    }
+
+    // REQUIRES: team must be black or white
+    // EFFECTS: returns an array of chess pieces of given team that is not on the board
+    public ArrayList<ChessPiece> setOffBoard(String team) {
+        int numPawn = 0;
+        ArrayList<ChessPiece> examine;
+        if (team.equals("white")) {
+            examine = game.getWhiteChessPiecesOnBoard();
+        } else {
+            examine = game.getBlackChessPiecesOnBoard();
+        }
+        for (ChessPiece cp: examine) {
+            if (cp instanceof Pawn) {
+                numPawn++;
+            }
+        }
+        return game.buildDefaultChessOffBoard(team, numPawn);
+    }
+
+    // EFFECTS: let the user choose which team to go first, return user's input
+    public String setFirstTeam() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Which team will move first? (black or white): ");
+        String firstTeam = scan.nextLine();
+        if (!firstTeam.equals("white") && !firstTeam.equals("black")) {
+            System.out.println("Team must be \"black\" or \"white\"");
+        } else if (firstTeam.equals("black")) {
+            game.reverseTurn();
+        }
+        return firstTeam;
+    }
+
+    // EFFECTS: let the user add or remove chess pieces from game board, return true if user wants to continue
+    //          modifying or false if user is done modifying
+    public boolean modifyChessAction() {
+        boolean modifyChess = true;
+        Scanner response = new Scanner(System.in);
+        System.out.println("Type \"add\" to add a chess piece on game board, \"remove\" to remove a chess "
+                + "piece, or \"done\" if you are done adding");
+        String add = response.nextLine();
+        if (add.equals("add")) {
+            addChessActon();
+        } else if (add.equals("remove")) {
+            removeChessActon();
+        } else if (add.equals("done")) {
+            if (!hasKings()) {
+                System.out.println("Both teams must have a king!");
+            } else if (game.hasEnded()) {
+                System.out.println("There is a checkmate or stalemate in this game! Keep adding or removing "
+                        + "chess pieces");
+            } else {
+                modifyChess = false;
+            }
+        }
+        return modifyChess;
+    }
+
+    // EFFECTS: returns true there is a king on each side
+    public boolean hasKings() {
+        boolean hasWhiteKing = false;
+        boolean hasBlackKing = false;
+        for (ChessPiece cp: game.getBoard().getOnBoard()) {
+            if (!Objects.isNull(cp) && cp instanceof King) {
+                if (cp.getColour().equals("white")) {
+                    hasWhiteKing = true;
+                } else {
+                    hasBlackKing = true;
+                }
+            }
+        }
+        return hasWhiteKing && hasBlackKing;
+    }
+
+    // EFFECTS: let the user add a chess piece to this game
+    public void addChessActon() {
+        Scanner strScan = new Scanner(System.in);
+        System.out.println("Colour of chess Piece (white, black): ");
+        String colour = strScan.nextLine();
+        System.out.println("Chess type (king, queen, bishop, knight, rook, pawn): ");
+        String chessType = strScan.nextLine();
+        Scanner intScan = new Scanner(System.in);
+        System.out.println("Column to place (type an integer from 1 to 8): ");
+        int posX = intScan.nextInt();
+        System.out.println("Row to place (type an integer from 1 to 8): ");
+        int posY = intScan.nextInt();
+        if (!colourValid(colour)) {
+            System.out.println("Invalid colour! Colour must be \"black\" or \"white\"");
+        }
+        if (!typeValid(chessType)) {
+            System.out.println("Invalid chess type! Chess type must be \"king\", \"queen\", \"bishop\", \"knight\", "
+                    + "\"rook\", or \"pawn\"");
+        }
+        if (!(posX >= 1 && posY >= 1 && posX <= 8 && posY <= 8)) {
+            System.out.println("Invalid position! Column and Row must both be integers in the range 1 to 8");
+        }
+        if (colourValid(colour) && typeValid(chessType) && posX >= 1 && posY >= 1 && posX <= 8 && posY <= 8) {
+            proceedAdd(colour, chessType, posX, posY);
+        }
+    }
+
+    // EFFECTS: returns true if user's input of chess colour is valid
+    public boolean colourValid(String colour) {
+        return colour.equals("white") || colour.equals("black");
+    }
+
+    // EFFECTS: returns true if user's input of chess type is valid
+    public boolean typeValid(String type) {
+        return type.equals("king") || type.equals("queen") || type.equals("bishop") || type.equals("knight")
+                || type.equals("rook") || type.equals("pawn");
+    }
+
+    // REQUIRES: colour must black or white; type must be king, queen, bishop, knight, rook, or pawn; x and y must be
+    //           integers in the range 1 to 8
+    // EFFECTS: proceed with add chess action with valid colour, type, and coordinate inputs
+    public void proceedAdd(String colour, String type, int x, int y) {
+        ChessPiece chess = buildChess(colour, type, x, y);
+        Position pos = new Position(x,y);
+        int index = pos.toSingleValue() - 1;
+        if (!Objects.isNull(game.getBoard().getOnBoard().get(index))) {
+            System.out.println("Position is already occupied");
+        } else if (type.equals("king") && kingExist(colour)) {
+            System.out.println("Cannot have more than one king on the same team");
+        } else if (type.equals("pawn") && ((colour.equals("white") && y == 8) || (colour.equals("black") && y == 1))) {
+            System.out.println("Pawn of this colour cannot arrive to this position");
+        } else {
+            chessAdd(chess, colour, type, x, y);
+        }
+    }
+
+    // REQUIRES: colour must black or white; type must be king, queen, bishop, knight, rook, or pawn; x and y must be
+    //           integers in the range 1 to 8
+    // EFFECTS: constructs and returns a chess piece based on given type and colour information
+    public ChessPiece buildChess(String colour, String type, int x, int y) {
+        ChessPiece cp;
+        if (type.equals("king")) {
+            cp = new King(colour, x, y);
+        } else if (type.equals("queen")) {
+            cp = new Queen(colour, x, y);
+        } else if (type.equals("bishop")) {
+            cp = new Bishop(colour, x, y);
+        } else if (type.equals("knight")) {
+            cp = new Knight(colour, x, y);
+        } else if (type.equals("rook")) {
+            cp = new Rook(colour, x, y);
+        } else {
+            cp = new Pawn(colour, x, y);
+        }
+        return cp;
+    }
+
+    // REQUIRES: colour must be black or white
+    // EFFECTS: return true if a king already exist on given team
+    public boolean kingExist(String colour) {
+        boolean exist = false;
+        ArrayList<ChessPiece> examined;
+        if (colour.equals("white")) {
+            examined = game.getWhiteChessPiecesOnBoard();
+        } else {
+            examined = game.getBlackChessPiecesOnBoard();
+        }
+        for (ChessPiece cp: examined) {
+            if (cp instanceof King) {
+                exist = true;
+            }
+        }
+        return exist;
+    }
+
+    // REQUIRES: colour must black or white; type must be king, queen, bishop, knight, rook, or pawn; x and y must be
+    //           integers in the range 1 to 8
+    // EFFECTS: place given chess piece on given position and make adjustments to the chess piece's feature depending
+    //          on the position
+    public void chessAdd(ChessPiece cp, String colour, String type, int x, int y) {
+        int row1;
+        int row2;
+        if (colour.equals("white")) {
+            row1 = 8;
+            row2 = 7;
+        } else {
+            row1 = 1;
+            row2 = 2;
+        }
+        if (type.equals("king") && !(x == 5 && y == row1)) {
+            cp.setMove(true);
+        } else if (type.equals("pawn") && !(y == row2)) {
+            cp.setMove(true);
+        } else if (type.equals("rook") && !(y == row1 && (x == 1 || x == 8))) {
+            cp.setMove(true);
+        }
+        game.placeNew(cp);
+        System.out.println("Place success");
+    }
+
+    // EFFECTS: removes chess from game board (users can only remove a chess piece when they are constructing their own
+    //          game)
+    public void removeChessActon() {
+        Scanner intScan = new Scanner(System.in);
+        System.out.println("Enter the column of the chess piece that you wish to remove");
+        int x = intScan.nextInt();
+        System.out.println("Enter the row of the chess piece that you wish to remove");
+        int y = intScan.nextInt();
+        if (!(x >= 1 && y >= 1 && x <= 8 && y <= 8)) {
+            System.out.println("Invalid inputs! Column and row must be integers in the range 1 to 8");
+        } else {
+            Position pos = new Position(x, y);
+            int index = pos.toSingleValue() - 1;
+            if (Objects.isNull(game.getBoard().getOnBoard().get(index))) {
+                System.out.println("This position is empty");
+            } else {
+                ChessPiece cpRemove = game.getBoard().getOnBoard().get(index);
+                game.remove(cpRemove);
+                System.out.println("Remove success");
+            }
+        }
     }
 
     // EFFECTS: starts and proceeds a new chess game
