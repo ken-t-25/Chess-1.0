@@ -97,23 +97,26 @@ public class GameTest {
     @Test
     public void testCheckAndCheckmateAndHasEnded() {
         setupRest();
-        King whiteKing = new King("white");
         King blackKing = new King("black");
-        Bishop blackBishop = new Bishop("black");
-        Queen blackQueen = new Queen("black");
-        placeOnBoard(whiteKing, 1, 1);
-        placeOnBoard(blackBishop, 6, 6);
-        placeOnBoard(blackKing, 8, 8);
-        white.add(whiteKing);
-        black.add(blackBishop);
+        King whiteKing = new King("white");
+        Bishop whiteBishop = new Bishop("white");
+        Queen whiteQueen = new Queen("white");
+        placeOnBoard(blackKing, 1, 1);
+        placeOnBoard(whiteBishop, 6, 6);
+        placeOnBoard(whiteKing, 8, 8);
         black.add(blackKing);
-        blackOff.add(blackQueen);
+        white.add(whiteBishop);
+        white.add(whiteKing);
+        whiteOff.add(whiteQueen);
         setGame();
-        assertTrue(game.check("white"));
-        assertFalse(game.checkmate("white"));
+        assertTrue(game.check("black"));
+        assertFalse(game.checkmate("black"));
         assertFalse(game.hasEnded());
-        game.placeFromOffBoard(blackQueen, 3, 2);
-        assertTrue(game.checkmate("white"));
+        game.setDrawn(true);
+        assertTrue(game.hasEnded());
+        game.setDrawn(false);
+        game.placeFromOffBoard(whiteQueen, 3, 2);
+        assertTrue(game.checkmate("black"));
         assertTrue(game.hasEnded());
     }
 
