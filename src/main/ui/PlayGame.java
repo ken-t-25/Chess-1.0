@@ -20,9 +20,9 @@ public class PlayGame extends JPanel implements MouseListener {
     private static final Font SMALL_BUTTON_FONT = new Font("SmallButton", Font.BOLD, 15);
     private static final Font LABEL_FONT = new Font("Label", Font.BOLD,30);
     private static final Font HOME_PAGE_FONT = new Font("HomePage", Font.BOLD, 50);
-    private static final Color BACKGROUND_GAME = new Color(255,255,224);
-    private static final Color BACKGROUND_OTHER = new Color(255,255,224);
-    private static final Color SELECT = new Color(194, 245, 245);
+    private static final Color BACKGROUND_GAME = new Color(255,255,230);
+    private static final Color BACKGROUND_OTHER = new Color(255,255,255);
+    private static final Color SELECT = new Color(204, 255, 255);
     private static final Color UNSELECT = new Color(224,240,255);
     private Game game;
     private JsonWriter jsonWriter;
@@ -84,12 +84,6 @@ public class PlayGame extends JPanel implements MouseListener {
         chessTypeSelected = "";
         chessColourSelected = "";
     }
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /** MOUSE LISTENER METHODS */
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     // MODIFIES: this
     // EFFECTS: add a mouse listener to game panel
@@ -182,12 +176,6 @@ public class PlayGame extends JPanel implements MouseListener {
         }
         return round;
     }
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /** HOME PAGE, START_OPTION PAGE, EXIT_CONFIRMATION PAGE METHODS */
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     // MODIFIES: this
     // EFFECTS: draws the home page of this application.
@@ -315,10 +303,6 @@ public class PlayGame extends JPanel implements MouseListener {
             repaint();
         });
     }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /** CREATE GAME PAGE METHODS */
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // MODIFIES: this
     // EFFECTS: creates the create game page. User will create their own game on this page
@@ -718,12 +702,6 @@ public class PlayGame extends JPanel implements MouseListener {
         System.out.println("Place success");
     }
 
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /** CREATE SELECT_FIRST_TEAM PAGE METHODS */
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     // MODIFIES: this
     // EFFECTS: draws the select first team to move page
     public void paintSelectFirstTeamPage() {
@@ -827,11 +805,6 @@ public class PlayGame extends JPanel implements MouseListener {
         }
         return game.buildDefaultChessOffBoard(team, numPawn);
     }
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /** CREATE GAME PAGE METHODS */
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // MODIFIES: this
     // EFFECTS: create the graphic of the game page
