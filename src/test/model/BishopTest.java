@@ -173,6 +173,23 @@ public class BishopTest {
     }
 
     @Test
+    public void testCheckingEnemy() {
+        placeOnBoard(bishop, 6, 6);
+        placeOnBoard(king, 1, 2);
+        white.add(bishop);
+        white.add(king);
+        setGame();
+        Position pos1 = new Position(4, 4);
+        Position pos2 = new Position(5, 6);
+        Position pos3 = new Position(6, 6);
+        Position pos4 = new Position(6, 5);
+        assertTrue(bishop.checkEnemy(game, pos1));
+        assertFalse(bishop.checkEnemy(game, pos2));
+        assertFalse(bishop.checkEnemy(game, pos3));
+        assertFalse(bishop.checkEnemy(game, pos4));
+    }
+
+    @Test
     public void testBishopPossibleMovesKingWillBeChecked() {
         Rook rook = new Rook("black");
         placeOnBoard(bishop, 5, 4);
