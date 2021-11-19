@@ -30,7 +30,10 @@ public abstract class ChessPiece implements Writable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null) {
+            return false;
+        }
+        if (getClass() != o.getClass()) {
             return false;
         }
         ChessPiece that = (ChessPiece) o;
