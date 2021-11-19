@@ -18,12 +18,13 @@ public class PlayGame extends JPanel implements MouseListener {
     private static final String JSON_STORE = "./data/chessGame.json";
     private static final Font STANDARD_FONT = new Font("Standard", Font.BOLD, 20);
     private static final Font SMALL_BUTTON_FONT = new Font("SmallButton", Font.BOLD, 15);
-    private static final Font LABEL_FONT = new Font("Label", Font.BOLD,30);
+    private static final Font LABEL_FONT = new Font("Label", Font.BOLD, 30);
     private static final Font HOME_PAGE_FONT = new Font("HomePage", Font.BOLD, 50);
-    private static final Color BACKGROUND_GAME = new Color(255,255,230);
-    private static final Color BACKGROUND_OTHER = new Color(255,255,255);
+    private static final Color BACKGROUND_GAME = new Color(255, 255, 230);
+    private static final Color BACKGROUND_OTHER = new Color(255, 255, 255);
     private static final Color SELECT = new Color(204, 255, 255);
-    private static final Color UNSELECT = new Color(224,240,255);
+    private static final Color UNSELECT = new Color(224, 240, 255);
+
     private Game game;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -65,7 +66,7 @@ public class PlayGame extends JPanel implements MouseListener {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         JFrame frame = new JFrame();
-        frame.setSize(1200,1100);
+        frame.setSize(1200, 1100);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Chess");
         frame.add(this);
@@ -138,7 +139,7 @@ public class PlayGame extends JPanel implements MouseListener {
         } else if (clickedChess != null) {
             int beginX = clickedChess.getPosX();
             int beginY = clickedChess.getPosY();
-            handleMoveInfo(beginX,beginY,clickedX,clickedY);
+            handleMoveInfo(beginX, beginY, clickedX, clickedY);
             clickedChess = null;
             gamePanel.setClickedChess(null);
         } else {
@@ -192,10 +193,10 @@ public class PlayGame extends JPanel implements MouseListener {
         setBackground(BACKGROUND_OTHER);
         label.setText("Chess Game");
         label.setFont(HOME_PAGE_FONT);
-        label.setBounds(200,50,400,100);
-        start.setBounds(300,250,400,100);
-        load.setBounds(300,400,400,100);
-        exit.setBounds(300,550,400,100);
+        label.setBounds(200, 50, 400, 100);
+        start.setBounds(300, 250, 400, 100);
+        load.setBounds(300, 400, 400, 100);
+        exit.setBounds(300, 550, 400, 100);
         this.add(label);
         this.add(start);
         this.add(load);
@@ -209,18 +210,18 @@ public class PlayGame extends JPanel implements MouseListener {
         start = new JButton("Start");
         start.setFont(STANDARD_FONT);
         start.addActionListener(e -> {
-            removeAllComponents();
-            createRegularButton();
-            createCreateButton();
-            createBackButton();
-            regular.setBounds(300,300,400,100);
-            create.setBounds(300,500,400,100);
-            back.setBounds(10,10,100,50);
-            add(regular);
-            add(create);
-            add(back);
-            repaint();
-        }
+                    removeAllComponents();
+                    createRegularButton();
+                    createCreateButton();
+                    createBackButton();
+                    regular.setBounds(300, 300, 400, 100);
+                    create.setBounds(300, 500, 400, 100);
+                    back.setBounds(10, 10, 100, 50);
+                    add(regular);
+                    add(create);
+                    add(back);
+                    repaint();
+                }
         );
     }
 
@@ -230,13 +231,13 @@ public class PlayGame extends JPanel implements MouseListener {
         load = new JButton("Load");
         load.setFont(STANDARD_FONT);
         load.addActionListener(e -> {
-            try {
-                game = jsonReader.readGame();
-                paintGamePage();
-            } catch (IOException exception) {
-                System.out.println("Unable to read from file: " + JSON_STORE);
-            }
-        }
+                    try {
+                        game = jsonReader.readGame();
+                        paintGamePage();
+                    } catch (IOException exception) {
+                        System.out.println("Unable to read from file: " + JSON_STORE);
+                    }
+                }
         );
     }
 
@@ -246,19 +247,19 @@ public class PlayGame extends JPanel implements MouseListener {
         exit = new JButton("Exit");
         exit.setFont(STANDARD_FONT);
         exit.addActionListener(e -> {
-            removeAllComponents();
-            createExitYesButton();
-            createExitNoButton();
-            label.setText("Are you sure to exit?");
-            label.setFont(LABEL_FONT);
-            label.setBounds(200,100,400,100);
-            yes.setBounds(300,300,400,100);
-            no.setBounds(300,500,400,100);
-            add(label);
-            add(yes);
-            add(no);
-            repaint();
-        }
+                    removeAllComponents();
+                    createExitYesButton();
+                    createExitNoButton();
+                    label.setText("Are you sure to exit?");
+                    label.setFont(LABEL_FONT);
+                    label.setBounds(200, 100, 400, 100);
+                    yes.setBounds(300, 300, 400, 100);
+                    no.setBounds(300, 500, 400, 100);
+                    add(label);
+                    add(yes);
+                    add(no);
+                    repaint();
+                }
         );
     }
 
@@ -268,9 +269,9 @@ public class PlayGame extends JPanel implements MouseListener {
         regular = new JButton("Regular Game");
         regular.setFont(STANDARD_FONT);
         regular.addActionListener(e -> {
-            game = new Game();
-            paintGamePage();
-        }
+                    game = new Game();
+                    paintGamePage();
+                }
         );
     }
 
@@ -280,11 +281,11 @@ public class PlayGame extends JPanel implements MouseListener {
         create = new JButton("Create Your Game");
         create.setFont(STANDARD_FONT);
         create.addActionListener(e -> {
-            creating = true;
-            game = new Game(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new Board(),
-                    new ArrayList<>(), "white", false);
-            paintCreateGamePage();
-        }
+                    creating = true;
+                    game = new Game(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+                            new Board(), new ArrayList<>(), "white", false);
+                    paintCreateGamePage();
+                }
         );
     }
 
@@ -293,9 +294,9 @@ public class PlayGame extends JPanel implements MouseListener {
     public void createBackButton() {
         back = new JButton("Back");
         back.addActionListener(e -> {
-            paintHomePage();
-            repaint();
-        }
+                    paintHomePage();
+                    repaint();
+                }
         );
     }
 
@@ -313,9 +314,9 @@ public class PlayGame extends JPanel implements MouseListener {
         no = new JButton("No");
         no.setFont(STANDARD_FONT);
         no.addActionListener(e -> {
-            paintHomePage();
-            repaint();
-        }
+                    paintHomePage();
+                    repaint();
+                }
         );
     }
 
@@ -325,7 +326,7 @@ public class PlayGame extends JPanel implements MouseListener {
         removeAllComponents();
         setBackground(BACKGROUND_GAME);
         gamePanel = new GameBoardPanel(game);
-        gamePanel.setBounds(100,80,800,800);
+        gamePanel.setBounds(100, 80, 800, 800);
         add(gamePanel);
         addColourOptions();
         addChessOptions();
@@ -432,12 +433,12 @@ public class PlayGame extends JPanel implements MouseListener {
     public void createWhiteButton() {
         white = new JButton("White");
         white.addActionListener(e -> {
-            colourSetUnselectBG();
-            remove.setBackground(UNSELECT);
-            white.setBackground(SELECT);
-            chessColourSelected = "white";
-            removing = false;
-        }
+                    colourSetUnselectBG();
+                    remove.setBackground(UNSELECT);
+                    white.setBackground(SELECT);
+                    chessColourSelected = "white";
+                    removing = false;
+                }
         );
     }
 
@@ -446,12 +447,12 @@ public class PlayGame extends JPanel implements MouseListener {
     public void createBlackButton() {
         black = new JButton("Black");
         black.addActionListener(e -> {
-            colourSetUnselectBG();
-            remove.setBackground(UNSELECT);
-            black.setBackground(SELECT);
-            chessColourSelected = "black";
-            removing = false;
-        }
+                    colourSetUnselectBG();
+                    remove.setBackground(UNSELECT);
+                    black.setBackground(SELECT);
+                    chessColourSelected = "black";
+                    removing = false;
+                }
         );
     }
 
@@ -460,12 +461,12 @@ public class PlayGame extends JPanel implements MouseListener {
     public void createSetKingButton() {
         king = new JButton("King");
         king.addActionListener(e -> {
-            chessSetUnselectBG();
-            remove.setBackground(UNSELECT);
-            king.setBackground(SELECT);
-            chessTypeSelected = "king";
-            removing = false;
-        }
+                    chessSetUnselectBG();
+                    remove.setBackground(UNSELECT);
+                    king.setBackground(SELECT);
+                    chessTypeSelected = "king";
+                    removing = false;
+                }
         );
     }
 
@@ -474,12 +475,12 @@ public class PlayGame extends JPanel implements MouseListener {
     public void createSetQueenButton() {
         queen = new JButton("Queen");
         queen.addActionListener(e -> {
-            chessSetUnselectBG();
-            remove.setBackground(UNSELECT);
-            queen.setBackground(SELECT);
-            chessTypeSelected = "queen";
-            removing = false;
-        }
+                    chessSetUnselectBG();
+                    remove.setBackground(UNSELECT);
+                    queen.setBackground(SELECT);
+                    chessTypeSelected = "queen";
+                    removing = false;
+                }
         );
     }
 
@@ -488,12 +489,12 @@ public class PlayGame extends JPanel implements MouseListener {
     public void createSetBishopButton() {
         bishop = new JButton("Bishop");
         bishop.addActionListener(e -> {
-            chessSetUnselectBG();
-            remove.setBackground(UNSELECT);
-            bishop.setBackground(SELECT);
-            chessTypeSelected = "bishop";
-            removing = false;
-        }
+                    chessSetUnselectBG();
+                    remove.setBackground(UNSELECT);
+                    bishop.setBackground(SELECT);
+                    chessTypeSelected = "bishop";
+                    removing = false;
+                }
         );
     }
 
@@ -502,12 +503,12 @@ public class PlayGame extends JPanel implements MouseListener {
     public void createSetKnightButton() {
         knight = new JButton("Knight");
         knight.addActionListener(e -> {
-            chessSetUnselectBG();
-            remove.setBackground(UNSELECT);
-            knight.setBackground(SELECT);
-            chessTypeSelected = "knight";
-            removing = false;
-        }
+                    chessSetUnselectBG();
+                    remove.setBackground(UNSELECT);
+                    knight.setBackground(SELECT);
+                    chessTypeSelected = "knight";
+                    removing = false;
+                }
         );
     }
 
@@ -516,12 +517,12 @@ public class PlayGame extends JPanel implements MouseListener {
     public void createSetRookButton() {
         rook = new JButton("Rook");
         rook.addActionListener(e -> {
-            chessSetUnselectBG();
-            remove.setBackground(UNSELECT);
-            rook.setBackground(SELECT);
-            chessTypeSelected = "rook";
-            removing = false;
-        }
+                    chessSetUnselectBG();
+                    remove.setBackground(UNSELECT);
+                    rook.setBackground(SELECT);
+                    chessTypeSelected = "rook";
+                    removing = false;
+                }
         );
     }
 
@@ -530,12 +531,12 @@ public class PlayGame extends JPanel implements MouseListener {
     public void createSetPawnButton() {
         pawn = new JButton("Pawn");
         pawn.addActionListener(e -> {
-            chessSetUnselectBG();
-            remove.setBackground(UNSELECT);
-            pawn.setBackground(SELECT);
-            chessTypeSelected = "pawn";
-            removing = false;
-        }
+                    chessSetUnselectBG();
+                    remove.setBackground(UNSELECT);
+                    pawn.setBackground(SELECT);
+                    chessTypeSelected = "pawn";
+                    removing = false;
+                }
         );
     }
 
@@ -544,13 +545,13 @@ public class PlayGame extends JPanel implements MouseListener {
     public void createRemoveButton() {
         remove = new JButton("Remove");
         remove.addActionListener(e -> {
-            remove.setBackground(SELECT);
-            colourSetUnselectBG();
-            chessSetUnselectBG();
-            chessColourSelected = "";
-            chessTypeSelected = "";
-            removing = true;
-        }
+                    remove.setBackground(SELECT);
+                    colourSetUnselectBG();
+                    chessSetUnselectBG();
+                    chessColourSelected = "";
+                    chessTypeSelected = "";
+                    removing = true;
+                }
         );
     }
 
@@ -560,16 +561,16 @@ public class PlayGame extends JPanel implements MouseListener {
     public void createDoneButton() {
         done = new JButton("Done");
         done.addActionListener(e -> {
-            removing = false;
-            chessColourSelected = "";
-            chessTypeSelected = "";
-            colourSetUnselectBG();
-            chessSetUnselectBG();
-            remove.setBackground(UNSELECT);
-            remove(message);
-            repaint();
-            doneModifyAction();
-        }
+                    removing = false;
+                    chessColourSelected = "";
+                    chessTypeSelected = "";
+                    colourSetUnselectBG();
+                    chessSetUnselectBG();
+                    remove.setBackground(UNSELECT);
+                    remove(message);
+                    repaint();
+                    doneModifyAction();
+                }
         );
     }
 
@@ -580,7 +581,7 @@ public class PlayGame extends JPanel implements MouseListener {
         message = new JLabel("");
         message.setFont(STANDARD_FONT);
         message.setForeground(Color.red);
-        message.setBounds(100,10,800,70);
+        message.setBounds(100, 10, 800, 70);
         add(message);
         if (!hasKings()) {
             System.out.println("Both teams must have a king!");
@@ -609,12 +610,12 @@ public class PlayGame extends JPanel implements MouseListener {
     // EFFECTS: proceed with add chess action with valid colour, type, and coordinate inputs
     public void proceedAdd(String colour, String type, int x, int y) {
         ChessPiece chess = buildChess(colour, type, x, y);
-        Position pos = new Position(x,y);
+        Position pos = new Position(x, y);
         int index = pos.toSingleValue() - 1;
         message = new JLabel("");
         message.setFont(STANDARD_FONT);
         message.setForeground(Color.red);
-        message.setBounds(100,10,800,70);
+        message.setBounds(100, 10, 800, 70);
         add(message);
         if (!Objects.isNull(game.getBoard().getOnBoard().get(index))) {
             System.out.println("Position is already occupied");
@@ -692,7 +693,7 @@ public class PlayGame extends JPanel implements MouseListener {
         } else {
             examined = game.getBlackChessPiecesOnBoard();
         }
-        for (ChessPiece cp: examined) {
+        for (ChessPiece cp : examined) {
             if (cp instanceof King) {
                 exist = true;
                 break;
@@ -733,14 +734,14 @@ public class PlayGame extends JPanel implements MouseListener {
         removeAllComponents();
         setBackground(BACKGROUND_OTHER);
         label = new JLabel("Pick the team to move first");
-        label.setBounds(200,100,800,70);
+        label.setBounds(200, 100, 800, 70);
         label.setFont(LABEL_FONT);
         createSelectTeamWhiteButton();
         createSelectTeamBlackButton();
         createSelectTeamBackButton();
-        white.setBounds(300,300,400,100);
-        black.setBounds(300,500,400,100);
-        back.setBounds(10,10,100,50);
+        white.setBounds(300, 300, 400, 100);
+        black.setBounds(300, 500, 400, 100);
+        back.setBounds(10, 10, 100, 50);
         add(white);
         add(black);
         add(back);
@@ -755,10 +756,10 @@ public class PlayGame extends JPanel implements MouseListener {
         white = new JButton("White");
         white.setFont(STANDARD_FONT);
         white.addActionListener(e -> {
-            remove(message);
-            setFirstTeam("white");
-            repaint();
-        }
+                    remove(message);
+                    setFirstTeam("white");
+                    repaint();
+                }
         );
     }
 
@@ -769,10 +770,10 @@ public class PlayGame extends JPanel implements MouseListener {
         black = new JButton("Black");
         black.setFont(STANDARD_FONT);
         black.addActionListener(e -> {
-            remove(message);
-            setFirstTeam("black");
-            repaint();
-        }
+                    remove(message);
+                    setFirstTeam("black");
+                    repaint();
+                }
         );
     }
 
@@ -782,10 +783,10 @@ public class PlayGame extends JPanel implements MouseListener {
         back = new JButton("Back");
         back.setFont(STANDARD_FONT);
         back.addActionListener(e -> {
-            creating = true;
-            paintCreateGamePage();
-            repaint();
-        }
+                    creating = true;
+                    paintCreateGamePage();
+                    repaint();
+                }
         );
     }
 
@@ -795,7 +796,7 @@ public class PlayGame extends JPanel implements MouseListener {
         message = new JLabel("");
         message.setFont(STANDARD_FONT);
         message.setForeground(Color.red);
-        message.setBounds(300,200,800,70);
+        message.setBounds(300, 200, 800, 70);
         add(message);
         if (colour.equals("black") && game.check("white")) {
             System.out.println("White is checked, white must go first");
@@ -826,7 +827,7 @@ public class PlayGame extends JPanel implements MouseListener {
         } else {
             examine = game.getBlackChessPiecesOnBoard();
         }
-        for (ChessPiece cp: examine) {
+        for (ChessPiece cp : examine) {
             if (cp instanceof Pawn) {
                 numPawn++;
             }
@@ -842,15 +843,15 @@ public class PlayGame extends JPanel implements MouseListener {
         gamePanel = new GameBoardPanel(game);
         gamePanel.addMouseListener(this);
         add(gamePanel);
-        gamePanel.setBounds(100,80,800,800);
+        gamePanel.setBounds(100, 80, 800, 800);
         createUndoButton();
         createDrawButton();
         createSaveButton();
         createLeaveButton();
-        undo.setBounds(100,900,100,50);
-        draw.setBounds(250,900,100,50);
-        save.setBounds(400,900,100,50);
-        leave.setBounds(550,900,100,50);
+        undo.setBounds(100, 900, 100, 50);
+        draw.setBounds(250, 900, 100, 50);
+        save.setBounds(400, 900, 100, 50);
+        leave.setBounds(550, 900, 100, 50);
         add(undo);
         add(draw);
         add(save);
@@ -873,14 +874,14 @@ public class PlayGame extends JPanel implements MouseListener {
         undo = new JButton("Undo");
         undo.setFont(STANDARD_FONT);
         undo.addActionListener(e -> {
-            if (!promote) {
-                undoAction();
-                clickedChess = null;
-                gamePanel.setClickedChess(null);
-                paintGamePage();
-                repaint();
-            }
-        }
+                    if (!promote) {
+                        undoAction();
+                        clickedChess = null;
+                        gamePanel.setClickedChess(null);
+                        paintGamePage();
+                        repaint();
+                    }
+                }
         );
     }
 
@@ -890,24 +891,24 @@ public class PlayGame extends JPanel implements MouseListener {
         draw = new JButton("Draw");
         draw.setFont(STANDARD_FONT);
         draw.addActionListener(e -> {
-            if (!promote) {
-                removeAllComponents();
-                setBackground(BACKGROUND_OTHER);
-                clickedChess = null;
-                gamePanel.setClickedChess(null);
-                createDrawYesButton();
-                createLeaveDrawNoButton();
-                label.setText("Are you sure to draw the game?");
-                label.setFont(STANDARD_FONT);
-                label.setBounds(200, 100, 800, 100);
-                yes.setBounds(300, 300, 400, 100);
-                no.setBounds(300, 500, 400, 100);
-                add(label);
-                add(yes);
-                add(no);
-                repaint();
-            }
-        }
+                    if (!promote) {
+                        removeAllComponents();
+                        setBackground(BACKGROUND_OTHER);
+                        clickedChess = null;
+                        gamePanel.setClickedChess(null);
+                        createDrawYesButton();
+                        createLeaveDrawNoButton();
+                        label.setText("Are you sure to draw the game?");
+                        label.setFont(STANDARD_FONT);
+                        label.setBounds(200, 100, 800, 100);
+                        yes.setBounds(300, 300, 400, 100);
+                        no.setBounds(300, 500, 400, 100);
+                        add(label);
+                        add(yes);
+                        add(no);
+                        repaint();
+                    }
+                }
         );
     }
 
@@ -917,13 +918,13 @@ public class PlayGame extends JPanel implements MouseListener {
         save = new JButton("Save");
         save.setFont(STANDARD_FONT);
         save.addActionListener(e -> {
-            if (!promote) {
-                saveGame();
-                clickedChess = null;
-                gamePanel.setClickedChess(null);
-                repaint();
-            }
-        }
+                    if (!promote) {
+                        saveGame();
+                        clickedChess = null;
+                        gamePanel.setClickedChess(null);
+                        repaint();
+                    }
+                }
         );
     }
 
@@ -933,24 +934,24 @@ public class PlayGame extends JPanel implements MouseListener {
         leave = new JButton("Leave");
         leave.setFont(STANDARD_FONT);
         leave.addActionListener(e -> {
-            if (!promote) {
-                removeAllComponents();
-                setBackground(BACKGROUND_OTHER);
-                clickedChess = null;
-                gamePanel.setClickedChess(null);
-                createLeaveYesButton();
-                createLeaveDrawNoButton();
-                label.setText("Are you sure to leave? (Remember to save your game)");
-                label.setFont(LABEL_FONT);
-                label.setBounds(200, 100, 800, 100);
-                yes.setBounds(300, 300, 400, 100);
-                no.setBounds(300, 500, 400, 100);
-                add(label);
-                add(yes);
-                add(no);
-                repaint();
-            }
-        }
+                    if (!promote) {
+                        removeAllComponents();
+                        setBackground(BACKGROUND_OTHER);
+                        clickedChess = null;
+                        gamePanel.setClickedChess(null);
+                        createLeaveYesButton();
+                        createLeaveDrawNoButton();
+                        label.setText("Are you sure to leave? (Remember to save your game)");
+                        label.setFont(LABEL_FONT);
+                        label.setBounds(200, 100, 800, 100);
+                        yes.setBounds(300, 300, 400, 100);
+                        no.setBounds(300, 500, 400, 100);
+                        add(label);
+                        add(yes);
+                        add(no);
+                        repaint();
+                    }
+                }
         );
     }
 
@@ -960,9 +961,9 @@ public class PlayGame extends JPanel implements MouseListener {
         yes = new JButton("Yes");
         yes.setFont(STANDARD_FONT);
         yes.addActionListener(e -> {
-            paintHomePage();
-            repaint();
-        }
+                    paintHomePage();
+                    repaint();
+                }
         );
     }
 
@@ -972,10 +973,10 @@ public class PlayGame extends JPanel implements MouseListener {
         no = new JButton("No");
         no.setFont(STANDARD_FONT);
         no.addActionListener(e -> {
-            removeAllComponents();
-            paintGamePage();
-            repaint();
-        }
+                    removeAllComponents();
+                    paintGamePage();
+                    repaint();
+                }
         );
     }
 
@@ -986,11 +987,11 @@ public class PlayGame extends JPanel implements MouseListener {
         yes = new JButton("Yes");
         yes.setFont(STANDARD_FONT);
         yes.addActionListener(e -> {
-            removeAllComponents();
-            game.setDrawn(true);
-            paintGamePage();
-            repaint();
-        }
+                    removeAllComponents();
+                    game.setDrawn(true);
+                    paintGamePage();
+                    repaint();
+                }
         );
     }
 
@@ -1087,10 +1088,10 @@ public class PlayGame extends JPanel implements MouseListener {
         createBishopButton(cp, bx, by, ex, ey, moves);
         createKnightButton(cp, bx, by, ex, ey, moves);
         createRookButton(cp, bx, by, ex, ey, moves);
-        queen.setBounds(950,100,150,100);
-        bishop.setBounds(950,300,150,100);
-        knight.setBounds(950,500,150,100);
-        rook.setBounds(950,700,150,100);
+        queen.setBounds(950, 100, 150, 100);
+        bishop.setBounds(950, 300, 150, 100);
+        knight.setBounds(950, 500, 150, 100);
+        rook.setBounds(950, 700, 150, 100);
         add(queen);
         add(bishop);
         add(knight);
@@ -1105,13 +1106,13 @@ public class PlayGame extends JPanel implements MouseListener {
         queen = new JButton("Queen");
         queen.setFont(STANDARD_FONT);
         queen.addActionListener(e -> {
-            for (Move m : handlePromotionInput(cp, bx, by, ex, ey, "queen").getMoves()) {
-                moves.addMove(m);
-            }
-            promote = false;
-            paintGamePage();
-            repaint();
-        }
+                    for (Move m : handlePromotionInput(cp, bx, by, ex, ey, "queen").getMoves()) {
+                        moves.addMove(m);
+                    }
+                    promote = false;
+                    paintGamePage();
+                    repaint();
+                }
         );
     }
 
@@ -1121,13 +1122,13 @@ public class PlayGame extends JPanel implements MouseListener {
         bishop = new JButton("Bishop");
         bishop.setFont(STANDARD_FONT);
         bishop.addActionListener(e -> {
-            for (Move m : handlePromotionInput(cp, bx, by, ex, ey, "bishop").getMoves()) {
-                moves.addMove(m);
-            }
-            promote = false;
-            paintGamePage();
-            repaint();
-        }
+                    for (Move m : handlePromotionInput(cp, bx, by, ex, ey, "bishop").getMoves()) {
+                        moves.addMove(m);
+                    }
+                    promote = false;
+                    paintGamePage();
+                    repaint();
+                }
         );
     }
 
@@ -1137,13 +1138,13 @@ public class PlayGame extends JPanel implements MouseListener {
         knight = new JButton("Knight");
         knight.setFont(STANDARD_FONT);
         knight.addActionListener(e -> {
-            for (Move m : handlePromotionInput(cp, bx, by, ex, ey, "knight").getMoves()) {
-                moves.addMove(m);
-            }
-            promote = false;
-            paintGamePage();
-            repaint();
-        }
+                    for (Move m : handlePromotionInput(cp, bx, by, ex, ey, "knight").getMoves()) {
+                        moves.addMove(m);
+                    }
+                    promote = false;
+                    paintGamePage();
+                    repaint();
+                }
         );
     }
 
@@ -1153,13 +1154,13 @@ public class PlayGame extends JPanel implements MouseListener {
         rook = new JButton("Rook");
         rook.setFont(STANDARD_FONT);
         rook.addActionListener(e -> {
-            for (Move m : handlePromotionInput(cp, bx, by, ex, ey, "rook").getMoves()) {
-                moves.addMove(m);
-            }
-            promote = false;
-            paintGamePage();
-            repaint();
-        }
+                    for (Move m : handlePromotionInput(cp, bx, by, ex, ey, "rook").getMoves()) {
+                        moves.addMove(m);
+                    }
+                    promote = false;
+                    paintGamePage();
+                    repaint();
+                }
         );
     }
 
@@ -1186,8 +1187,8 @@ public class PlayGame extends JPanel implements MouseListener {
             }
             game.remove(cp);
             game.placeNew(addChess);
-            moves.addMove(new Move(bx,by,0,0,cp,pawnMoveStatus));
-            moves.addMove(new Move(0,0,ex,ey,addChess,false));
+            moves.addMove(new Move(bx, by, 0, 0, cp, pawnMoveStatus));
+            moves.addMove(new Move(0, 0, ex, ey, addChess, false));
         }
         return moves;
     }
@@ -1256,7 +1257,7 @@ public class PlayGame extends JPanel implements MouseListener {
         } else {
             System.out.println("Players have left the game.");
         }
-        message.setBounds(425,10,200,70);
+        message.setBounds(425, 10, 200, 70);
         add(message);
         repaint();
     }

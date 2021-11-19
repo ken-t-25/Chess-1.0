@@ -13,10 +13,11 @@ public class GameBoardPanel extends JPanel {
     private static final int HEIGHT = 800;
     private static final int PEN_THICKNESS = 4;
     private static final int PEN_HIGHLIGHT = 4;
-    private static final Color LIGHT_SQUARE_COLOUR = new Color(250,225,145);
-    private static final Color DARK_SQUARE_COLOUR = new Color(160,120,40);
-    private static final Color SQUARE_COLOUR = new Color(153,204,255);
-    private static final Color MOVE_COLOUR = new Color(153,255,255);
+    private static final Color LIGHT_SQUARE_COLOUR = new Color(250, 225, 145);
+    private static final Color DARK_SQUARE_COLOUR = new Color(160, 120, 40);
+    private static final Color SQUARE_COLOUR = new Color(153, 204, 255);
+    private static final Color MOVE_COLOUR = new Color(153, 255, 255);
+
     private Game game;
     private ChessPiece clickedChess;
 
@@ -49,20 +50,20 @@ public class GameBoardPanel extends JPanel {
     // EFFECTS: create the graphic of a chess board
     public void drawGameBoard(Graphics2D g) {
         g.setColor(DARK_SQUARE_COLOUR);
-        g.drawRect(0,0,800,800);
+        g.drawRect(0, 0, 800, 800);
         for (int i = 0; i < 8; i++) {
             if (i % 2 == 0) {
-                drawEvenColumns(g,i);
+                drawEvenColumns(g, i);
             } else {
-                drawOddColumns(g,i);
+                drawOddColumns(g, i);
             }
         }
         g.setColor(LIGHT_SQUARE_COLOUR);
         for (int i = 0; i < 8; i++) {
             if (i % 2 == 0) {
-                drawOddColumns(g,i);
+                drawOddColumns(g, i);
             } else {
-                drawEvenColumns(g,i);
+                drawEvenColumns(g, i);
             }
         }
     }
@@ -71,7 +72,7 @@ public class GameBoardPanel extends JPanel {
     // EFFECTS: draw squares on even columns in row i
     public void drawEvenColumns(Graphics2D g, int i) {
         for (int j = 0; j < 4; j++) {
-            g.fillRect(i * 100, j * 200 + 100,100,100);
+            g.fillRect(i * 100, j * 200 + 100, 100, 100);
         }
     }
 
@@ -79,7 +80,7 @@ public class GameBoardPanel extends JPanel {
     // EFFECTS: draw squares on odd columns in row i
     public void drawOddColumns(Graphics2D g, int i) {
         for (int j = 0; j < 4; j++) {
-            g.fillRect(i * 100, j * 200,100,100);
+            g.fillRect(i * 100, j * 200, 100, 100);
         }
     }
 
@@ -88,7 +89,7 @@ public class GameBoardPanel extends JPanel {
     public void drawChessPieces(Graphics2D g, Game game) {
         g.setStroke(new BasicStroke(PEN_THICKNESS));
         ArrayList<ChessPiece> cps = game.getBoard().getOnBoard();
-        for (ChessPiece cp: cps) {
+        for (ChessPiece cp : cps) {
             if (cp != null) {
                 int x = 100 * (cp.getPosX() - 1);
                 int y = 100 * (cp.getPosY() - 1);
@@ -111,17 +112,17 @@ public class GameBoardPanel extends JPanel {
             fill = Color.BLACK;
         }
         if (cp instanceof Pawn) {
-            drawPawn(g,x,y,outline,fill);
+            drawPawn(g, x, y, outline, fill);
         } else if (cp instanceof Rook) {
-            drawRook(g,x,y,outline,fill);
+            drawRook(g, x, y, outline, fill);
         } else if (cp instanceof Knight) {
-            drawKnight(g,x,y,outline,fill);
+            drawKnight(g, x, y, outline, fill);
         } else if (cp instanceof Bishop) {
-            drawBishop(g,x,y,outline,fill);
+            drawBishop(g, x, y, outline, fill);
         } else if (cp instanceof Queen) {
-            drawQueen(g,x,y,outline,fill);
+            drawQueen(g, x, y, outline, fill);
         } else {
-            drawKing(g,x,y,outline,fill);
+            drawKing(g, x, y, outline, fill);
         }
     }
 
@@ -135,9 +136,9 @@ public class GameBoardPanel extends JPanel {
         g.setColor(fill);
         g.fillPolygon(bottomX, bottomY, 3);
         g.setColor(outline);
-        g.drawOval(x + 35, y + 20, 30,30);
+        g.drawOval(x + 35, y + 20, 30, 30);
         g.setColor(fill);
-        g.fillOval(x + 35, y + 20, 30,30);
+        g.fillOval(x + 35, y + 20, 30, 30);
     }
 
     // MODIFIES: this
@@ -148,15 +149,15 @@ public class GameBoardPanel extends JPanel {
         int[] topRookY = new int[]{y + 15, y + 15, y + 25, y + 25, y + 15, y + 15, y + 25, y + 25, y + 15,
                 y + 15, y + 35, y + 35};
         g.setColor(outline);
-        g.drawRect(x + 30,y + 30, 40, 45);
+        g.drawRect(x + 30, y + 30, 40, 45);
         g.setColor(fill);
         g.fillRect(x + 30, y + 30, 40, 45);
         g.setColor(outline);
         g.drawPolygon(topRookX, topRookY, 12);
-        g.drawRect(x + 20,y + 75,60,15);
+        g.drawRect(x + 20, y + 75, 60, 15);
         g.setColor(fill);
-        g.fillPolygon(topRookX,topRookY,12);
-        g.fillRect(x + 20,y + 75,60,15);
+        g.fillPolygon(topRookX, topRookY, 12);
+        g.fillRect(x + 20, y + 75, 60, 15);
     }
 
     // MODIFIES: this
@@ -169,10 +170,10 @@ public class GameBoardPanel extends JPanel {
         g.setColor(fill);
         g.fillPolygon(horseX, horseY, 7);
         g.setColor(outline);
-        g.drawRect(x + 20,y + 75,60,15);
-        g.fillOval(x + 50, y + 25, 10,10);
+        g.drawRect(x + 20, y + 75, 60, 15);
+        g.fillOval(x + 50, y + 25, 10, 10);
         g.setColor(fill);
-        g.fillRect(x + 20,y + 75,60,15);
+        g.fillRect(x + 20, y + 75, 60, 15);
     }
 
     // MODIFIES: this
@@ -185,20 +186,20 @@ public class GameBoardPanel extends JPanel {
         int[] bottomX = new int[]{x + 33, x + 67, x + 75, x + 25};
         int[] bottomY = new int[]{y + 75, y + 75, y + 90, y + 90};
         g.setColor(outline);
-        g.drawRect(x + 36,y + 48,28,25);
+        g.drawRect(x + 36, y + 48, 28, 25);
         g.setColor(fill);
-        g.fillRect(x + 35,y + 50,30,25);
+        g.fillRect(x + 35, y + 50, 30, 25);
         g.setColor(outline);
         g.drawPolygon(midX, midY, 4);
         g.setColor(fill);
         g.fillPolygon(midX, midY, 4);
         g.setColor(outline);
         g.drawPolygon(tipX, tipY, 3);
-        g.drawOval(x + 37, y + 16, 26,26);
+        g.drawOval(x + 37, y + 16, 26, 26);
         g.drawPolygon(bottomX, bottomY, 4);
         g.setColor(fill);
         g.fillPolygon(tipX, tipY, 3);
-        g.fillOval(x + 37, y + 16, 26,26);
+        g.fillOval(x + 37, y + 16, 26, 26);
         g.fillPolygon(bottomX, bottomY, 4);
     }
 
@@ -232,22 +233,24 @@ public class GameBoardPanel extends JPanel {
     public void drawKing(Graphics2D g, int x, int y, Color outline, Color fill) {
         int[] crownX = new int[]{x + 20, x + 30, x + 40, x + 60, x + 70, x + 80, x + 75, x + 65, x + 35, x + 25};
         int[] crownY = new int[]{y + 35, y + 30, y + 35, y + 35, y + 30, y + 35, y + 50, y + 55, y + 55, y + 50};
-        int[] crossX = new int[]{x + 45,x + 55,x + 55,x + 60,x + 60,x + 55,x + 55,x + 45,x + 45,x + 40,x + 40,x + 45};
-        int[] crossY = new int[]{y + 10,y + 10,y + 15,y + 15,y + 25,y + 25,y + 30,y + 30,y + 25,y + 25,y + 15,y + 15};
+        int[] crossX = new int[]{x + 45, x + 55, x + 55, x + 60, x + 60, x + 55, x + 55, x + 45, x + 45, x + 40, x + 40,
+                x + 45};
+        int[] crossY = new int[]{y + 10, y + 10, y + 15, y + 15, y + 25, y + 25, y + 30, y + 30, y + 25, y + 25, y + 15,
+                y + 15};
         int[] bottomX = new int[]{x + 30, x + 70, x + 80, x + 20};
         int[] bottomY = new int[]{y + 75, y + 75, y + 90, y + 90};
         g.setColor(outline);
         g.drawPolygon(crossX, crossY, 12);
-        g.drawRect(x + 35, y + 55, 30,20);
+        g.drawRect(x + 35, y + 55, 30, 20);
         g.setColor(fill);
         g.fillPolygon(crossX, crossY, 12);
-        g.fillRect(x + 35, y + 55, 30,20);
+        g.fillRect(x + 35, y + 55, 30, 20);
         g.setColor(outline);
         g.drawPolygon(crownX, crownY, 10);
-        g.drawPolygon(bottomX,bottomY,4);
+        g.drawPolygon(bottomX, bottomY, 4);
         g.setColor(fill);
         g.fillPolygon(crownX, crownY, 10);
-        g.fillPolygon(bottomX,bottomY,4);
+        g.fillPolygon(bottomX, bottomY, 4);
     }
 
     // MODIFIES: this
@@ -258,7 +261,7 @@ public class GameBoardPanel extends JPanel {
             int y = clickedChess.getPosY();
             highlightSquare(g, x, y, SQUARE_COLOUR);
             ArrayList<Position> moves = clickedChess.possibleMoves(game);
-            for (Position pos: moves) {
+            for (Position pos : moves) {
                 int posX = pos.getPosX();
                 int posY = pos.getPosY();
                 highlightSquare(g, posX, posY, MOVE_COLOUR);
@@ -273,6 +276,6 @@ public class GameBoardPanel extends JPanel {
         int topLeftY = 100 * (y - 1) + 5;
         g.setStroke(new BasicStroke(PEN_HIGHLIGHT));
         g.setColor(c);
-        g.drawRect(topLeftX,topLeftY,90,90);
+        g.drawRect(topLeftX, topLeftY, 90, 90);
     }
 }
