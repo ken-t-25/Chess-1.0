@@ -47,8 +47,9 @@ public class JsonReader {
         ArrayList<ChessPiece> bcOnBoard = parseChessList(jsonObject.getJSONArray("bcOnBoard"));
         ArrayList<ChessPiece> wcOffBoard = parseChessList(jsonObject.getJSONArray("wcOffBoard"));
         ArrayList<ChessPiece> bcOffBoard = parseChessList(jsonObject.getJSONArray("bcOffBoard"));
-        Board gameBoard = parseGameBoard(jsonObject.getJSONObject("gameBoard"));
-        ArrayList<Moves> history = parseHistory(jsonObject.getJSONArray("history"));
+        Board gameBoard = parseGameBoard(jsonObject.getJSONObject("gameBoard"), wcOnBoard, bcOnBoard);
+        ArrayList<Moves> history = parseHistory(jsonObject.getJSONArray("history"), wcOnBoard, wcOffBoard,
+                bcOnBoard, bcOffBoard);
         String turn = jsonObject.getString("turn");
         boolean drawn = jsonObject.getBoolean("drawn");
         return new Game(wcOnBoard,wcOffBoard,bcOnBoard,bcOffBoard,gameBoard,history,turn,drawn);
@@ -66,47 +67,72 @@ public class JsonReader {
     }
 
     // EFFECTS: parses Board from JSON object and returns it
-    private Board parseGameBoard(JSONObject jsonObject) {
+    private Board parseGameBoard(JSONObject jsonObject, ArrayList<ChessPiece> wc, ArrayList<ChessPiece> bc) {
         ArrayList<ChessPiece> onBoard = new ArrayList<>();
         JSONArray jsonArray = jsonObject.getJSONArray("onBoard");
         for (Object jo: jsonArray) {
+            ArrayList<ChessPiece> allChessOnBoard = new ArrayList<>();
+            allChessOnBoard.addAll(wc);
+            allChessOnBoard.addAll(bc);
             JSONObject json = (JSONObject) jo;
             ChessPiece nextCP = parseChessPiece(json);
-            onBoard.add(nextCP);
+            if (nextCP == null) {
+                onBoard.add(null);
+            } else {
+                for (ChessPiece cp : allChessOnBoard) {
+                    if (cp.equals(nextCP)) {
+                        onBoard.add(cp);
+                    }
+                }
+            }
         }
         return new Board(onBoard);
     }
 
     // EFFECTS: parses a list of moves from JSON array and returns it
-    private ArrayList<Moves> parseHistory(JSONArray jsonArray) {
+    private ArrayList<Moves> parseHistory(JSONArray jsonArray, ArrayList<ChessPiece> wcOn, ArrayList<ChessPiece> wcOff,
+                                          ArrayList<ChessPiece> bcOn, ArrayList<ChessPiece> bcOff) {
         ArrayList<Moves> history = new ArrayList<>();
         for (Object jo: jsonArray) {
             JSONObject json = (JSONObject) jo;
-            Moves moves = parseMoves(json);
+            Moves moves = parseMoves(json, wcOn, wcOff, bcOn, bcOff);
             history.add(moves);
         }
         return history;
     }
 
     // EFFECTS: parses Moves from JSON object and returns it
-    private Moves parseMoves(JSONObject jsonObject) {
+    private Moves parseMoves(JSONObject jsonObject, ArrayList<ChessPiece> wcOn, ArrayList<ChessPiece> wcOff,
+                             ArrayList<ChessPiece> bcOn, ArrayList<ChessPiece> bcOff) {
         ArrayList<Move> moves = new ArrayList<>();
         JSONArray jsonArray = jsonObject.getJSONArray("moves");
         for (Object jo: jsonArray) {
             JSONObject json = (JSONObject) jo;
-            Move move = parseMove(json);
+            Move move = parseMove(json, wcOn, wcOff, bcOn, bcOff);
             moves.add(move);
         }
         return new Moves(moves);
     }
 
     // EFFECTS: parses Move from JSON object and returns it
-    private Move parseMove(JSONObject jsonObject) {
+    private Move parseMove(JSONObject jsonObject, ArrayList<ChessPiece> wcOn, ArrayList<ChessPiece> wcOff,
+                           ArrayList<ChessPiece> bcOn, ArrayList<ChessPiece> bcOff) {
+        ArrayList<ChessPiece> allChess = new ArrayList<>();
+        allChess.addAll(wcOn);
+        allChess.addAll(bcOn);
+        allChess.addAll(wcOff);
+        allChess.addAll(bcOff);
         int bx = jsonObject.getInt("beginX");
         int by = jsonObject.getInt("beginY");
         int ex = jsonObject.getInt("endX");
         int ey = jsonObject.getInt("endY");
         ChessPiece chess = parseChessPiece(jsonObject.getJSONObject("chess"));
+        for (ChessPiece cp: allChess) {
+            if (cp.equals(chess)) {
+                chess = cp;
+                break;
+            }
+        }
         boolean moveStatus = jsonObject.getBoolean("moveStatus");
         return new Move(bx,by,ex,ey,chess,moveStatus);
     }

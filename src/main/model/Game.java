@@ -336,8 +336,7 @@ public class Game implements Writable {
 
     // EFFECTS: tells whether the game has ended by checkmate or stalemate
     public boolean hasEnded() {
-        return checkmate("white") || checkmate("black") || stalemate("white") || stalemate("black")
-                || drawn;
+        return checkmate("white") || checkmate("black") || stalemate(turn) || drawn;
     }
 
     // REQUIRES: history must not be empty

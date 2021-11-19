@@ -25,6 +25,18 @@ public abstract class ChessPiece implements Writable {
         move = false;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessPiece that = (ChessPiece) o;
+        return posX == that.posX && posY == that.posY && onBoard == that.onBoard && move == that.move && Objects.equals(colour, that.colour);
+    }
+
     // REQUIRES: colour must be one of "black" and "white", x and y must be in the range [1.8]
     // EFFECTS: an abstract constructor for chess piece that is on the game board
     protected ChessPiece(String colour, int x, int y) {

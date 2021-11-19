@@ -68,6 +68,9 @@ public class GameTest {
         assertTrue(game.stalemate("white"));
         assertFalse(game.stalemate("black"));
         assertTrue(game.hasEnded());
+        game.reverseTurn();
+        assertFalse(game.hasEnded());
+        game.reverseTurn();
         game.placeFromOffBoard(whitePawn,8,6);
         assertFalse(game.stalemate("white"));
     }
