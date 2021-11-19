@@ -2,7 +2,9 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PawnTest {
@@ -53,8 +55,8 @@ public class PawnTest {
 
     @Test
     public void testPossibleMovesNoBlockHasNotMoved() {
-        placeOnBoard(pawn, 6,7);
-        placeOnBoard(king,6,8);
+        placeOnBoard(pawn, 6, 7);
+        placeOnBoard(king, 6, 8);
         white.add(pawn);
         white.add(king);
         setGame();
@@ -68,8 +70,8 @@ public class PawnTest {
 
     @Test
     public void testPossibleMovesNoBlockHasMoved() {
-        placeOnBoard(pawn, 6,7);
-        placeOnBoard(king,6,8);
+        placeOnBoard(pawn, 6, 7);
+        placeOnBoard(king, 6, 8);
         white.add(pawn);
         white.add(king);
         setGame();
@@ -84,9 +86,9 @@ public class PawnTest {
     @Test
     public void testPossibleMovesBlockByTeammate() {
         placeOnBoard(pawn, 6, 7);
-        placeOnBoard(king,6,8);
+        placeOnBoard(king, 6, 8);
         Bishop bishop = new Bishop("white");
-        placeOnBoard(bishop, 6,6);
+        placeOnBoard(bishop, 6, 6);
         white.add(pawn);
         white.add(king);
         white.add(bishop);
@@ -98,9 +100,9 @@ public class PawnTest {
     @Test
     public void testPossibleMovesDiagonalToTeammateCannotAttack() {
         placeOnBoard(pawn, 6, 7);
-        placeOnBoard(king,6,8);
+        placeOnBoard(king, 6, 8);
         Bishop bishop = new Bishop("white");
-        placeOnBoard(bishop, 5,6);
+        placeOnBoard(bishop, 5, 6);
         white.add(pawn);
         white.add(king);
         white.add(bishop);
@@ -116,7 +118,7 @@ public class PawnTest {
     @Test
     public void testPossibleMovesNoSpaceInFront() {
         placeOnBoard(pawn, 6, 1);
-        placeOnBoard(king,6,8);
+        placeOnBoard(king, 6, 8);
         white.add(pawn);
         white.add(king);
         setGame();
@@ -127,9 +129,9 @@ public class PawnTest {
     @Test
     public void testPossibleMovesBlockByEnemy() {
         placeOnBoard(pawn, 6, 7);
-        placeOnBoard(king,6,8);
+        placeOnBoard(king, 6, 8);
         Bishop bishop = new Bishop("black");
-        placeOnBoard(bishop, 6,6);
+        placeOnBoard(bishop, 6, 6);
         white.add(pawn);
         white.add(king);
         black.add(bishop);
@@ -141,11 +143,11 @@ public class PawnTest {
     @Test
     public void testPossibleMovesCanAttack() {
         placeOnBoard(pawn, 4, 5);
-        placeOnBoard(king,4,6);
+        placeOnBoard(king, 4, 6);
         Bishop bishop = new Bishop("black");
-        placeOnBoard(bishop, 3,4);
+        placeOnBoard(bishop, 3, 4);
         Rook rook = new Rook("black");
-        placeOnBoard(rook,5,4);
+        placeOnBoard(rook, 5, 4);
         white.add(pawn);
         white.add(king);
         black.add(bishop);
@@ -166,7 +168,7 @@ public class PawnTest {
         placeOnBoard(pawn, 4, 5);
         placeOnBoard(king, 5, 5);
         Bishop bishop = new Bishop("black");
-        placeOnBoard(bishop, 7,3);
+        placeOnBoard(bishop, 7, 3);
         white.add(pawn);
         white.add(king);
         black.add(bishop);
@@ -180,9 +182,9 @@ public class PawnTest {
         placeOnBoard(pawn, 5, 4);
         placeOnBoard(king, 5, 5);
         Bishop bishop = new Bishop("black");
-        placeOnBoard(bishop, 6,3);
+        placeOnBoard(bishop, 6, 3);
         Rook rook = new Rook("black");
-        placeOnBoard(rook, 5,3);
+        placeOnBoard(rook, 5, 3);
         white.add(pawn);
         white.add(king);
         black.add(bishop);

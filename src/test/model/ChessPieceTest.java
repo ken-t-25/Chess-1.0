@@ -44,7 +44,7 @@ public class ChessPieceTest {
 
     @Test
     public void testHasMovedMethod() {
-        placeOnBoard(rook,1,1);
+        placeOnBoard(rook, 1, 1);
         white.add(rook);
         setGame();
         assertFalse(rook.hasMoved());

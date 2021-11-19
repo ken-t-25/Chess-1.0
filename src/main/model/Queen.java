@@ -37,14 +37,14 @@ public class Queen extends ChessPiece {
     @Override
     public ArrayList<Position> possibleMoves(Game game) {
         ArrayList<Position> moves = new ArrayList<>();
-        moves.addAll(lineTest(game,-1,-1));
-        moves.addAll(lineTest(game,-1,1));
-        moves.addAll(lineTest(game,1,-1));
-        moves.addAll(lineTest(game,1,1));
-        moves.addAll(lineTest(game,0,-1));
-        moves.addAll(lineTest(game,0,1));
-        moves.addAll(lineTest(game,-1,0));
-        moves.addAll(lineTest(game,1,0));
+        moves.addAll(lineTest(game, -1, -1));
+        moves.addAll(lineTest(game, -1, 1));
+        moves.addAll(lineTest(game, 1, -1));
+        moves.addAll(lineTest(game, 1, 1));
+        moves.addAll(lineTest(game, 0, -1));
+        moves.addAll(lineTest(game, 0, 1));
+        moves.addAll(lineTest(game, -1, 0));
+        moves.addAll(lineTest(game, 1, 0));
         return moves;
     }
 
@@ -62,11 +62,11 @@ public class Queen extends ChessPiece {
             int diff = Math.abs(diffX);
             int deltaX = Math.abs(diffX) / diffX;
             int deltaY = Math.abs(diffY) / diffY;
-            return checkEnemyDiagonalPath(deltaX,deltaY,posX,posY,diff,bd);
+            return checkEnemyDiagonalPath(deltaX, deltaY, posX, posY, diff, bd);
         } else if (x == posX) {
-            return checkEnemyStraightPath(posX,posY,y,"y",bd);
+            return checkEnemyStraightPath(posX, posY, y, "y", bd);
         } else if (y == posY) {
-            return checkEnemyStraightPath(posY,posX,x,"x",bd);
+            return checkEnemyStraightPath(posY, posX, x, "x", bd);
         } else {
             return false;
         }

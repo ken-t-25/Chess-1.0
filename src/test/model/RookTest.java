@@ -2,7 +2,9 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RookTest {
@@ -55,7 +57,7 @@ public class RookTest {
     @Test
     public void testPossibleMovesNoBlockMiddle() {
         placeOnBoard(rook, 5, 4);
-        placeOnBoard(king,4,3);
+        placeOnBoard(king, 4, 3);
         white.add(rook);
         white.add(king);
         setGame();
@@ -82,7 +84,7 @@ public class RookTest {
     @Test
     public void testPossibleMovesNoBlockSide() {
         placeOnBoard(rook, 1, 6);
-        placeOnBoard(king,2,5);
+        placeOnBoard(king, 2, 5);
         white.add(rook);
         white.add(king);
         setGame();
@@ -109,7 +111,7 @@ public class RookTest {
     @Test
     public void testPossibleMovesNoBlockCorner() {
         placeOnBoard(rook, 1, 1);
-        placeOnBoard(king,2,2);
+        placeOnBoard(king, 2, 2);
         white.add(rook);
         white.add(king);
         setGame();
@@ -136,11 +138,11 @@ public class RookTest {
     @Test
     public void testPossibleMovesBlockByTeammate() {
         placeOnBoard(rook, 5, 4);
-        placeOnBoard(king,4,3);
+        placeOnBoard(king, 4, 3);
         Bishop bishop1 = new Bishop("white");
         Bishop bishop2 = new Bishop("white");
-        placeOnBoard(bishop1,5,2);
-        placeOnBoard(bishop2,8,4);
+        placeOnBoard(bishop1, 5, 2);
+        placeOnBoard(bishop2, 8, 4);
         white.add(rook);
         white.add(king);
         white.add(bishop1);
@@ -166,11 +168,11 @@ public class RookTest {
     @Test
     public void testPossibleMovesBlockByEnemy() {
         placeOnBoard(rook, 5, 4);
-        placeOnBoard(king,4,5);
+        placeOnBoard(king, 4, 5);
         Bishop bishop1 = new Bishop("black");
         Bishop bishop2 = new Bishop("black");
-        placeOnBoard(bishop1,5,2);
-        placeOnBoard(bishop2,8,4);
+        placeOnBoard(bishop1, 5, 2);
+        placeOnBoard(bishop2, 8, 4);
         white.add(rook);
         white.add(king);
         black.add(bishop1);
@@ -199,8 +201,8 @@ public class RookTest {
     public void testPossibleMovesKingUnderAttack() {
         placeOnBoard(rook, 5, 4);
         Queen queen = new Queen("black");
-        placeOnBoard(king,3,6);
-        placeOnBoard(queen,3,2);
+        placeOnBoard(king, 3, 6);
+        placeOnBoard(queen, 3, 2);
         white.add(rook);
         white.add(king);
         black.add(queen);
@@ -217,8 +219,8 @@ public class RookTest {
         setup();
         placeOnBoard(rook, 3, 5);
         Queen queen = new Queen("black");
-        placeOnBoard(king,3,6);
-        placeOnBoard(queen,3,2);
+        placeOnBoard(king, 3, 6);
+        placeOnBoard(queen, 3, 2);
         white.add(rook);
         white.add(king);
         black.add(queen);

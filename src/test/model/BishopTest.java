@@ -2,7 +2,9 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BishopTest {
@@ -54,7 +56,7 @@ public class BishopTest {
     @Test
     public void testBishopPossibleMovesNoBlockingMiddle() {
         placeOnBoard(bishop, 5, 4);
-        placeOnBoard(king,5,5);
+        placeOnBoard(king, 5, 5);
         white.add(bishop);
         white.add(king);
         setGame();
@@ -80,7 +82,7 @@ public class BishopTest {
     @Test
     public void testBishopPossibleMovesNoBlockingSide() {
         placeOnBoard(bishop, 1, 4);
-        placeOnBoard(king,1,3);
+        placeOnBoard(king, 1, 3);
         white.add(bishop);
         white.add(king);
         setGame();
@@ -100,7 +102,7 @@ public class BishopTest {
     @Test
     public void testBishopPossibleMovesNoBlockingCorner() {
         placeOnBoard(bishop, 1, 1);
-        placeOnBoard(king,1,2);
+        placeOnBoard(king, 1, 2);
         white.add(bishop);
         white.add(king);
         setGame();
@@ -121,8 +123,8 @@ public class BishopTest {
     public void testBishopPossibleMovesBlockBySameTeam() {
         Rook rook = new Rook("white");
         placeOnBoard(bishop, 5, 4);
-        placeOnBoard(king,5,5);
-        placeOnBoard(rook, 3,6);
+        placeOnBoard(king, 5, 5);
+        placeOnBoard(rook, 3, 6);
         white.add(bishop);
         white.add(king);
         white.add(rook);
@@ -147,8 +149,8 @@ public class BishopTest {
     public void testBishopPossibleMovesBlockByOpponents() {
         Pawn pawn = new Pawn("black");
         placeOnBoard(bishop, 5, 4);
-        placeOnBoard(king,5,5);
-        placeOnBoard(pawn, 4,3);
+        placeOnBoard(king, 5, 5);
+        placeOnBoard(pawn, 4, 3);
         white.add(bishop);
         white.add(king);
         black.add(pawn);
@@ -174,22 +176,22 @@ public class BishopTest {
     public void testBishopPossibleMovesKingWillBeChecked() {
         Rook rook = new Rook("black");
         placeOnBoard(bishop, 5, 4);
-        placeOnBoard(rook, 5,3);
-        placeOnBoard(king, 5,5);
+        placeOnBoard(rook, 5, 3);
+        placeOnBoard(king, 5, 5);
         white.add(bishop);
         white.add(king);
         black.add(rook);
         setGame();
         ArrayList<Position> pm = bishop.possibleMoves(game);
-        assertEquals(0,pm.size());
+        assertEquals(0, pm.size());
     }
 
     @Test
     public void testBishopPossibleMovesKingIsChecked() {
         Knight knight = new Knight("black");
         placeOnBoard(bishop, 5, 4);
-        placeOnBoard(knight, 6,5);
-        placeOnBoard(king,4,6);
+        placeOnBoard(knight, 6, 5);
+        placeOnBoard(king, 4, 6);
         white.add(bishop);
         white.add(king);
         black.add(knight);

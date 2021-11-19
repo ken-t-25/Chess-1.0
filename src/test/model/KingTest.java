@@ -2,7 +2,9 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class KingTest {
@@ -51,7 +53,7 @@ public class KingTest {
 
     @Test
     public void testPossibleMovesMiddle() {
-        placeOnBoard(king, 5,4);
+        placeOnBoard(king, 5, 4);
         white.add(king);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
@@ -65,12 +67,12 @@ public class KingTest {
         expected.add(new Position(6, 4));
         expected.add(new Position(6, 5));
         assertEquals(expected.size(), pm.size());
-        arrayListEquals(pm,expected);
+        arrayListEquals(pm, expected);
     }
 
     @Test
     public void testPossibleMovesSide() {
-        placeOnBoard(king, 8,3);
+        placeOnBoard(king, 8, 3);
         white.add(king);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
@@ -81,12 +83,12 @@ public class KingTest {
         expected.add(new Position(8, 2));
         expected.add(new Position(8, 4));
         assertEquals(expected.size(), pm.size());
-        arrayListEquals(pm,expected);
+        arrayListEquals(pm, expected);
     }
 
     @Test
     public void testPossibleMovesCorner() {
-        placeOnBoard(king, 1,8);
+        placeOnBoard(king, 1, 8);
         white.add(king);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
@@ -95,7 +97,7 @@ public class KingTest {
         expected.add(new Position(2, 7));
         expected.add(new Position(2, 8));
         assertEquals(expected.size(), pm.size());
-        arrayListEquals(pm,expected);
+        arrayListEquals(pm, expected);
     }
 
     @Test
@@ -158,12 +160,12 @@ public class KingTest {
     }
 
     @Test
-    public void testPossibleMovesCastlingNoEnemiesRookKingHasNotMoved(){
-        placeOnBoard(king, 4,1);
+    public void testPossibleMovesCastlingNoEnemiesRookKingHasNotMoved() {
+        placeOnBoard(king, 4, 1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
-        placeOnBoard(rook1,1,1);
-        placeOnBoard(rook2,8,1);
+        placeOnBoard(rook1, 1, 1);
+        placeOnBoard(rook2, 8, 1);
         white.add(king);
         white.add(rook1);
         white.add(rook2);
@@ -178,22 +180,22 @@ public class KingTest {
         expected.add(new Position(2, 1));
         expected.add(new Position(6, 1));
         assertEquals(expected.size(), pm.size());
-        arrayListEquals(pm,expected);
+        arrayListEquals(pm, expected);
     }
 
     @Test
-    public void testPossibleMovesCastlingNoEnemiesRookMoved(){
-        placeOnBoard(king, 4,1);
+    public void testPossibleMovesCastlingNoEnemiesRookMoved() {
+        placeOnBoard(king, 4, 1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
-        placeOnBoard(rook1,1,1);
-        placeOnBoard(rook2,8,1);
+        placeOnBoard(rook1, 1, 1);
+        placeOnBoard(rook2, 8, 1);
         white.add(king);
         white.add(rook1);
         white.add(rook2);
         setGame();
-        game.move(rook1,1,2);
-        game.move(rook1,1,1);
+        game.move(rook1, 1, 2);
+        game.move(rook1, 1, 1);
         ArrayList<Position> pm = king.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(3, 1));
@@ -203,22 +205,22 @@ public class KingTest {
         expected.add(new Position(5, 2));
         expected.add(new Position(6, 1));
         assertEquals(expected.size(), pm.size());
-        arrayListEquals(pm,expected);
+        arrayListEquals(pm, expected);
     }
 
     @Test
-    public void testPossibleMovesCastlingNoEnemiesKingMoved(){
-        placeOnBoard(king, 4,1);
+    public void testPossibleMovesCastlingNoEnemiesKingMoved() {
+        placeOnBoard(king, 4, 1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
-        placeOnBoard(rook1,1,1);
-        placeOnBoard(rook2,8,1);
+        placeOnBoard(rook1, 1, 1);
+        placeOnBoard(rook2, 8, 1);
         white.add(king);
         white.add(rook1);
         white.add(rook2);
         setGame();
-        game.move(king,3,1);
-        game.move(king,4,1);
+        game.move(king, 3, 1);
+        game.move(king, 4, 1);
         ArrayList<Position> pm = king.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<>();
         expected.add(new Position(3, 1));
@@ -227,18 +229,18 @@ public class KingTest {
         expected.add(new Position(5, 1));
         expected.add(new Position(5, 2));
         assertEquals(expected.size(), pm.size());
-        arrayListEquals(pm,expected);
+        arrayListEquals(pm, expected);
     }
 
     @Test
-    public void testPossibleMovesCastlingNoEnemiesPathBlocked(){
-        placeOnBoard(king, 4,1);
+    public void testPossibleMovesCastlingNoEnemiesPathBlocked() {
+        placeOnBoard(king, 4, 1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
         Bishop bishop = new Bishop("white");
-        placeOnBoard(rook1,1,1);
-        placeOnBoard(rook2,8,1);
-        placeOnBoard(bishop, 7,1);
+        placeOnBoard(rook1, 1, 1);
+        placeOnBoard(rook2, 8, 1);
+        placeOnBoard(bishop, 7, 1);
         white.add(king);
         white.add(rook1);
         white.add(rook2);
@@ -253,18 +255,18 @@ public class KingTest {
         expected.add(new Position(5, 2));
         expected.add(new Position(2, 1));
         assertEquals(expected.size(), pm.size());
-        arrayListEquals(pm,expected);
+        arrayListEquals(pm, expected);
     }
 
     @Test
-    public void testPossibleMovesCastlingEnemiesAttackingKing(){
-        placeOnBoard(king, 4,1);
+    public void testPossibleMovesCastlingEnemiesAttackingKing() {
+        placeOnBoard(king, 4, 1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
         Rook rook3 = new Rook("black");
-        placeOnBoard(rook1,1,1);
-        placeOnBoard(rook2,8,1);
-        placeOnBoard(rook3,4,6);
+        placeOnBoard(rook1, 1, 1);
+        placeOnBoard(rook2, 8, 1);
+        placeOnBoard(rook3, 4, 6);
         white.add(king);
         white.add(rook1);
         white.add(rook2);
@@ -277,18 +279,18 @@ public class KingTest {
         expected.add(new Position(5, 1));
         expected.add(new Position(5, 2));
         assertEquals(expected.size(), pm.size());
-        arrayListEquals(pm,expected);
+        arrayListEquals(pm, expected);
     }
 
     @Test
-    public void testPossibleMovesCastlingEnemiesAttackingPath(){
-        placeOnBoard(king, 4,1);
+    public void testPossibleMovesCastlingEnemiesAttackingPath() {
+        placeOnBoard(king, 4, 1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
         Rook rook3 = new Rook("black");
-        placeOnBoard(rook1,1,1);
-        placeOnBoard(rook2,8,1);
-        placeOnBoard(rook3,5,6);
+        placeOnBoard(rook1, 1, 1);
+        placeOnBoard(rook2, 8, 1);
+        placeOnBoard(rook3, 5, 6);
         white.add(king);
         white.add(rook1);
         white.add(rook2);
@@ -301,18 +303,18 @@ public class KingTest {
         expected.add(new Position(4, 2));
         expected.add(new Position(2, 1));
         assertEquals(expected.size(), pm.size());
-        arrayListEquals(pm,expected);
+        arrayListEquals(pm, expected);
     }
 
     @Test
-    public void testPossibleMovesCastlingEnemiesWillAttackEndKing(){
-        placeOnBoard(king, 4,1);
+    public void testPossibleMovesCastlingEnemiesWillAttackEndKing() {
+        placeOnBoard(king, 4, 1);
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
         Rook rook3 = new Rook("black");
-        placeOnBoard(rook1,1,1);
-        placeOnBoard(rook2,8,1);
-        placeOnBoard(rook3,6,6);
+        placeOnBoard(rook1, 1, 1);
+        placeOnBoard(rook2, 8, 1);
+        placeOnBoard(rook3, 6, 6);
         white.add(king);
         white.add(rook1);
         white.add(rook2);
@@ -327,6 +329,6 @@ public class KingTest {
         expected.add(new Position(5, 2));
         expected.add(new Position(2, 1));
         assertEquals(expected.size(), pm.size());
-        arrayListEquals(pm,expected);
+        arrayListEquals(pm, expected);
     }
 }

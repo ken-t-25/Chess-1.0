@@ -52,13 +52,13 @@ public class JsonReader {
                 bcOnBoard, bcOffBoard);
         String turn = jsonObject.getString("turn");
         boolean drawn = jsonObject.getBoolean("drawn");
-        return new Game(wcOnBoard,wcOffBoard,bcOnBoard,bcOffBoard,gameBoard,history,turn,drawn);
+        return new Game(wcOnBoard, wcOffBoard, bcOnBoard, bcOffBoard, gameBoard, history, turn, drawn);
     }
 
     // EFFECTS: parses a list of chess pieces from JSON array and returns it
     private ArrayList<ChessPiece> parseChessList(JSONArray jsonArray) {
         ArrayList<ChessPiece> cp = new ArrayList<>();
-        for (Object jo: jsonArray) {
+        for (Object jo : jsonArray) {
             JSONObject json = (JSONObject) jo;
             ChessPiece nextCP = parseChessPiece(json);
             cp.add(nextCP);
@@ -70,7 +70,7 @@ public class JsonReader {
     private Board parseGameBoard(JSONObject jsonObject, ArrayList<ChessPiece> wc, ArrayList<ChessPiece> bc) {
         ArrayList<ChessPiece> onBoard = new ArrayList<>();
         JSONArray jsonArray = jsonObject.getJSONArray("onBoard");
-        for (Object jo: jsonArray) {
+        for (Object jo : jsonArray) {
             ArrayList<ChessPiece> allChessOnBoard = new ArrayList<>();
             allChessOnBoard.addAll(wc);
             allChessOnBoard.addAll(bc);
@@ -93,7 +93,7 @@ public class JsonReader {
     private ArrayList<Moves> parseHistory(JSONArray jsonArray, ArrayList<ChessPiece> wcOn, ArrayList<ChessPiece> wcOff,
                                           ArrayList<ChessPiece> bcOn, ArrayList<ChessPiece> bcOff) {
         ArrayList<Moves> history = new ArrayList<>();
-        for (Object jo: jsonArray) {
+        for (Object jo : jsonArray) {
             JSONObject json = (JSONObject) jo;
             Moves moves = parseMoves(json, wcOn, wcOff, bcOn, bcOff);
             history.add(moves);
@@ -106,7 +106,7 @@ public class JsonReader {
                              ArrayList<ChessPiece> bcOn, ArrayList<ChessPiece> bcOff) {
         ArrayList<Move> moves = new ArrayList<>();
         JSONArray jsonArray = jsonObject.getJSONArray("moves");
-        for (Object jo: jsonArray) {
+        for (Object jo : jsonArray) {
             JSONObject json = (JSONObject) jo;
             Move move = parseMove(json, wcOn, wcOff, bcOn, bcOff);
             moves.add(move);
@@ -127,14 +127,14 @@ public class JsonReader {
         int ex = jsonObject.getInt("endX");
         int ey = jsonObject.getInt("endY");
         ChessPiece chess = parseChessPiece(jsonObject.getJSONObject("chess"));
-        for (ChessPiece cp: allChess) {
+        for (ChessPiece cp : allChess) {
             if (cp.equals(chess)) {
                 chess = cp;
                 break;
             }
         }
         boolean moveStatus = jsonObject.getBoolean("moveStatus");
-        return new Move(bx,by,ex,ey,chess,moveStatus);
+        return new Move(bx, by, ex, ey, chess, moveStatus);
     }
 
     // EFFECTS: parses ChessPiece from JSON object and returns it
@@ -149,17 +149,17 @@ public class JsonReader {
         boolean move = jsonObject.getBoolean("move");
         String type = jsonObject.getString("type");
         if (type.equals("pawn")) {
-            return new Pawn(colour,x,y,onBoard,move);
+            return new Pawn(colour, x, y, onBoard, move);
         } else if (type.equals("rook")) {
-            return new Rook(colour,x,y,onBoard,move);
+            return new Rook(colour, x, y, onBoard, move);
         } else if (type.equals("knight")) {
-            return new Knight(colour,x,y,onBoard,move);
+            return new Knight(colour, x, y, onBoard, move);
         } else if (type.equals("bishop")) {
-            return new Bishop(colour,x,y,onBoard,move);
+            return new Bishop(colour, x, y, onBoard, move);
         } else if (type.equals("queen")) {
-            return new Queen(colour,x,y,onBoard,move);
+            return new Queen(colour, x, y, onBoard, move);
         } else {
-            return new King(colour,x,y,onBoard,move);
+            return new King(colour, x, y, onBoard, move);
         }
     }
 }

@@ -56,7 +56,7 @@ public class KnightTest {
     @Test
     public void testPossibleMovesMiddle() {
         placeOnBoard(knight, 4, 6);
-        placeOnBoard(king,4,5);
+        placeOnBoard(king, 4, 5);
         white.add(knight);
         white.add(king);
         setGame();
@@ -77,7 +77,7 @@ public class KnightTest {
     @Test
     public void testPossibleMovesSide() {
         placeOnBoard(knight, 5, 8);
-        placeOnBoard(king,5,7);
+        placeOnBoard(king, 5, 7);
         white.add(knight);
         white.add(king);
         setGame();
@@ -94,7 +94,7 @@ public class KnightTest {
     @Test
     public void testPossibleMovesCorner() {
         placeOnBoard(knight, 8, 8);
-        placeOnBoard(king,8,7);
+        placeOnBoard(king, 8, 7);
         white.add(knight);
         white.add(king);
         setGame();
@@ -109,9 +109,9 @@ public class KnightTest {
     @Test
     public void testPossibleBlockByTeammate() {
         placeOnBoard(knight, 4, 6);
-        placeOnBoard(king,4,5);
+        placeOnBoard(king, 4, 5);
         Bishop bishop = new Bishop("white");
-        placeOnBoard(bishop,2,5);
+        placeOnBoard(bishop, 2, 5);
         white.add(knight);
         white.add(bishop);
         white.add(king);
@@ -132,9 +132,9 @@ public class KnightTest {
     @Test
     public void testPossibleMovesBlockByEnemy() {
         placeOnBoard(knight, 4, 6);
-        placeOnBoard(king,4,5);
+        placeOnBoard(king, 4, 5);
         Bishop bishop = new Bishop("black");
-        placeOnBoard(bishop,6,5);
+        placeOnBoard(bishop, 6, 5);
         white.add(knight);
         white.add(king);
         black.add(bishop);
@@ -157,8 +157,8 @@ public class KnightTest {
     public void testPossibleMovesKingUnderAttack() {
         Rook rook = new Rook("black");
         placeOnBoard(knight, 4, 6);
-        placeOnBoard(king,6,3);
-        placeOnBoard(rook, 6,8);
+        placeOnBoard(king, 6, 3);
+        placeOnBoard(rook, 6, 8);
         white.add(knight);
         white.add(king);
         black.add(rook);
@@ -175,8 +175,8 @@ public class KnightTest {
     public void testPossibleMovesKingWillBeUnderAttack() {
         Rook rook = new Rook("black");
         placeOnBoard(knight, 4, 6);
-        placeOnBoard(king, 4,3);
-        placeOnBoard(rook, 4,8);
+        placeOnBoard(king, 4, 3);
+        placeOnBoard(rook, 4, 8);
         white.add(knight);
         white.add(king);
         black.add(rook);

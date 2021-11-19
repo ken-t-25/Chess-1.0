@@ -20,7 +20,7 @@ public class BoardTest {
         setup();
         Bishop bishop = new Bishop("black");
         board.place(bishop, 5, 6);
-        Position posn = new Position(5,6);
+        Position posn = new Position(5, 6);
         int indexValue = posn.toSingleValue() - 1;
         assertEquals(bishop, board.getOnBoard().get(indexValue));
     }
@@ -33,10 +33,10 @@ public class BoardTest {
         rook.setPosX(3);
         rook.setPosY(8);
         board.move(rook, 4, 8);
-        Position posn = new Position(4,8);
+        Position posn = new Position(4, 8);
         int indexValue = posn.toSingleValue() - 1;
         assertEquals(rook, board.getOnBoard().get(indexValue));
-        Position oldPosn = new Position(3,8);
+        Position oldPosn = new Position(3, 8);
         int oldIndexValue = oldPosn.toSingleValue() - 1;
         assertNull(board.getOnBoard().get(oldIndexValue));
     }
@@ -49,7 +49,7 @@ public class BoardTest {
         rook.setPosX(3);
         rook.setPosY(8);
         board.remove(rook);
-        Position posn = new Position(3,8);
+        Position posn = new Position(3, 8);
         int indexValue = posn.toSingleValue() - 1;
         assertNull(board.getOnBoard().get(indexValue));
     }

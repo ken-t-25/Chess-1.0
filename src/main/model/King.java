@@ -56,9 +56,9 @@ public class King extends ChessPiece {
     // EFFECTS: find possible moves of a king by positions (excluding castling)
     private ArrayList<Position> kingPositionTest(Game game, int x, int y) {
         ArrayList<Position> moves = new ArrayList<>();
-        Position testPosition = new Position(x,y);
+        Position testPosition = new Position(x, y);
         if (x >= 1 && x <= 8 && y >= 1 && y <= 8) {
-            moves = positionTest(game,testPosition);
+            moves = positionTest(game, testPosition);
         }
         return moves;
     }
@@ -74,12 +74,12 @@ public class King extends ChessPiece {
             } else {
                 examinedList = game.getBlackChessPiecesOnBoard();
             }
-            for (ChessPiece cp: examinedList) {
+            for (ChessPiece cp : examinedList) {
                 if (cp instanceof Rook) {
                     rooks.add(cp);
                 }
             }
-            for (ChessPiece rook: rooks) {
+            for (ChessPiece rook : rooks) {
                 moves.addAll(testRook(rook, game));
             }
         }
@@ -124,11 +124,11 @@ public class King extends ChessPiece {
         int initialY = this.posY;
         boolean initialMove = move;
         if (Objects.isNull(bd.getOnBoard().get(posnIndex))) {
-            game.move(this,posn.getPosX(),posn.getPosY());
+            game.move(this, posn.getPosX(), posn.getPosY());
             if (!game.check(colour)) {
                 moves.add(posn);
             }
-            game.move(this,initialX,initialY);
+            game.move(this, initialX, initialY);
             move = initialMove;
         }
         return moves;

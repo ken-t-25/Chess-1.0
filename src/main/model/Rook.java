@@ -37,10 +37,10 @@ public class Rook extends ChessPiece {
     @Override
     public ArrayList<Position> possibleMoves(Game game) {
         ArrayList<Position> moves = new ArrayList<>();
-        moves.addAll(lineTest(game,0,-1));
-        moves.addAll(lineTest(game,0,1));
-        moves.addAll(lineTest(game,-1,0));
-        moves.addAll(lineTest(game,1,0));
+        moves.addAll(lineTest(game, 0, -1));
+        moves.addAll(lineTest(game, 0, 1));
+        moves.addAll(lineTest(game, -1, 0));
+        moves.addAll(lineTest(game, 1, 0));
         return moves;
     }
 
@@ -53,9 +53,9 @@ public class Rook extends ChessPiece {
         int x = posn.getPosX();
         int y = posn.getPosY();
         if (x == posX) {
-            return checkEnemyStraightPath(posX,posY,y,"y",bd);
+            return checkEnemyStraightPath(posX, posY, y, "y", bd);
         } else if (y == posY) {
-            return checkEnemyStraightPath(posY,posX,x,"x",bd);
+            return checkEnemyStraightPath(posY, posX, x, "x", bd);
         } else {
             return false;
         }

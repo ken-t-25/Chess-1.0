@@ -27,7 +27,8 @@ public class JsonWriterTest extends JsonTest {
         try {
             Game gm = new Game();
             JsonWriter jsonWriter = new JsonWriter("./data/jsonWriterTestDefaultChessGame.json");
-            jsonWriter.open();;
+            jsonWriter.open();
+            ;
             jsonWriter.writeGame(gm);
             jsonWriter.close();
             JsonReader jsonReader = new JsonReader("./data/jsonWriterTestDefaultChessGame.json");
@@ -45,7 +46,8 @@ public class JsonWriterTest extends JsonTest {
         try {
             Game gm = modifyCompareGame();
             JsonWriter jsonWriter = new JsonWriter("./data/jsonWriterTestModifiedChessGame.json");
-            jsonWriter.open();;
+            jsonWriter.open();
+            ;
             jsonWriter.writeGame(gm);
             jsonWriter.close();
             JsonReader jsonReader = new JsonReader("./data/jsonWriterTestModifiedChessGame.json");

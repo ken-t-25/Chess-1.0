@@ -34,7 +34,8 @@ public abstract class ChessPiece implements Writable {
             return false;
         }
         ChessPiece that = (ChessPiece) o;
-        return posX == that.posX && posY == that.posY && onBoard == that.onBoard && move == that.move && Objects.equals(colour, that.colour);
+        return posX == that.posX && posY == that.posY && onBoard == that.onBoard && move == that.move
+                && Objects.equals(colour, that.colour);
     }
 
     // REQUIRES: colour must be one of "black" and "white", x and y must be in the range [1.8]
@@ -68,7 +69,6 @@ public abstract class ChessPiece implements Writable {
         json.put("move", move);
         return json;
     }
-
 
 
     // EFFECTS: return the possible next moves that this chess piece can take on given board
@@ -141,10 +141,10 @@ public abstract class ChessPiece implements Writable {
         int initialY = this.posY;
         boolean initialMove = move;
         if (Objects.isNull(bd.getOnBoard().get(posnIndex))) {
-            positionEmpty(game,posn,moves,initialX,initialY,initialMove);
+            positionEmpty(game, posn, moves, initialX, initialY, initialMove);
         } else {
             if (!bd.getOnBoard().get(posnIndex).getColour().equals(colour)) {
-                hasEnemy(game,posn,moves,initialX,initialY,initialMove,bd,posnIndex);
+                hasEnemy(game, posn, moves, initialX, initialY, initialMove, bd, posnIndex);
             }
         }
         return moves;
@@ -154,11 +154,11 @@ public abstract class ChessPiece implements Writable {
     // EFFECTS: do position test on a position that is empty
     //          ix = initialX, iy = initialY, im = initialMove
     protected void positionEmpty(Game game, Position posn, ArrayList<Position> moves, int ix, int iy, boolean im) {
-        game.move(this,posn.getPosX(),posn.getPosY());
+        game.move(this, posn.getPosX(), posn.getPosY());
         if (!game.check(colour)) {
             moves.add(posn);
         }
-        game.move(this,ix,iy);
+        game.move(this, ix, iy);
         this.move = im;
     }
 
@@ -171,12 +171,12 @@ public abstract class ChessPiece implements Writable {
         int enemyInitialX = enemyAttacked.getPosX();
         int enemyInitialY = enemyAttacked.getPosY();
         g.remove(enemyAttacked);
-        g.move(this,p.getPosX(),p.getPosY());
+        g.move(this, p.getPosX(), p.getPosY());
         if (!g.check(colour)) {
             ms.add(p);
         }
-        g.move(this,ix,iy);
-        g.placeFromOffBoard(enemyAttacked,enemyInitialX,enemyInitialY);
+        g.move(this, ix, iy);
+        g.placeFromOffBoard(enemyAttacked, enemyInitialX, enemyInitialY);
         move = im;
     }
 
@@ -190,7 +190,7 @@ public abstract class ChessPiece implements Writable {
         Board bd = game.getBoard();
         while (x >= 1 && x <= 8 && y >= 1 && y <= 8 && !blocked) {
             Position testPosn = new Position(x, y);
-            ArrayList<Position> testedMove = positionTest(game,testPosn);
+            ArrayList<Position> testedMove = positionTest(game, testPosn);
             moves.addAll(testedMove);
             if (!Objects.isNull(bd.getOnBoard().get(testPosn.toSingleValue() - 1))) {
                 blocked = true;

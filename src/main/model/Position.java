@@ -27,8 +27,8 @@ public class Position {
     // EFFECTS: returns a boolean representing whether this position is attacked by the given list of chess pieces
     public Boolean attacked(ArrayList<ChessPiece> chessPieces, Game game) {
         boolean attacked = false;
-        for (ChessPiece cp: chessPieces) {
-            if (cp.checkEnemy(game,this)) {
+        for (ChessPiece cp : chessPieces) {
+            if (cp.checkEnemy(game, this)) {
                 attacked = true;
             }
         }

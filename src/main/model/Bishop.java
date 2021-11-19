@@ -37,10 +37,10 @@ public class Bishop extends ChessPiece {
     @Override
     public ArrayList<Position> possibleMoves(Game game) {
         ArrayList<Position> moves = new ArrayList<>();
-        moves.addAll(lineTest(game,-1,-1));
-        moves.addAll(lineTest(game,-1,1));
-        moves.addAll(lineTest(game,1,-1));
-        moves.addAll(lineTest(game,1,1));
+        moves.addAll(lineTest(game, -1, -1));
+        moves.addAll(lineTest(game, -1, 1));
+        moves.addAll(lineTest(game, 1, -1));
+        moves.addAll(lineTest(game, 1, 1));
         return moves;
     }
 
@@ -58,7 +58,7 @@ public class Bishop extends ChessPiece {
             int deltaX = Math.abs(diffX) / diffX;
             int deltaY = Math.abs(diffY) / diffY;
             int diff = Math.abs(diffX);
-            return checkEnemyDiagonalPath(deltaX,deltaY,posX,posY,diff,bd);
+            return checkEnemyDiagonalPath(deltaX, deltaY, posX, posY, diff, bd);
         } else {
             return false;
         }

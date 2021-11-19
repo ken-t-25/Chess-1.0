@@ -14,29 +14,29 @@ public abstract class JsonTest {
     protected Game modifyCompareGame() {
         Game compare = new Game();
         ArrayList<ChessPiece> wcOnBoardCopy = new ArrayList<>(compare.getWhiteChessPiecesOnBoard());
-        for (ChessPiece cp: wcOnBoardCopy) {
-            if(cp.getPosX() == 5 && cp.getPosY() == 7) {
-                compare.move(cp,5,5);
+        for (ChessPiece cp : wcOnBoardCopy) {
+            if (cp.getPosX() == 5 && cp.getPosY() == 7) {
+                compare.move(cp, 5, 5);
                 Moves moves = new Moves();
-                moves.addMove(new Move(5,7,5,5,cp,false));
+                moves.addMove(new Move(5, 7, 5, 5, cp, false));
                 compare.updateHistory(moves);
             }
         }
         ArrayList<ChessPiece> bcOnBoardCopy = new ArrayList<>(compare.getBlackChessPiecesOnBoard());
-        for (ChessPiece cp: bcOnBoardCopy) {
-            if(cp.getPosX() == 1 && cp.getPosY() == 2) {
-                compare.move(cp,1,4);
+        for (ChessPiece cp : bcOnBoardCopy) {
+            if (cp.getPosX() == 1 && cp.getPosY() == 2) {
+                compare.move(cp, 1, 4);
                 Moves moves = new Moves();
-                moves.addMove(new Move(1,2,1,4,cp,false));
+                moves.addMove(new Move(1, 2, 1, 4, cp, false));
                 compare.updateHistory(moves);
             }
         }
         ArrayList<ChessPiece> wcOnBoardCopy1 = new ArrayList<>(compare.getWhiteChessPiecesOnBoard());
-        for (ChessPiece cp: wcOnBoardCopy1) {
-            if(cp.getPosX() == 5 && cp.getPosY() == 5) {
-                compare.move(cp,5,4);
+        for (ChessPiece cp : wcOnBoardCopy1) {
+            if (cp.getPosX() == 5 && cp.getPosY() == 5) {
+                compare.move(cp, 5, 4);
                 Moves moves = new Moves();
-                moves.addMove(new Move(5,5,5,4,cp,true));
+                moves.addMove(new Move(5, 5, 5, 4, cp, true));
                 compare.updateHistory(moves);
             }
         }
@@ -52,7 +52,7 @@ public abstract class JsonTest {
         for (int i = 0; i < len; i++) {
             ChessPiece cp1 = l1.get(i);
             ChessPiece cp2 = l2.get(i);
-            if(Objects.isNull(cp1)) {
+            if (Objects.isNull(cp1)) {
                 assertNull(cp2);
             } else {
                 checkChess(cp1, cp2);

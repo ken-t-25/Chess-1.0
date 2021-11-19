@@ -64,7 +64,7 @@ public class Game implements Writable {
     // EFFECTS: returns given chess array as a json array
     public JSONArray movesListToJson(ArrayList<Moves> movesArray) {
         JSONArray jsonArray = new JSONArray();
-        for (Moves ms: movesArray) {
+        for (Moves ms : movesArray) {
             jsonArray.put(ms.toJson());
         }
         return jsonArray;
@@ -83,16 +83,16 @@ public class Game implements Writable {
             firstRow = 1;
             secondRow = 2;
         }
-        cp.add(new Rook(colour,1,firstRow));
-        cp.add(new Knight(colour,2,firstRow));
-        cp.add(new Bishop(colour,3,firstRow));
-        cp.add(new Queen(colour,4,firstRow));
-        cp.add(new King(colour,5,firstRow));
-        cp.add(new Bishop(colour,6,firstRow));
-        cp.add(new Knight(colour,7,firstRow));
-        cp.add(new Rook(colour,8,firstRow));
+        cp.add(new Rook(colour, 1, firstRow));
+        cp.add(new Knight(colour, 2, firstRow));
+        cp.add(new Bishop(colour, 3, firstRow));
+        cp.add(new Queen(colour, 4, firstRow));
+        cp.add(new King(colour, 5, firstRow));
+        cp.add(new Bishop(colour, 6, firstRow));
+        cp.add(new Knight(colour, 7, firstRow));
+        cp.add(new Rook(colour, 8, firstRow));
         for (int i = 1; i <= 8; i++) {
-            cp.add(new Pawn(colour,i,secondRow));
+            cp.add(new Pawn(colour, i, secondRow));
         }
         return cp;
     }
@@ -112,8 +112,8 @@ public class Game implements Writable {
 
     // EFFECTS: update the chess info in given chess list to the board in this game
     private void updateBoard(ArrayList<ChessPiece> cpl) {
-        for (ChessPiece cp: cpl) {
-            gameBoard.place(cp,cp.getPosX(),cp.getPosY());
+        for (ChessPiece cp : cpl) {
+            gameBoard.place(cp, cp.getPosX(), cp.getPosY());
         }
     }
 
@@ -198,7 +198,7 @@ public class Game implements Writable {
     // EFFECTS: tells whether given team has legal move
     private boolean haveLegalMove(ArrayList<ChessPiece> chessList) {
         ArrayList<ChessPiece> copyList = new ArrayList<>(chessList);
-        for (ChessPiece cp: copyList) {
+        for (ChessPiece cp : copyList) {
             if (!cp.possibleMoves(this).isEmpty()) {
                 return true;
             }
@@ -228,7 +228,7 @@ public class Game implements Writable {
     // EFFECTS: find king within given chessList
     private ChessPiece findKing(ArrayList<ChessPiece> chessList) {
         ChessPiece king = null;
-        for (ChessPiece cp: chessList) {
+        for (ChessPiece cp : chessList) {
             if (cp instanceof King) {
                 king = cp;
             }
@@ -242,7 +242,7 @@ public class Game implements Writable {
     // MODIFIES: this, cp
     // EFFECTS: change the position of cp in this game to (x, y)
     public void move(ChessPiece cp, int x, int y) {
-        gameBoard.move(cp,x,y);
+        gameBoard.move(cp, x, y);
         String colour = cp.getColour();
         ArrayList<ChessPiece> listModified;
         if (colour.equals("white")) {
@@ -286,7 +286,7 @@ public class Game implements Writable {
     // MODIFIES: this
     // EFFECTS: take cp from off board list and place cp on this board at given x, y position
     public void placeFromOffBoard(ChessPiece cp, int x, int y) {
-        gameBoard.place(cp,x,y);
+        gameBoard.place(cp, x, y);
         String colour = cp.getColour();
         ArrayList<ChessPiece> listTakeFrom;
         ArrayList<ChessPiece> listAddTo;
@@ -311,7 +311,7 @@ public class Game implements Writable {
     public void placeNew(ChessPiece cp) {
         int x = cp.getPosX();
         int y = cp.getPosY();
-        gameBoard.place(cp,x,y);
+        gameBoard.place(cp, x, y);
         String colour = cp.getColour();
         ArrayList<ChessPiece> listAddTo;
         if (colour.equals("white")) {

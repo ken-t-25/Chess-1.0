@@ -32,7 +32,7 @@ public class Board implements Writable {
     // EFFECTS: returns given chess array as a json array
     public JSONArray chessListToJson(ArrayList<ChessPiece> chessArray) {
         JSONArray jsonArray = new JSONArray();
-        for (ChessPiece cp: chessArray) {
+        for (ChessPiece cp : chessArray) {
             if (Objects.isNull(cp)) {
                 ChessPiece nullChess = new King("");
                 jsonArray.put(nullChess.toJson());

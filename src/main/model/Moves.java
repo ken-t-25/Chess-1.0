@@ -21,10 +21,10 @@ public class Moves implements Writable {
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
-        for (Move m: moves) {
+        for (Move m : moves) {
             jsonArray.put(m.toJson());
         }
-        jsonObject.put("moves",jsonArray);
+        jsonObject.put("moves", jsonArray);
         return jsonObject;
     }
 
