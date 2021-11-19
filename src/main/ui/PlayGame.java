@@ -53,7 +53,6 @@ public class PlayGame extends JPanel implements MouseListener {
     private JButton black;
     private JButton remove;
     private JButton done;
-    private ChessPiece clickedChess;
     private Boolean promote;
     private Boolean creating;
     private Boolean removing;
@@ -78,7 +77,6 @@ public class PlayGame extends JPanel implements MouseListener {
         createExitButton();
         paintHomePage();
         frame.setVisible(true);
-        clickedChess = null;
         promote = false;
         creating = false;
         removing = false;
@@ -140,16 +138,13 @@ public class PlayGame extends JPanel implements MouseListener {
         int posIndex = pos.toSingleValue() - 1;
         ChessPiece cp = game.getBoard().getOnBoard().get(posIndex);
         if (cp != null && cp.getColour().equals(game.getTurn())) {
-            clickedChess = cp;
             gamePanel.setClickedChess(cp);
-        } else if (clickedChess != null) {
-            int beginX = clickedChess.getPosX();
-            int beginY = clickedChess.getPosY();
+        } else if (gamePanel.getClickedChess() != null) {
+            int beginX = gamePanel.getClickedChess().getPosX();
+            int beginY = gamePanel.getClickedChess().getPosY();
             handleMoveInfo(beginX, beginY, clickedX, clickedY);
-            clickedChess = null;
             gamePanel.setClickedChess(null);
         } else {
-            clickedChess = null;
             gamePanel.setClickedChess(null);
         }
         gamePanel.repaint();
@@ -906,7 +901,6 @@ public class PlayGame extends JPanel implements MouseListener {
         undo.addActionListener(e -> {
                     if (!promote) {
                         undoAction();
-                        clickedChess = null;
                         gamePanel.setClickedChess(null);
                         paintGamePage();
                         repaint();
@@ -924,7 +918,6 @@ public class PlayGame extends JPanel implements MouseListener {
                     if (!promote) {
                         removeAllComponents();
                         setBackground(BACKGROUND_OTHER);
-                        clickedChess = null;
                         gamePanel.setClickedChess(null);
                         createDrawYesButton();
                         createLeaveDrawNoButton();
@@ -950,7 +943,6 @@ public class PlayGame extends JPanel implements MouseListener {
         save.addActionListener(e -> {
                     if (!promote) {
                         saveGame();
-                        clickedChess = null;
                         gamePanel.setClickedChess(null);
                         repaint();
                     }
@@ -967,7 +959,6 @@ public class PlayGame extends JPanel implements MouseListener {
                     if (!promote) {
                         removeAllComponents();
                         setBackground(BACKGROUND_OTHER);
-                        clickedChess = null;
                         gamePanel.setClickedChess(null);
                         createLeaveYesButton();
                         createLeaveDrawNoButton();

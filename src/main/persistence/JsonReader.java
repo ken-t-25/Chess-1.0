@@ -47,10 +47,13 @@ public class JsonReader {
         ArrayList<ChessPiece> bcOnBoard = parseChessList(jsonObject.getJSONArray("bcOnBoard"));
         ArrayList<ChessPiece> wcOffBoard = parseChessList(jsonObject.getJSONArray("wcOffBoard"));
         ArrayList<ChessPiece> bcOffBoard = parseChessList(jsonObject.getJSONArray("bcOffBoard"));
+        ArrayList<ChessPiece> allChessOnBoard = new ArrayList<>();
+        allChessOnBoard.addAll(wcOnBoard);
+        allChessOnBoard.addAll(bcOnBoard);
+        Board gameBoard = parseGameBoard(jsonObject.getJSONObject("gameBoard"), wcOnBoard, bcOnBoard, allChessOnBoard);
         ArrayList<ChessPiece> allChess = new ArrayList<>();
         allChess.addAll(wcOnBoard);
         allChess.addAll(bcOnBoard);
-        Board gameBoard = parseGameBoard(jsonObject.getJSONObject("gameBoard"), wcOnBoard, bcOnBoard, allChess);
         allChess.addAll(wcOffBoard);
         allChess.addAll(bcOffBoard);
         ArrayList<Moves> history = parseHistory(jsonObject.getJSONArray("history"), wcOnBoard, wcOffBoard,

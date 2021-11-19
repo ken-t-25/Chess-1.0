@@ -46,6 +46,11 @@ public class GameBoardPanel extends JPanel {
         clickedChess = cp;
     }
 
+    // EFFECTS: returns clickedChess
+    public ChessPiece getClickedChess() {
+        return clickedChess;
+    }
+
     // MODIFIES: this
     // EFFECTS: create the graphic of a chess board
     public void drawGameBoard(Graphics2D g) {
