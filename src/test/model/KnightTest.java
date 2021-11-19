@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class KnightTest {
 
@@ -75,18 +76,31 @@ public class KnightTest {
     }
 
     @Test
-    public void testPossibleMovesSide() {
-        placeOnBoard(knight, 5, 8);
+    public void testPossibleMovesTopRightCorner() {
+        placeOnBoard(knight, 8, 1);
         placeOnBoard(king, 5, 7);
         white.add(knight);
         white.add(king);
         setGame();
         ArrayList<Position> pm = knight.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<>();
-        expected.add(new Position(4, 6));
+        expected.add(new Position(7, 3));
+        expected.add(new Position(6, 2));
+        assertEquals(expected.size(), pm.size());
+        arrayListEquals(pm, expected);
+    }
+
+    @Test
+    public void testPossibleMovesBottomLeftCorner() {
+        placeOnBoard(knight, 1, 8);
+        placeOnBoard(king, 5, 7);
+        white.add(knight);
+        white.add(king);
+        setGame();
+        ArrayList<Position> pm = knight.possibleMoves(game);
+        ArrayList<Position> expected = new ArrayList<>();
+        expected.add(new Position(2, 6));
         expected.add(new Position(3, 7));
-        expected.add(new Position(6, 6));
-        expected.add(new Position(7, 7));
         assertEquals(expected.size(), pm.size());
         arrayListEquals(pm, expected);
     }
@@ -183,5 +197,28 @@ public class KnightTest {
         setGame();
         ArrayList<Position> pm = knight.possibleMoves(game);
         assertEquals(0, pm.size());
+    }
+
+    @Test
+    public void testCheckingEnemy() {
+        placeOnBoard(knight, 5, 5);
+        placeOnBoard(king, 6, 8);
+        white.add(knight);
+        white.add(king);
+        setGame();
+        Position pos1 = new Position(4,3);
+        Position pos2 = new Position(8,5);
+        Position pos3 = new Position(5,2);
+        Position pos4 = new Position(1,8);
+        Position pos5 = new Position(1,5);
+        Position pos6 = new Position(5,1);
+        Position pos7 = new Position(5,5);
+        assertTrue(knight.checkEnemy(game, pos1));
+        assertFalse(knight.checkEnemy(game, pos2));
+        assertFalse(knight.checkEnemy(game, pos3));
+        assertFalse(knight.checkEnemy(game, pos4));
+        assertFalse(knight.checkEnemy(game, pos5));
+        assertFalse(knight.checkEnemy(game, pos6));
+        assertFalse(knight.checkEnemy(game, pos7));
     }
 }

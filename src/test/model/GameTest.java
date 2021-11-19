@@ -59,6 +59,7 @@ public class GameTest {
         King blackKing = new King("black");
         Bishop blackBishop = new Bishop("black");
         Pawn whitePawn = new Pawn("white");
+        Queen blackQueen = new Queen("black");
         placeOnBoard(whiteKing, 1, 1);
         placeOnBoard(blackKing, 2, 3);
         placeOnBoard(blackBishop, 4, 3);
@@ -66,6 +67,7 @@ public class GameTest {
         black.add(blackKing);
         black.add(blackBishop);
         whiteOff.add(whitePawn);
+        blackOff.add(blackQueen);
         setGame();
         assertTrue(game.stalemate("white"));
         assertFalse(game.stalemate("black"));
@@ -73,8 +75,23 @@ public class GameTest {
         game.reverseTurn();
         assertFalse(game.hasEnded());
         game.reverseTurn();
+        game.setDrawn(true);
+        assertTrue(game.hasEnded());
+        game.setDrawn(false);
+        game.placeFromOffBoard(blackQueen, 3,3);
+        assertFalse(game.stalemate("white"));
+        assertTrue(game.hasEnded());
         game.placeFromOffBoard(whitePawn, 8, 6);
         assertFalse(game.stalemate("white"));
+        assertTrue(game.hasEnded());
+        game.setDrawn(true);
+        assertTrue(game.hasEnded());
+        game.setDrawn(false);
+        game.remove(blackQueen);
+        assertFalse(game.stalemate("white"));
+        assertFalse(game.hasEnded());
+        game.setDrawn(true);
+        assertTrue(game.hasEnded());
     }
 
     @Test
