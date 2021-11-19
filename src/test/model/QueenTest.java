@@ -252,6 +252,23 @@ public class QueenTest {
     }
 
     @Test
+    public void testCheckingEnemy() {
+        placeOnBoard(queen, 6, 6);
+        placeOnBoard(king, 1, 2);
+        white.add(queen);
+        white.add(king);
+        setGame();
+        Position pos1 = new Position(4, 4);
+        Position pos2 = new Position(5, 6);
+        Position pos3 = new Position(6, 6);
+        Position pos4 = new Position(6, 5);
+        assertTrue(queen.checkEnemy(game, pos1));
+        assertTrue(queen.checkEnemy(game, pos2));
+        assertFalse(queen.checkEnemy(game, pos3));
+        assertTrue(queen.checkEnemy(game, pos4));
+    }
+
+    @Test
     public void testPossibleMovesKingUnderAttack() {
         placeOnBoard(queen, 5, 4);
         Rook rook = new Rook("black");

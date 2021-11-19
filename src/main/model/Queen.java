@@ -58,7 +58,9 @@ public class Queen extends ChessPiece {
         int y = posn.getPosY();
         int diffX = x - posX;
         int diffY = y - posY;
-        if (Math.abs(diffX) == Math.abs(diffY) && diffX != 0) {
+        if (diffX == 0 && diffY == 0) {
+            return false;
+        } else if (Math.abs(diffX) == Math.abs(diffY)) {
             int diff = Math.abs(diffX);
             int deltaX = Math.abs(diffX) / diffX;
             int deltaY = Math.abs(diffY) / diffY;
