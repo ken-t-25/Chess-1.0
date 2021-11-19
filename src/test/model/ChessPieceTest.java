@@ -54,6 +54,8 @@ public class ChessPieceTest {
 
     @Test
     public void testChessEquals() {
+        assertFalse(rook.equals(null));
+        assertTrue(rook.equals(rook));
         Bishop bishop = new Bishop("white");
         assertFalse(rook.equals(bishop));
         Rook rook1 = new Rook("white");

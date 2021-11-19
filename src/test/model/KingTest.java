@@ -255,13 +255,16 @@ public class KingTest {
         Rook rook1 = new Rook("white");
         Rook rook2 = new Rook("white");
         Bishop bishop = new Bishop("white");
+        Bishop bishop1 = new Bishop("white");
         placeOnBoard(rook1, 1, 1);
         placeOnBoard(rook2, 8, 1);
         placeOnBoard(bishop, 7, 1);
+        placeOnBoard(bishop1, 2, 1);
         white.add(king);
         white.add(rook1);
         white.add(rook2);
         white.add(bishop);
+        white.add(bishop1);
         setGame();
         ArrayList<Position> pm = king.possibleMoves(game);
         ArrayList<Position> expected = new ArrayList<>();
@@ -270,7 +273,6 @@ public class KingTest {
         expected.add(new Position(4, 2));
         expected.add(new Position(5, 1));
         expected.add(new Position(5, 2));
-        expected.add(new Position(2, 1));
         assertEquals(expected.size(), pm.size());
         arrayListEquals(pm, expected);
     }
