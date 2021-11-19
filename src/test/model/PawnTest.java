@@ -130,7 +130,7 @@ public class PawnTest {
         placeOnBoard(pawn4, 1, 8);
         placeOnBoard(pawn5, 8, 8);
         placeOnBoard(king, 8, 5);
-        placeOnBoard(blackKing, 1,5);
+        placeOnBoard(blackKing, 1, 5);
         white.add(pawn);
         white.add(pawn1);
         white.add(pawn2);
@@ -223,10 +223,10 @@ public class PawnTest {
         white.add(pawn);
         white.add(king);
         setGame();
-        Position pos1 = new Position(4,6);
-        Position pos2 = new Position(5,6);
-        Position pos3 = new Position(6,6);
-        Position pos4 = new Position(6,5);
+        Position pos1 = new Position(4, 6);
+        Position pos2 = new Position(5, 6);
+        Position pos3 = new Position(6, 6);
+        Position pos4 = new Position(6, 5);
         assertFalse(pawn.checkEnemy(game, pos1));
         assertTrue(pawn.checkEnemy(game, pos2));
         assertFalse(pawn.checkEnemy(game, pos3));

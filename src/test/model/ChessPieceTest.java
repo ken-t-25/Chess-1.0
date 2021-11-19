@@ -51,4 +51,46 @@ public class ChessPieceTest {
         game.move(rook, 1, 5);
         assertTrue(rook.hasMoved());
     }
+
+    @Test
+    public void testChessEquals() {
+        Bishop bishop = new Bishop("white");
+        assertFalse(rook.equals(bishop));
+        Rook rook1 = new Rook("white");
+        assertTrue(rook.equals(rook1));
+        alterOnBoardMoveXYCombinations(rook1);
+        Rook rook2 = new Rook("black");
+        assertFalse(rook.equals(rook2));
+        alterOnBoardMoveXYCombinations(rook2);
+    }
+
+    private void alterOnBoardAndMoveCombinations(ChessPiece cp) {
+        cp.setMove(true);
+        assertFalse(rook.equals(cp));
+        cp.setMove(false);
+        cp.setOnBoard(true);
+        assertFalse(rook.equals(cp));
+        cp.setMove(true);
+        assertFalse(rook.equals(cp));
+    }
+
+    private void alterOnBoardMoveXYCombinations(ChessPiece cp) {
+        alterOnBoardAndMoveCombinations(cp);
+        cp.setPosY(1);
+        cp.setMove(false);
+        cp.setOnBoard(false);
+        assertFalse(rook.equals(cp));
+        alterOnBoardAndMoveCombinations(cp);
+        cp.setPosX(1);
+        cp.setPosY(0);
+        cp.setMove(false);
+        cp.setOnBoard(false);
+        assertFalse(rook.equals(cp));
+        alterOnBoardAndMoveCombinations(cp);
+        cp.setPosY(1);
+        cp.setMove(false);
+        cp.setOnBoard(false);
+        assertFalse(rook.equals(cp));
+        alterOnBoardAndMoveCombinations(cp);
+    }
 }
