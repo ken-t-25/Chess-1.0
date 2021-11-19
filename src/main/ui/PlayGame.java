@@ -85,6 +85,12 @@ public class PlayGame extends JPanel implements MouseListener {
         chessColourSelected = "";
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /** MOUSE LISTENER METHODS */
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     // MODIFIES: this
     // EFFECTS: add a mouse listener to game panel
     @Override
@@ -99,22 +105,30 @@ public class PlayGame extends JPanel implements MouseListener {
     // EFFECTS: method needed to be overridden from MouseListener interface. No implementation because nothing should
     //          happen when mouse is pressed
     @Override
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+
+    }
 
     // EFFECTS: method needed to be overridden from MouseListener interface. No implementation because nothing should
     //          happen when mouse is released
     @Override
-    public void mouseReleased(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {
+
+    }
 
     // EFFECTS: method needed to be overridden from MouseListener interface. No implementation because nothing should
     //          happen when mouse enters
     @Override
-    public void mouseEntered(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+
+    }
 
     // EFFECTS: method needed to be overridden from MouseListener interface. No implementation because nothing should
     //          happen when mouse exits
     @Override
-    public void mouseExited(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {
+
+    }
 
     // MODIFIES: this
     // EFFECTS: handle given mouse click during a game to move chess pieces
@@ -177,6 +191,12 @@ public class PlayGame extends JPanel implements MouseListener {
         return round;
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /** HOME PAGE, START_OPTION PAGE, EXIT_CONFIRMATION PAGE METHODS */
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     // MODIFIES: this
     // EFFECTS: draws the home page of this application.
     public void paintHomePage() {
@@ -212,7 +232,8 @@ public class PlayGame extends JPanel implements MouseListener {
             add(create);
             add(back);
             repaint();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -227,7 +248,8 @@ public class PlayGame extends JPanel implements MouseListener {
             } catch (IOException exception) {
                 System.out.println("Unable to read from file: " + JSON_STORE);
             }
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -248,7 +270,8 @@ public class PlayGame extends JPanel implements MouseListener {
             add(yes);
             add(no);
             repaint();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -259,7 +282,8 @@ public class PlayGame extends JPanel implements MouseListener {
         regular.addActionListener(e -> {
             game = new Game();
             paintGamePage();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -272,7 +296,8 @@ public class PlayGame extends JPanel implements MouseListener {
             game = new Game(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new Board(),
                     new ArrayList<>(), "white", false);
             paintCreateGamePage();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -282,7 +307,8 @@ public class PlayGame extends JPanel implements MouseListener {
         back.addActionListener(e -> {
             paintHomePage();
             repaint();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -301,8 +327,14 @@ public class PlayGame extends JPanel implements MouseListener {
         no.addActionListener(e -> {
             paintHomePage();
             repaint();
-        });
+        }
+        );
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /** CREATE GAME PAGE METHODS */
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     // MODIFIES: this
     // EFFECTS: creates the create game page. User will create their own game on this page
@@ -422,7 +454,8 @@ public class PlayGame extends JPanel implements MouseListener {
             white.setBackground(SELECT);
             chessColourSelected = "white";
             removing = false;
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -435,7 +468,8 @@ public class PlayGame extends JPanel implements MouseListener {
             black.setBackground(SELECT);
             chessColourSelected = "black";
             removing = false;
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -448,7 +482,8 @@ public class PlayGame extends JPanel implements MouseListener {
             king.setBackground(SELECT);
             chessTypeSelected = "king";
             removing = false;
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -461,7 +496,8 @@ public class PlayGame extends JPanel implements MouseListener {
             queen.setBackground(SELECT);
             chessTypeSelected = "queen";
             removing = false;
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -474,7 +510,8 @@ public class PlayGame extends JPanel implements MouseListener {
             bishop.setBackground(SELECT);
             chessTypeSelected = "bishop";
             removing = false;
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -487,7 +524,8 @@ public class PlayGame extends JPanel implements MouseListener {
             knight.setBackground(SELECT);
             chessTypeSelected = "knight";
             removing = false;
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -500,7 +538,8 @@ public class PlayGame extends JPanel implements MouseListener {
             rook.setBackground(SELECT);
             chessTypeSelected = "rook";
             removing = false;
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -513,7 +552,8 @@ public class PlayGame extends JPanel implements MouseListener {
             pawn.setBackground(SELECT);
             chessTypeSelected = "pawn";
             removing = false;
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -527,7 +567,8 @@ public class PlayGame extends JPanel implements MouseListener {
             chessColourSelected = "";
             chessTypeSelected = "";
             removing = true;
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -545,7 +586,8 @@ public class PlayGame extends JPanel implements MouseListener {
             remove(message);
             repaint();
             doneModifyAction();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -702,6 +744,12 @@ public class PlayGame extends JPanel implements MouseListener {
         System.out.println("Place success");
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /** CREATE SELECT_FIRST_TEAM PAGE METHODS */
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     // MODIFIES: this
     // EFFECTS: draws the select first team to move page
     public void paintSelectFirstTeamPage() {
@@ -733,7 +781,8 @@ public class PlayGame extends JPanel implements MouseListener {
             remove(message);
             setFirstTeam("white");
             repaint();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -746,7 +795,8 @@ public class PlayGame extends JPanel implements MouseListener {
             remove(message);
             setFirstTeam("black");
             repaint();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -758,7 +808,8 @@ public class PlayGame extends JPanel implements MouseListener {
             creating = true;
             paintCreateGamePage();
             repaint();
-        });
+        }
+        );
     }
 
     // REQUIRES: colour must be "white" or "black"
@@ -806,6 +857,12 @@ public class PlayGame extends JPanel implements MouseListener {
         return game.buildDefaultChessOffBoard(team, numPawn);
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /** CREATE GAME PAGE METHODS */
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     // MODIFIES: this
     // EFFECTS: create the graphic of the game page
     public void paintGamePage() {
@@ -852,7 +909,8 @@ public class PlayGame extends JPanel implements MouseListener {
                 paintGamePage();
                 repaint();
             }
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -878,7 +936,8 @@ public class PlayGame extends JPanel implements MouseListener {
                 add(no);
                 repaint();
             }
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -893,7 +952,8 @@ public class PlayGame extends JPanel implements MouseListener {
                 gamePanel.setClickedChess(null);
                 repaint();
             }
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -919,7 +979,8 @@ public class PlayGame extends JPanel implements MouseListener {
                 add(no);
                 repaint();
             }
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -930,7 +991,8 @@ public class PlayGame extends JPanel implements MouseListener {
         yes.addActionListener(e -> {
             paintHomePage();
             repaint();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -942,7 +1004,8 @@ public class PlayGame extends JPanel implements MouseListener {
             removeAllComponents();
             paintGamePage();
             repaint();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -956,7 +1019,8 @@ public class PlayGame extends JPanel implements MouseListener {
             game.setDrawn(true);
             paintGamePage();
             repaint();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -1076,7 +1140,8 @@ public class PlayGame extends JPanel implements MouseListener {
             promote = false;
             paintGamePage();
             repaint();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -1091,7 +1156,8 @@ public class PlayGame extends JPanel implements MouseListener {
             promote = false;
             paintGamePage();
             repaint();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -1106,7 +1172,8 @@ public class PlayGame extends JPanel implements MouseListener {
             promote = false;
             paintGamePage();
             repaint();
-        });
+        }
+        );
     }
 
     // MODIFIES: this
@@ -1121,7 +1188,8 @@ public class PlayGame extends JPanel implements MouseListener {
             promote = false;
             paintGamePage();
             repaint();
-        });
+        }
+        );
     }
 
     // REQUIRES: pro must be "queen", "bishop", "knight", "rook"
