@@ -215,4 +215,21 @@ public class PawnTest {
         ArrayList<Position> pm = pawn.possibleMoves(game);
         assertEquals(0, pm.size());
     }
+
+    @Test
+    public void testCheckingEnemy() {
+        placeOnBoard(pawn, 6, 7);
+        placeOnBoard(king, 6, 8);
+        white.add(pawn);
+        white.add(king);
+        setGame();
+        Position pos1 = new Position(4,6);
+        Position pos2 = new Position(5,6);
+        Position pos3 = new Position(6,6);
+        Position pos4 = new Position(6,5);
+        assertFalse(pawn.checkEnemy(game, pos1));
+        assertTrue(pawn.checkEnemy(game, pos2));
+        assertFalse(pawn.checkEnemy(game, pos3));
+        assertFalse(pawn.checkEnemy(game, pos4));
+    }
 }

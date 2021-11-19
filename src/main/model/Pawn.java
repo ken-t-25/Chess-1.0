@@ -69,11 +69,12 @@ public class Pawn extends ChessPiece {
         return moves;
     }
 
+    // REQUIRES: x is within the range [1, 8]
     // EFFECTS: find possible moves of a pawn by positions (excluding attack moves)
     private ArrayList<Position> pawnPositionTest(Game game, int x, int y) {
         ArrayList<Position> moves = new ArrayList<>();
         Position testPosition = new Position(x, y);
-        if (x >= 1 && x <= 8 && y >= 1 && y <= 8) {
+        if (y >= 1 && y <= 8) {
             Board bd = game.getBoard();
             int posnIndex = testPosition.toSingleValue() - 1;
             int initialX = this.posX;
@@ -130,7 +131,7 @@ public class Pawn extends ChessPiece {
 
     // REQUIRES: posn must not be the same as the current position
     // EFFECTS: returns a boolean that tells whether this pawn can move to given position(enemy king's position)
-    // in one step, ignoring whether the king on the same team will be checked
+    //          in one step, ignoring whether the king on the same team will be checked
     @Override
     public boolean checkEnemy(Game game, Position posn) {
         int x = posn.getPosX();
