@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -19,7 +20,6 @@ public class PlayGame extends JPanel implements MouseListener {
     private static final Font STANDARD_FONT = new Font("Standard", Font.BOLD, 20);
     private static final Font SMALL_BUTTON_FONT = new Font("SmallButton", Font.BOLD, 15);
     private static final Font LABEL_FONT = new Font("Label", Font.BOLD, 30);
-    private static final Font HOME_PAGE_FONT = new Font("HomePage", Font.BOLD, 50);
     private static final Color BACKGROUND_GAME = new Color(255, 255, 230);
     private static final Color BACKGROUND_OTHER = new Color(255, 255, 255);
     private static final Color SELECT = new Color(204, 255, 255);
@@ -197,13 +197,13 @@ public class PlayGame extends JPanel implements MouseListener {
     // EFFECTS: draws the home page of this application.
     public void paintHomePage() {
         removeAllComponents();
-        setBackground(BACKGROUND_OTHER);
-        label.setText("Chess Game");
-        label.setFont(HOME_PAGE_FONT);
-        label.setBounds(200, 50, 400, 100);
-        start.setBounds(300, 250, 400, 100);
-        load.setBounds(300, 400, 400, 100);
-        exit.setBounds(300, 550, 400, 100);
+        URL image = PlayGame.class.getClassLoader().getResource("chessTitle2.png");
+        ImageIcon title = new ImageIcon(image);
+        label = new JLabel(title);
+        label.setBounds(100, 70, 800, 250);
+        start.setBounds(300, 270, 400, 100);
+        load.setBounds(300, 420, 400, 100);
+        exit.setBounds(300, 570, 400, 100);
         this.add(label);
         this.add(start);
         this.add(load);
@@ -257,7 +257,7 @@ public class PlayGame extends JPanel implements MouseListener {
                     removeAllComponents();
                     createExitYesButton();
                     createExitNoButton();
-                    label.setText("Are you sure to exit?");
+                    label = new JLabel("Are you sure to exit?");
                     label.setFont(LABEL_FONT);
                     label.setBounds(200, 100, 400, 100);
                     yes.setBounds(300, 300, 400, 100);
@@ -921,7 +921,7 @@ public class PlayGame extends JPanel implements MouseListener {
                         gamePanel.setClickedChess(null);
                         createDrawYesButton();
                         createLeaveDrawNoButton();
-                        label.setText("Are you sure to draw the game?");
+                        label = new JLabel("Are you sure to draw the game?");
                         label.setFont(STANDARD_FONT);
                         label.setBounds(200, 100, 800, 100);
                         yes.setBounds(300, 300, 400, 100);
@@ -962,7 +962,7 @@ public class PlayGame extends JPanel implements MouseListener {
                         gamePanel.setClickedChess(null);
                         createLeaveYesButton();
                         createLeaveDrawNoButton();
-                        label.setText("Are you sure to leave? (Remember to save your game)");
+                        label = new JLabel("Are you sure to leave? (Remember to save your game)");
                         label.setFont(LABEL_FONT);
                         label.setBounds(200, 100, 800, 100);
                         yes.setBounds(300, 300, 400, 100);
