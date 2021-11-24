@@ -140,4 +140,10 @@ public class Pawn extends ChessPiece {
         int diffY = y - posY;
         return diffY == direction && Math.abs(diffX) == 1;
     }
+
+    // EFFECTS: return chess type of this chess
+    @Override
+    public String getType() {
+        return "pawn";
+    }
 }

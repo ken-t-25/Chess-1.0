@@ -69,4 +69,10 @@ public class Knight extends ChessPiece {
         int diffY = y - posY;
         return Math.abs(diffX) + Math.abs(diffY) == 3 && diffX != 0 && diffY != 0;
     }
+
+    // EFFECTS: return chess type of this chess
+    @Override
+    public String getType() {
+        return "knight";
+    }
 }

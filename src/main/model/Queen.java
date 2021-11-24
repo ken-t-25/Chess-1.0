@@ -73,4 +73,10 @@ public class Queen extends ChessPiece {
             return false;
         }
     }
+
+    // EFFECTS: return chess type of this chess
+    @Override
+    public String getType() {
+        return "queen";
+    }
 }

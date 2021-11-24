@@ -63,4 +63,10 @@ public class Bishop extends ChessPiece {
             return false;
         }
     }
+
+    // EFFECTS: return chess type of this chess
+    @Override
+    public String getType() {
+        return "bishop";
+    }
 }

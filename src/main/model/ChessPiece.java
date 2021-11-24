@@ -239,4 +239,7 @@ public abstract class ChessPiece implements Writable {
         }
         return notBlock;
     }
+
+    // EFFECTS: returns chess type
+    public abstract String getType();
 }

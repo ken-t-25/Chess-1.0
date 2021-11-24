@@ -29,6 +29,7 @@ public class Game implements Writable {
         history = new ArrayList<>();
         turn = "white";
         drawn = false;
+        EventLog.getInstance().logEvent(new Event("Open a regular game."));
     }
 
     // REQUIRES: t must be "black" or "white"
@@ -43,12 +44,14 @@ public class Game implements Writable {
         history = his;
         turn = t;
         drawn = d;
+        EventLog.getInstance().logEvent(new Event("Open a modified game."));
     }
 
 
     // EFFECTS: returns this PlayGame as a json object
     @Override
     public JSONObject toJson() {
+        EventLog.getInstance().logEvent(new Event("Save a Game."));
         JSONObject json = new JSONObject();
         json.put("wcOnBoard", gameBoard.chessListToJson(whiteChessPiecesOnBoard));
         json.put("bcOnBoard", gameBoard.chessListToJson(blackChessPiecesOnBoard));
@@ -346,16 +349,110 @@ public class Game implements Writable {
         return history.get(totalMoves - 1);
     }
 
+    // REQUIRES: moves must consist of 1 to 3 move variables
     // MODIFIES: this
-    // EFFECTS: update the given move on history
+    // EFFECTS: update the given move on history, update EventLog
     public void updateHistory(Moves moves) {
+        String event = "Move: ";
+        ArrayList<Move> moveList = moves.getMoves();
+        if (moveList.size() == 3) {
+            event = event + eventMessageThreeMoves(moveList);
+        } else if (moveList.size() == 2) {
+            event = event + eventMessageTwoMoves(moveList);
+        } else if (moveList.size() == 1) {
+            event = event + eventMessageOneMove(moveList);
+        }
+        EventLog.getInstance().logEvent(new Event(event));
         history.add(moves);
+        if (hasEnded()) {
+            eventLogUpdateResult();
+        }
     }
 
+    // REQUIRES: moveList has exactly three moves
+    // EFFECTS: constructs a message for event log for cases where there are three moves in moveList
+    public String eventMessageThreeMoves(ArrayList<Move> moveList) {
+        Move m1 = moveList.get(1);
+        Move m2 = moveList.get(1);
+        Move m3 = moveList.get(2);
+        return m2.getChessPiece().getColour() + " pawn at " + posName(m2.getBeginX(), m2.getBeginY())
+                + " attacks " + m1.getChessPiece().getColour() + " " + m1.getChessPiece().getType() + " at "
+                + posName(m1.getBeginX(), m1.getBeginY()) + ". Promote the moved pawn to a "
+                + m3.getChessPiece().getType() + ". ";
+    }
+
+    // REQUIRES: moveList has exactly two moves
+    // EFFECTS: constructs a message for event log for cases where there are two moves in moveList
+    public String eventMessageTwoMoves(ArrayList<Move> moveList) {
+        Move m1 = moveList.get(0);
+        Move m2 = moveList.get(1);
+        String message;
+        if (m1.getChessPiece().getColour().equals(m2.getChessPiece().getColour())) {
+            if (m1.getBeginX() == m2.getEndX()) {
+                message = "move " + m1.getChessPiece().getColour() + " pawn at " + posName(m1.getBeginX(),
+                        m1.getBeginY()) + " to " + posName(m2.getEndX(), m2.getEndY()) + ". Promote the moved pawn"
+                        + " to a " + m2.getChessPiece().getType() + ". ";
+            } else {
+                message = "castling between " + m1.getChessPiece().getColour() + " "
+                        + m1.getChessPiece().getType() + " at " + posName(m1.getBeginX(), m1.getBeginY()) + " and "
+                        + m2.getChessPiece().getColour() + " " + m2.getChessPiece().getType() + " at "
+                        + posName(m2.getBeginX(), m2.getBeginY()) + ". ";
+            }
+        } else {
+            message = m2.getChessPiece().getColour() + " " + m2.getChessPiece().getType() + " at "
+                    + posName(m2.getBeginX(), m2.getBeginY()) + " attacks " + m1.getChessPiece().getColour() + " "
+                    + m1.getChessPiece().getType() + " at " + posName(m1.getBeginX(), m1.getBeginY()) + ". ";
+        }
+        return message;
+    }
+
+    // REQUIRES: moveList has exactly one move
+    // EFFECTS: constructs a message for event log for cases where there is one move in moveList
+    public String eventMessageOneMove(ArrayList<Move> moveList) {
+        Move m1 = moveList.get(0);
+        return "move " + m1.getChessPiece().getColour() + " " + m1.getChessPiece().getType() + " at "
+                + posName(m1.getBeginX(), m1.getBeginY()) + " to " + posName(m1.getEndX(), m1.getEndY()) + ". ";
+    }
+
+    // MODIFIES: EventLog
+    // REQUIRES: this game has ended
+    // EFFECTS: update EventLog with result
+    public void eventLogUpdateResult() {
+        if (checkmate("white")) {
+            EventLog.getInstance().logEvent(new Event("Black wins. Game ends in a checkmate."));
+        } else if (check("black")) {
+            EventLog.getInstance().logEvent(new Event("White wins. Game ends in a checkmate."));
+        } else if (stalemate(turn)) {
+            EventLog.getInstance().logEvent(new Event("There is a tie. Game ends in a stalemate."));
+        } else {
+            EventLog.getInstance().logEvent(new Event("There is a tie. Game ends in a draw."));
+        }
+    }
+
+    // REQUIRES: history must not be empty
     // MODIFIES: this
-    // EFFECTS: remove the most recent moves from history, do nothing if history is empty
+    // EFFECTS: remove the most recent moves from history, do nothing if history is empty, update EventLog
     public void removeMostRecentMoves() {
+        String eventMessage = "Undo move: ";
         int totalMoves = history.size();
+        Moves recent = getMostRecentMoves();
+        ArrayList<Move> moveList = recent.getMoves();
+        for (int i = moveList.size() - 1; i >= 0; i--) {
+            Move move = moveList.get(i);
+            ChessPiece movedChess = move.getChessPiece();
+            if (move.getBeginX() == 0 && move.getBeginY() == 0) {
+                eventMessage = eventMessage + "Remove " + movedChess.getColour() + " " + movedChess.getType() + " at "
+                        + posName(move.getEndX(), move.getEndY()) + ". ";
+            } else if (move.getEndX() == 0 && move.getEndY() == 0) {
+                eventMessage = eventMessage + "Place " + movedChess.getColour() + " " + movedChess.getType() + " at "
+                        + posName(move.getBeginX(), move.getBeginY()) + ". ";
+            } else {
+                eventMessage = eventMessage + "Move " + movedChess.getColour() + " " + movedChess.getType() + " from "
+                        + posName(move.getEndX(), move.getEndY()) + " back to "
+                        + posName(move.getBeginX(), move.getBeginY()) + ". ";
+            }
+        }
+        EventLog.getInstance().logEvent(new Event(eventMessage));
         history.remove(totalMoves - 1);
     }
 
@@ -383,5 +480,40 @@ public class Game implements Writable {
     // EFFECTS: return drawn
     public boolean getDrawn() {
         return drawn;
+    }
+
+    // REQUIRES: column must be in the range [1, 8]
+    // EFFECTS: returns the formal name for a column in chess (a - g)
+    public String columnName(int column) {
+        if (column == 1) {
+            return "a";
+        } else if (column == 2) {
+            return "b";
+        } else if (column == 3) {
+            return "c";
+        } else if (column == 4) {
+            return "d";
+        } else if (column == 5) {
+            return "e";
+        } else if (column == 6) {
+            return "f";
+        } else if (column == 7) {
+            return "g";
+        } else {
+            return "h";
+        }
+    }
+
+    // REQUIRES: row must be in the range [1, 8]
+    // EFFECTS: returns the formal name for a row in chess (1 - 8)
+    public String rowName(int row) {
+        int rowName = 8 - row + 1;
+        return Integer.toString(rowName);
+    }
+
+    // REQUIRES: row must be in the range [1, 8], column must be in the range [1, 8]
+    // EFFECTS: returns the formal name for a position on a chess board
+    public String posName(int column, int row) {
+        return columnName(column) + rowName(row);
     }
 }

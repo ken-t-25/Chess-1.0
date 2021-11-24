@@ -145,4 +145,10 @@ public class King extends ChessPiece {
         int diffY = y - posY;
         return (Math.abs(diffX) + Math.abs(diffY) <= 2) && (Math.abs(diffX) == 1 || Math.abs(diffY) == 1);
     }
+
+    // EFFECTS: return chess type of this chess
+    @Override
+    public String getType() {
+        return "king";
+    }
 }
