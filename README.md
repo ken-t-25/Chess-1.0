@@ -39,6 +39,13 @@ I can make) and the game is over
 - As a user, I want to be able to save my unfinished game
 - As a user, I want to be able to load my unfinished game
 
+## Phase 4: Task 2
+
+![](Event Log.png)
+
+## Phase 4: Task 3
+
+
 
 ## References:
 

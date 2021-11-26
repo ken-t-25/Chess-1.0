@@ -8,7 +8,7 @@ public class Main {
         PlayGame game = new PlayGame();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             for (Event next : EventLog.getInstance()) {
-                System.out.println(next.toString() + "\n\n");
+                System.out.println(next.toString() + "\n");
             }
         }));
     }
