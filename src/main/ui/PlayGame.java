@@ -21,7 +21,6 @@ public class PlayGame extends JPanel implements MouseListener {
     private static final Font SMALL_BUTTON_FONT = new Font("SmallButton", Font.BOLD, 15);
     private static final Font LABEL_FONT = new Font("Label", Font.BOLD, 30);
     private static final Color BACKGROUND_GAME = new Color(236, 230, 220);
-    //private static final Color BACKGROUND_GAME = new Color(255, 255, 255);
     private static final Color BACKGROUND_OTHER = new Color(236, 236, 236);
     private static final Color SELECT = new Color(214, 255, 255);
     private static final Color UNSELECT = new Color(255, 255, 255);
@@ -30,7 +29,6 @@ public class PlayGame extends JPanel implements MouseListener {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private GameBoardPanel gamePanel;
-    private JFrame frame;
     private JLabel label;
     private JLabel message;
     private JButton start;
@@ -55,7 +53,6 @@ public class PlayGame extends JPanel implements MouseListener {
     private JButton black;
     private JButton remove;
     private JButton done;
-    private JButton eventLog;
     private Boolean promote;
     private Boolean creating;
     private Boolean removing;
@@ -67,7 +64,7 @@ public class PlayGame extends JPanel implements MouseListener {
     public PlayGame() {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-        frame = new JFrame();
+        JFrame frame = new JFrame();
         frame.setSize(2000, 1100);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Chess");

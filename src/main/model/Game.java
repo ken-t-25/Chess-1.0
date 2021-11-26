@@ -17,6 +17,7 @@ public class Game implements Writable {
     private String turn;
     private boolean drawn;
 
+    // MODIFIES: EventLog
     // EFFECTS: constructs and sets up a chess game
     public Game() {
         whiteChessPiecesOnBoard = buildDefaultChessOnBoard("white");
@@ -33,6 +34,7 @@ public class Game implements Writable {
     }
 
     // REQUIRES: t must be "black" or "white"
+    // MODIFIES: EventLog
     // EFFECTS: constructs and sets up a chess game using given chess lists, game board, and history
     public Game(ArrayList<ChessPiece> onW, ArrayList<ChessPiece> offW, ArrayList<ChessPiece> onB,
                 ArrayList<ChessPiece> offB, Board gb, ArrayList<Moves> his, String t, boolean d) {
@@ -47,7 +49,7 @@ public class Game implements Writable {
         EventLog.getInstance().logEvent(new Event("Open a modified game."));
     }
 
-
+    // MODIFIES: EventLog
     // EFFECTS: returns this PlayGame as a json object
     @Override
     public JSONObject toJson() {
@@ -350,7 +352,7 @@ public class Game implements Writable {
     }
 
     // REQUIRES: moves must consist of 1 to 3 move variables
-    // MODIFIES: this
+    // MODIFIES: this, EventLog
     // EFFECTS: update the given move on history, update EventLog
     public void updateHistory(Moves moves) {
         String event = "Move: ";
@@ -430,7 +432,7 @@ public class Game implements Writable {
     }
 
     // REQUIRES: history must not be empty
-    // MODIFIES: this
+    // MODIFIES: this, EventLog
     // EFFECTS: remove the most recent moves from history, do nothing if history is empty, update EventLog
     public void removeMostRecentMoves() {
         String eventMessage = "Undo move: ";

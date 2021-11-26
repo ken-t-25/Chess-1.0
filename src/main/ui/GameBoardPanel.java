@@ -13,9 +13,7 @@ public class GameBoardPanel extends JPanel {
     private static final int HEIGHT = 800;
     private static final int PEN_THICKNESS = 4;
     private static final int PEN_HIGHLIGHT = 4;
-    //private static final Color LIGHT_SQUARE_COLOUR = new Color(250, 225, 145);
     private static final Color LIGHT_SQUARE_COLOUR = new Color(248, 246, 231);
-    //private static final Color DARK_SQUARE_COLOUR = new Color(160, 120, 40);
     private static final Color DARK_SQUARE_COLOUR = new Color(186, 172, 144);
     private static final Color SQUARE_COLOUR = new Color(153, 204, 255);
     private static final Color MOVE_COLOUR = new Color(153, 255, 255);

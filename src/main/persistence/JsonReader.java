@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import org.json.*;
-import ui.PlayGame;
 
 // Represents a reader that reads workroom from JSON data stored in file
 public class JsonReader {

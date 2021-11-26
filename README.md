@@ -41,12 +41,32 @@ I can make) and the game is over
 
 ## Phase 4: Task 2
 
-![](Event Log.png)
+![](data/Event Log.png)
 
 ## Phase 4: Task 3
 
+![](data/UML_Design_Diagram.jpg)
 
+- Several methods in the ui package could be moved to the model package
+- PlayGame class performs several unrelated functions (e.g. processing different types of chess moves, 
+letting users create their own game), which could be refactored into several classes
+- Game class performs several unrelated functions (e.g. modifying chess board, determining whether checkmate, 
+stalemate exist), which could be refactored into several classes
+- PlayGame class consists of many button fields, which could be reduced or transform into local variables if methods
+related to buttons are designed differently
+- The chessListToJson method in the Board class is also used in Game class. Instead of calling this method in Game from 
+a Board variable, I could create an interface and have the two classes implementing that interface so that they can share
+this functionality
+- Make more uses of the Position class
 
 ## References:
+
+- UBC. AlarmSystem. Retrieved November 26, 2021 from https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
+- UBC. JsonSerializationDemo. Retrieved November 26, 2021 from 
+https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+- Vexels. 2017. Queen chess figure white. (January 2017). Retrieved November 26, 2021 from 
+https://www.vexels.com/png-svg/preview/143217/queen-chess-figure-white
+- Vexels. 2019. King chess piece. (January 2019). Retrieved November 26, 2021 from 
+https://www.vexels.com/png-svg/preview/166404/king-chess-piece 
 
 

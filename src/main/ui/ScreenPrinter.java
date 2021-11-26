@@ -13,6 +13,7 @@ public class ScreenPrinter extends JInternalFrame {
     private JTextArea textArea;
 
 
+    // EFFECTS: constructs a screen printer to print events in event log
     public ScreenPrinter() {
         super("Event log", false, false, false, false);
         textArea = new JTextArea();
@@ -23,6 +24,9 @@ public class ScreenPrinter extends JInternalFrame {
         setVisible(true);
     }
 
+    // REQUIRES: textArea must be previously initialized
+    // MODIFIES: this
+    // EFFECTS: print all events in event log onto textArea
     public void printLog(EventLog el) {
         for (Event next : el) {
             textArea.setText(textArea.getText() + next.toString() + "\n\n");
