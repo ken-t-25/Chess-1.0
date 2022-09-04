@@ -60,6 +60,9 @@ public class PlayGame extends JPanel implements MouseListener {
     private String chessColourSelected;
     private ScreenPrinter sp;
 
+    private int clickedX;
+    private int clickedY;
+
     // EFFECTS: constructs a chess game
     public PlayGame() {
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -98,25 +101,41 @@ public class PlayGame extends JPanel implements MouseListener {
     // EFFECTS: add a mouse listener to game panel
     @Override
     public void mouseClicked(MouseEvent e) {
+        /*
         if (creating) {
             handleMouseCreateAction(e);
         } else if (!game.hasEnded() && !promote) {
             handleMouseMoveAction(e);
         }
+        */
     }
 
-    // EFFECTS: method needed to be overridden from MouseListener interface. No implementation because nothing should
-    //          happen when mouse is pressed
+    // MODIFIES: this
+    // EFFECTS: add a mouse listener to game panel
     @Override
     public void mousePressed(MouseEvent e) {
-
+        if (creating || (!game.hasEnded() && !promote)) {
+            clickedX = roundUpHundred(e.getX()) / 100;
+            clickedY = roundUpHundred(e.getY()) / 100;
+        }
     }
 
-    // EFFECTS: method needed to be overridden from MouseListener interface. No implementation because nothing should
-    //          happen when mouse is released
+    // MODIFIES: this
+    // EFFECTS: add a mouse listener to game panel
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        if (roundUpHundred(e.getX()) / 100 == clickedX && roundUpHundred(e.getY()) / 100 == clickedY) {
+            if (creating) {
+                handleMouseCreateAction(e);
+            } else if (!game.hasEnded() && !promote) {
+                handleMouseMoveAction(e);
+            }
+        } else {
+            if (!game.hasEnded() && !promote) {
+                gamePanel.setClickedChess(null);
+                gamePanel.repaint();
+            }
+        }
     }
 
     // EFFECTS: method needed to be overridden from MouseListener interface. No implementation because nothing should
@@ -136,8 +155,8 @@ public class PlayGame extends JPanel implements MouseListener {
     // MODIFIES: this
     // EFFECTS: handle given mouse click during a game to move chess pieces
     public void handleMouseMoveAction(MouseEvent e) {
-        int clickedX = roundUpHundred(e.getX()) / 100;
-        int clickedY = roundUpHundred(e.getY()) / 100;
+        clickedX = roundUpHundred(e.getX()) / 100;
+        clickedY = roundUpHundred(e.getY()) / 100;
         Position pos = new Position(clickedX, clickedY);
         int posIndex = pos.toSingleValue() - 1;
         ChessPiece cp = game.getBoard().getOnBoard().get(posIndex);
@@ -159,13 +178,13 @@ public class PlayGame extends JPanel implements MouseListener {
     public void handleMouseCreateAction(MouseEvent e) {
         if (colourValid(chessColourSelected) && typeValid(chessTypeSelected)) {
             remove(message);
-            int clickedX = roundUpHundred(e.getX()) / 100;
-            int clickedY = roundUpHundred(e.getY()) / 100;
+            clickedX = roundUpHundred(e.getX()) / 100;
+            clickedY = roundUpHundred(e.getY()) / 100;
             proceedAdd(chessColourSelected, chessTypeSelected, clickedX, clickedY);
             repaint();
         } else if (removing) {
-            int clickedX = roundUpHundred(e.getX()) / 100;
-            int clickedY = roundUpHundred(e.getY()) / 100;
+            clickedX = roundUpHundred(e.getX()) / 100;
+            clickedY = roundUpHundred(e.getY()) / 100;
             removeChessActon(clickedX, clickedY);
         }
     }
@@ -354,7 +373,7 @@ public class PlayGame extends JPanel implements MouseListener {
         add(gamePanel);
         addColourOptions();
         addChessOptions();
-        addRemoveAndDone();
+        addRemoveAndDoneAndExit();
         gamePanel.addMouseListener(this);
         repaint();
     }
@@ -419,18 +438,23 @@ public class PlayGame extends JPanel implements MouseListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: add the remove button and done button on to the create game page
-    public void addRemoveAndDone() {
+    // EFFECTS: add the remove, done, and exit buttons on to the create game page
+    public void addRemoveAndDoneAndExit() {
         createRemoveButton();
         createDoneButton();
+        createCreateLeaveButton();
         remove.setBackground(UNSELECT);
         done.setBackground(UNSELECT);
+        leave.setBackground(UNSELECT);
         remove.setBounds(100, 900, 100, 50);
         done.setBounds(250, 900, 100, 50);
+        leave.setBounds(400, 900, 100, 50);
         remove.setFont(SMALL_BUTTON_FONT);
         done.setFont(SMALL_BUTTON_FONT);
+        leave.setFont(SMALL_BUTTON_FONT);
         add(remove);
         add(done);
+        add(leave);
         repaint();
     }
 
@@ -597,6 +621,52 @@ public class PlayGame extends JPanel implements MouseListener {
                 }
         );
     }
+
+    public void createCreateLeaveButton() {
+        leave = new JButton("Leave");
+        leave.setFont(STANDARD_FONT);
+        leave.addActionListener(e -> {
+                    removeAllComponents();
+                    createCreateExitYesButton();
+                    createCreateExitNoButton();
+                    label = new JLabel("Are you sure to leave?");
+                    label.setFont(LABEL_FONT);
+                    label.setBounds(200, 100, 400, 100);
+                    yes.setBounds(300, 300, 400, 100);
+                    no.setBounds(300, 500, 400, 100);
+                    add(label);
+                    add(yes);
+                    add(no);
+                    repaint();
+                }
+        );
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates the yes button on the exit confirmation page. When pressed, exit program
+    public void createCreateExitYesButton() {
+        yes = new JButton("Yes");
+        yes.setFont(STANDARD_FONT);
+        yes.addActionListener(e -> {
+            creating = false;
+            paintHomePage();
+            repaint();
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates the no button on the exit confirmation page. When pressed, go back to home page
+    public void createCreateExitNoButton() {
+        no = new JButton("No");
+        no.setFont(STANDARD_FONT);
+        no.addActionListener(e -> {
+                    creating = true;
+                    paintCreateGamePage();
+                    repaint();
+                }
+        );
+    }
+
 
     // MODIFIES: this
     // EFFECTS: evaluates whether the created game is valid (both team must have a king, cannot be an ended game).
