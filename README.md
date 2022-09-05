@@ -1,4 +1,4 @@
-# CPSC210 Personal Project Proposal -  Kent Chen
+# CPSC210 Personal Project Proposal (Chess-1.0) -  Kent Chen
 
 For the term project, I am planning to design a chess game application. 
 The game will include all chess figures, and each side will have:
